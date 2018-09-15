@@ -1,0 +1,13 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /
+    session:
+      timeout: 60m
+  error:
+    path: /error
+  tomcat:
+    uri-encoding: UTF-8
+
+img:
+  location: /images
