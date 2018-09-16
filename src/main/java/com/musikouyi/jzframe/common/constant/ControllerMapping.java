@@ -15,4 +15,5 @@ public interface ControllerMapping {
 
     String TEST = ADMIN_BASE + "/test";
     String USER = ADMIN_BASE + "/user";
+    String USER_INFO = "/userInfo";
 }

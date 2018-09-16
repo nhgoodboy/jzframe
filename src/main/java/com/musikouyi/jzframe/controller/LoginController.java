@@ -33,4 +33,9 @@ public class LoginController {
             throw new GlobalException(ResultEnum.USERNAME_PASSWORD_ERROR);
         }
     }
+
+    @GetMapping(ControllerMapping.DO_LOGOUT)
+    public Result doLogout() {
+        return ResultUtil.success();
+    }
 }

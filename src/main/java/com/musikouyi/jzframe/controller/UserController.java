@@ -3,7 +3,10 @@ package com.musikouyi.jzframe.controller;
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.dto.UserInfoRespDto;
+import com.musikouyi.jzframe.service.IUserService;
+import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
+import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,12 +24,9 @@ import java.util.List;
 @RequestMapping(ControllerMapping.USER)
 public class UserController {
 
-    @GetMapping("/userInfo")
+    @GetMapping(ControllerMapping.USER_INFO)
     public Result userInfo(@RequestParam("token") String token) {
-        System.out.println(token);
-        List<String> roles = new ArrayList<>();
-        roles.add("admin");
-        UserInfoRespDto userInfoRespDto = new UserInfoRespDto("admin", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif", roles);
-        return ResultUtil.success(userInfoRespDto);
+        System.out.println(JwtTokenUtil.getUserIdFromToken(token));
+        return SpringContextHolder.getBean(IUserService.class).findById(Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token)));
     }
 }

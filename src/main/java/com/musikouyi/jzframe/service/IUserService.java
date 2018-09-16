@@ -1,5 +1,6 @@
 package com.musikouyi.jzframe.service;
 
+import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
 import org.springframework.data.repository.query.Param;
 
@@ -37,4 +38,9 @@ public interface IUserService {
      * 通过账号获取用户
      */
     User getByAccount(@Param("account") String account);
+
+    /**
+     * 通过userid获取用户信息
+     */
+    Result findById(@Param("userId") Integer userId);
 }

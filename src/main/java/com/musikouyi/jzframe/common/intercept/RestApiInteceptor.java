@@ -36,8 +36,7 @@ public class RestApiInteceptor extends HandlerInterceptorAdapter {
 
     private boolean check(HttpServletRequest request, HttpServletResponse response) {
         final String requestMethod = request.getMethod();
-        System.out.println(requestMethod);
-        if("OPTIONS".equals(requestMethod)){
+        if("OPTIONS".equals(requestMethod)){   //
             return true;
         }
         final String requestHeader = request.getHeader(JwtConstants.X_TOKEN);

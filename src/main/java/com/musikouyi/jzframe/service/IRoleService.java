@@ -1,5 +1,6 @@
 package com.musikouyi.jzframe.service;
 
+import com.musikouyi.jzframe.domain.entity.Role;
 import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import org.springframework.data.repository.query.Param;
 
@@ -63,4 +64,6 @@ public interface IRoleService {
      * @date 2017年2月18日 上午10:32:04
      */
     List<ZTreeNode> roleTreeListByRoleId(String[] roleId);
+
+    Role findById(Integer roleId);
 }

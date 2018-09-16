@@ -28,40 +28,40 @@ import java.util.Map;
 public class JwtTokenUtil {
 
     /**
-     * 获取用户名从token中
+     * 获取用户id从token中
      */
-//    public static String getUsernameFromToken(String token) {
-//        return getClaimFromToken(token).getSubject();
-//    }
-//
-//    /**
-//     * 获取jwt发布时间
-//     */
-//    public static Date getIssuedAtDateFromToken(String token) {
-//        return getClaimFromToken(token).getIssuedAt();
-//    }
-//
+    public static String getUserIdFromToken(String token) {
+        return getClaimFromToken(token).getSubject();
+    }
+
+    /**
+     * 获取jwt发布时间
+     */
+    public static Date getIssuedAtDateFromToken(String token) {
+        return getClaimFromToken(token).getIssuedAt();
+    }
+
     /**
      * 获取jwt失效时间
      */
     public static Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token).getExpiration();
     }
-//
-//    /**
-//     * 获取jwt接收者
-//     */
-//    public static String getAudienceFromToken(String token) {
-//        return getClaimFromToken(token).getAudience();
-//    }
-//
-//    /**
-//     * 获取私有的jwt claim
-//     */
-//    public static String getPrivateClaimFromToken(String token, String key) {
-//        return getClaimFromToken(token).get(key).toString();
-//    }
-//
+
+    /**
+     * 获取jwt接收者
+     */
+    public static String getAudienceFromToken(String token) {
+        return getClaimFromToken(token).getAudience();
+    }
+
+    /**
+     * 获取私有的jwt claim
+     */
+    public static String getPrivateClaimFromToken(String token, String key) {
+        return getClaimFromToken(token).get(key).toString();
+    }
+
     /**
      * 获取jwt的payload部分
      */
@@ -71,14 +71,14 @@ public class JwtTokenUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
-//
-//    /**
-//     * 解析token是否正确,不正确会报异常<br>
-//     */
-//    public static void parseToken(String token) throws JwtException {
-//        Jwts.parser().setSigningKey(JwtConstants.SECRET).parseClaimsJws(token).getBody();
-//    }
-//
+
+    /**
+     * 解析token是否正确,不正确会报异常<br>
+     */
+    public static void parseToken(String token) throws JwtException {
+        Jwts.parser().setSigningKey(JwtConstants.SECRET).parseClaimsJws(token).getBody();
+    }
+
     /**
      * <pre>
      *  验证token是否失效
@@ -118,9 +118,9 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-//    /**
-//     * 获取混淆MD5签名用的随机字符串
-//     */
+    /**
+     * 获取混淆MD5签名用的随机字符串
+     */
 //    public static String getRandomKey() {
 //        return ToolUtil.getRandomString(6);
 //    }
