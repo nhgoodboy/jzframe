@@ -1,5 +1,6 @@
 package com.musikouyi.jzframe.controller;
 
+import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.domain.enums.ResultEnum;
@@ -17,11 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping(ControllerMapping.BASE)
 public class LoginController {
 
-    @GetMapping("/auth")
-    public Result auth(@RequestParam("username") String username, @RequestParam("password") String password) {
+    @GetMapping(ControllerMapping.DO_LOGIN)
+    public Result doLogin(@RequestParam("username") String username, @RequestParam("password") String password) {
 
         User user = SpringContextHolder.getBean(IUserService.class).getByAccount(username);
         if (user != null && password.equals(user.getPassword())) {

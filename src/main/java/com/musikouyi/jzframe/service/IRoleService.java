@@ -1,6 +1,6 @@
 package com.musikouyi.jzframe.service;
 
-import com.musikouyi.jzframe.node.ZTreeNode;
+import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;

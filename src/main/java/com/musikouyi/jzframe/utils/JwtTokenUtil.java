@@ -41,12 +41,12 @@ public class JwtTokenUtil {
 //        return getClaimFromToken(token).getIssuedAt();
 //    }
 //
-//    /**
-//     * 获取jwt失效时间
-//     */
-//    public static Date getExpirationDateFromToken(String token) {
-//        return getClaimFromToken(token).getExpiration();
-//    }
+    /**
+     * 获取jwt失效时间
+     */
+    public static Date getExpirationDateFromToken(String token) {
+        return getClaimFromToken(token).getExpiration();
+    }
 //
 //    /**
 //     * 获取jwt接收者
@@ -62,15 +62,15 @@ public class JwtTokenUtil {
 //        return getClaimFromToken(token).get(key).toString();
 //    }
 //
-//    /**
-//     * 获取jwt的payload部分
-//     */
-//    public static Claims getClaimFromToken(String token) {
-//        return Jwts.parser()
-//                .setSigningKey(JwtConstants.SECRET)
-//                .parseClaimsJws(token)
-//                .getBody();
-//    }
+    /**
+     * 获取jwt的payload部分
+     */
+    public static Claims getClaimFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(JwtConstants.SECRET)
+                .parseClaimsJws(token)
+                .getBody();
+    }
 //
 //    /**
 //     * 解析token是否正确,不正确会报异常<br>
@@ -79,20 +79,20 @@ public class JwtTokenUtil {
 //        Jwts.parser().setSigningKey(JwtConstants.SECRET).parseClaimsJws(token).getBody();
 //    }
 //
-//    /**
-//     * <pre>
-//     *  验证token是否失效
-//     *  true:过期   false:没过期
-//     * </pre>
-//     */
-//    public static Boolean isTokenExpired(String token) {
-//        try {
-//            final Date expiration = getExpirationDateFromToken(token);
-//            return expiration.before(new Date());
-//        } catch (ExpiredJwtException expiredJwtException) {
-//            return true;
-//        }
-//    }
+    /**
+     * <pre>
+     *  验证token是否失效
+     *  true:过期   false:没过期
+     * </pre>
+     */
+    public static Boolean isTokenExpired(String token) {
+        try {
+            final Date expiration = getExpirationDateFromToken(token);
+            return expiration.before(new Date());
+        } catch (ExpiredJwtException expiredJwtException) {
+            return true;
+        }
+    }
 
     /**
      * 生成token(通过用户名和签名时候用的随机数)

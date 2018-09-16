@@ -1,5 +1,7 @@
 package com.musikouyi.jzframe.controller;
 
+import com.musikouyi.jzframe.common.constant.ControllerMapping;
+import com.musikouyi.jzframe.common.constant.Global;
 import com.musikouyi.jzframe.domain.entity.TestEntity;
 import com.musikouyi.jzframe.service.TestService;
 import org.springframework.web.bind.annotation.*;
@@ -8,8 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/miniprogram")
+@RequestMapping(ControllerMapping.TEST)
 public class TestController {
+
+    @GetMapping("/testToken")
+    public String testToken(){
+        System.out.println("testToken");
+        return "sdf";
+    }
 
     @GetMapping("/coming_soon")
     public TestEntity datas() {

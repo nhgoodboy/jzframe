@@ -8,12 +8,14 @@ package com.musikouyi.jzframe.common.constant;
  */
 public interface JwtConstants {
 
+    String X_TOKEN = "X-TOKEN";
+
     String AUTH_HEADER = "Authorization";
 
-    String SECRET = "defaultSecret";
+    String SECRET = "defaultSecret";    //密钥
 
     Long EXPIRATION = 604800L;
 
-    String AUTH_PATH = "/gunsApi/auth";
+    String AUTH_PATH = ControllerMapping.DO_LOGIN;
 
 }

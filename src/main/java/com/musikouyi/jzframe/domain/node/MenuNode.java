@@ -1,4 +1,4 @@
-package com.musikouyi.jzframe.node;
+package com.musikouyi.jzframe.domain.node;
 
 
 import com.musikouyi.jzframe.common.constant.IsMenu;

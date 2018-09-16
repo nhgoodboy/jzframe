@@ -1,4 +1,4 @@
-package com.musikouyi.jzframe.node;
+package com.musikouyi.jzframe.domain.node;
 
 /**
  * jquery ztree 插件的节点
