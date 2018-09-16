@@ -1,5 +1,12 @@
 package com.musikouyi.jzframe.domain.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
+@AllArgsConstructor
 public enum ResultEnum {
 
     /**
@@ -14,25 +21,4 @@ public enum ResultEnum {
 
     private Integer code;
     private String msg;
-
-    ResultEnum(Integer code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    @Override
-    public String toString() {
-        return "ResultEnum{" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
-                '}';
-    }
 }

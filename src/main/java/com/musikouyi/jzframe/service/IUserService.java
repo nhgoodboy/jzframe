@@ -37,10 +37,15 @@ public interface IUserService {
     /**
      * 通过账号获取用户
      */
-    User getByAccount(@Param("account") String account);
+    User getByAccount(String account);
 
     /**
      * 通过userid获取用户信息
      */
-    Result findById(@Param("userId") Integer userId);
+    Result findById(Integer userId);
+
+    /**
+     * 获取用户列表
+     */
+    Result findAll();
 }

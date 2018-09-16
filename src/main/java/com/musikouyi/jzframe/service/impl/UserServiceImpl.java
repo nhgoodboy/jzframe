@@ -2,13 +2,16 @@ package com.musikouyi.jzframe.service.impl;
 
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
+import com.musikouyi.jzframe.domain.enums.SexEnum;
+import com.musikouyi.jzframe.domain.enums.UserStatusEnum;
 import com.musikouyi.jzframe.dto.UserInfoRespDto;
+import com.musikouyi.jzframe.dto.UserListRespDto;
 import com.musikouyi.jzframe.repository.UserRepository;
+import com.musikouyi.jzframe.service.IDeptService;
 import com.musikouyi.jzframe.service.IRoleService;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
-import com.musikouyi.jzframe.utils.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,12 +49,32 @@ public class UserServiceImpl implements IUserService {
     public Result findById(Integer userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
         User user = optionalUser.get();
-        Integer[] roleArray = ToolUtil.toIntArray(user.getRoleid());
         List<String> roleNameList = new ArrayList<>();
-        for (int roleId : roleArray) {
-            roleNameList.add(SpringContextHolder.getBean(IRoleService.class).findById(roleId).getTips());
-        }
+        roleNameList.add(SpringContextHolder.getBean(IRoleService.class).findById(user.getRoleid()).getTips());
         UserInfoRespDto userInfoRespDto = new UserInfoRespDto(user.getName(), user.getAvatar(), roleNameList);
         return ResultUtil.success(userInfoRespDto);
+    }
+
+    @Override
+    public Result findAll() {
+        List<User> userList = userRepository.findAll();
+        List<UserListRespDto> userListRespDtoList = new ArrayList<>();
+        for (User user :
+                userList) {
+            System.out.println(user.getCreatetime());
+            UserListRespDto userListRespDto = new UserListRespDto(
+                    user.getAccount(),
+                    user.getName(),
+                    SexEnum.fromCode(user.getSex()),
+                    SpringContextHolder.getBean(IRoleService.class).findById(user.getRoleid()).getName(),
+                    SpringContextHolder.getBean(IDeptService.class).findById(user.getDeptid()).getFullname(),
+                    user.getEmail(),
+                    user.getPhone(),
+                    user.getCreatetime(),
+                    UserStatusEnum.fromCode(user.getStatus())
+            );
+            userListRespDtoList.add(userListRespDto);
+        }
+        return ResultUtil.success(userListRespDtoList);
     }
 }
