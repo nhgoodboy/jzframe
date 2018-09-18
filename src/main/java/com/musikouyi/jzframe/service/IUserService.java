@@ -2,6 +2,7 @@ package com.musikouyi.jzframe.service;
 
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
+import com.musikouyi.jzframe.dto.ListReqDto;
 import org.springframework.data.repository.query.Param;
 
 /**
@@ -47,5 +48,5 @@ public interface IUserService {
     /**
      * 获取用户列表
      */
-    Result findAll();
+    Result findAll(ListReqDto listReqDto);
 }

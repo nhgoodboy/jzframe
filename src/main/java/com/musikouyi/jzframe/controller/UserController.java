@@ -2,13 +2,11 @@ package com.musikouyi.jzframe.controller;
 
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.domain.entity.Result;
+import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Create with IDEA
@@ -25,7 +23,7 @@ public class UserController {
     }
 
     @GetMapping(ControllerMapping.USER_LIST)
-    public Result userList() {
-        return SpringContextHolder.getBean(IUserService.class).findAll();
+    public Result userList(@RequestBody ListReqDto listReqDto) {
+        return SpringContextHolder.getBean(IUserService.class).findAll(listReqDto);
     }
 }

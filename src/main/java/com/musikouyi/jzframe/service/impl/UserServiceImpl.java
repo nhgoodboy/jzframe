@@ -4,6 +4,7 @@ import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.domain.enums.SexEnum;
 import com.musikouyi.jzframe.domain.enums.UserStatusEnum;
+import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.UserInfoRespDto;
 import com.musikouyi.jzframe.dto.UserListRespDto;
 import com.musikouyi.jzframe.repository.UserRepository;
@@ -56,7 +57,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Result findAll() {
+    public Result findAll(ListReqDto listReqDto) {
         List<User> userList = userRepository.findAll();
         List<UserListRespDto> userListRespDtoList = new ArrayList<>();
         for (User user :
