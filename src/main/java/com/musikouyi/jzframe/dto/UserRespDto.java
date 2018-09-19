@@ -14,7 +14,7 @@ import java.util.Date;
  **/
 @Data
 @AllArgsConstructor
-public class UserListRespDto {
+public class UserRespDto {
 
     private String account;
     private String name;

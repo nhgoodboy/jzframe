@@ -5,8 +5,9 @@ import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.domain.enums.SexEnum;
 import com.musikouyi.jzframe.domain.enums.UserStatusEnum;
 import com.musikouyi.jzframe.dto.ListReqDto;
+import com.musikouyi.jzframe.dto.ListRespDto;
 import com.musikouyi.jzframe.dto.UserInfoRespDto;
-import com.musikouyi.jzframe.dto.UserListRespDto;
+import com.musikouyi.jzframe.dto.UserRespDto;
 import com.musikouyi.jzframe.repository.UserRepository;
 import com.musikouyi.jzframe.service.IDeptService;
 import com.musikouyi.jzframe.service.IRoleService;
@@ -14,8 +15,11 @@ import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,12 +62,13 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Result findAll(ListReqDto listReqDto) {
-        List<User> userList = userRepository.findAll();
-        List<UserListRespDto> userListRespDtoList = new ArrayList<>();
+        Page<User> userPage = userRepository.findAll(PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
+        List<User> userList = userPage.getContent();
+        ListRespDto<UserRespDto> listRespDto = new ListRespDto<>();
+        List<UserRespDto> userRespDtoList = new ArrayList<>();
         for (User user :
                 userList) {
-            System.out.println(user.getCreatetime());
-            UserListRespDto userListRespDto = new UserListRespDto(
+            UserRespDto userRespDto = new UserRespDto(
                     user.getAccount(),
                     user.getName(),
                     SexEnum.fromCode(user.getSex()),
@@ -74,8 +79,10 @@ public class UserServiceImpl implements IUserService {
                     user.getCreatetime(),
                     UserStatusEnum.fromCode(user.getStatus())
             );
-            userListRespDtoList.add(userListRespDto);
+            userRespDtoList.add(userRespDto);
         }
-        return ResultUtil.success(userListRespDtoList);
+        listRespDto.setItems(userRespDtoList);
+        listRespDto.setTotal(userPage.getTotalElements());
+        return ResultUtil.success(listRespDto);
     }
 }

@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @GetMapping(ControllerMapping.USER_LIST)
-    public Result userList(@RequestBody ListReqDto listReqDto) {
+    public Result userList(ListReqDto listReqDto) {
         return SpringContextHolder.getBean(IUserService.class).findAll(listReqDto);
     }
 }
