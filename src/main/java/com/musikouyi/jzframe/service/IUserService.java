@@ -52,7 +52,7 @@ public interface IUserService {
     Result findAll(ListReqDto listReqDto);
 
     /**
-     * 删除用户
+     * 删除用户(软删除)
      */
     Result deleteUser(Integer id);
 }

@@ -17,7 +17,7 @@ public enum UserStatusEnum {
 
     USING(1, "启用"),
     FREEZE(2, "冻结"),
-    DELETED(3, "删除");
+    DELETED(3, "已删除");
 
     private Integer code;
     private String msg;
