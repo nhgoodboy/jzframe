@@ -4,6 +4,7 @@ import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -49,4 +50,9 @@ public interface IUserService {
      * 获取用户列表
      */
     Result findAll(ListReqDto listReqDto);
+
+    /**
+     * 删除用户
+     */
+    Result deleteUser(Integer id);
 }

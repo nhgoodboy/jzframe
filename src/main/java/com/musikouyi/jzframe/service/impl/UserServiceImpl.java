@@ -69,6 +69,7 @@ public class UserServiceImpl implements IUserService {
         for (User user :
                 userList) {
             UserRespDto userRespDto = new UserRespDto(
+                    user.getId(),
                     user.getAccount(),
                     user.getName(),
                     SexEnum.fromCode(user.getSex()),
@@ -84,5 +85,12 @@ public class UserServiceImpl implements IUserService {
         listRespDto.setItems(userRespDtoList);
         listRespDto.setTotal(userPage.getTotalElements());
         return ResultUtil.success(listRespDto);
+    }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public Result deleteUser(Integer id) {
+        userRepository.deleteById(id);
+        return ResultUtil.success();
     }
 }

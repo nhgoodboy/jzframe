@@ -17,4 +17,5 @@ public interface ControllerMapping {
     String USER = ADMIN_BASE + "/user";
     String USER_INFO = "/userInfo";
     String USER_LIST = "/userList";
+    String DELETE_USER = "/deleteUser";
 }

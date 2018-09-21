@@ -9,6 +9,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findUserByAccount(String account);
 
+    void deleteUserByAccount(String account);
+
 //    Page<User> findAll(int page, int limit);
 
 }

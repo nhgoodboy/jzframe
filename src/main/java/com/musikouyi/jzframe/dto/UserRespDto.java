@@ -16,6 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class UserRespDto {
 
+    private int id;
     private String account;
     private String name;
     private String sex;
