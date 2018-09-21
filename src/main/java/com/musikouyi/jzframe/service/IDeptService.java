@@ -1,6 +1,7 @@
 package com.musikouyi.jzframe.service;
 
 import com.musikouyi.jzframe.domain.entity.Dept;
+import com.musikouyi.jzframe.domain.entity.Result;
 
 /**
  * Create with IDEA
@@ -10,4 +11,10 @@ import com.musikouyi.jzframe.domain.entity.Dept;
 public interface IDeptService {
 
     Dept findById(Integer deptId);
+
+    /**
+     * 获取部门列表
+     */
+    Result getDeptList();
+
 }

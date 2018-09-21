@@ -1,6 +1,7 @@
 package com.musikouyi.jzframe.service.impl;
 
 import com.musikouyi.jzframe.domain.entity.Dept;
+import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.repository.DeptRepository;
 import com.musikouyi.jzframe.service.IDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,10 @@ public class DeptServiceImpl implements IDeptService {
     public Dept findById(Integer deptId) {
         Optional<Dept> dept = deptRepository.findById(deptId);
         return dept.get();
+    }
+
+    @Override
+    public Result getDeptList() {
+        return null;
     }
 }

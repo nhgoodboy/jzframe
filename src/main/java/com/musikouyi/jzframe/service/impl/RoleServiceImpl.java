@@ -1,5 +1,6 @@
 package com.musikouyi.jzframe.service.impl;
 
+import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.Role;
 import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import com.musikouyi.jzframe.repository.RoleRepository;
@@ -57,5 +58,11 @@ public class RoleServiceImpl implements IRoleService {
     public Role findById(Integer roleId) {
         Optional<Role> roleOptional = roleRepository.findById(roleId);
         return roleOptional.get();
+    }
+
+    @Override
+    public Result getRoleList() {
+//        List<String> roleList = roleRepository.find
+        return null;
     }
 }

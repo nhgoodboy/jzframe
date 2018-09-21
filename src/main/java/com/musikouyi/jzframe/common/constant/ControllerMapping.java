@@ -15,7 +15,11 @@ public interface ControllerMapping {
 
     String TEST = ADMIN_BASE + "/test";
     String USER = ADMIN_BASE + "/user";
+    String ROLE = ADMIN_BASE + "/role";
+    String DEPT = ADMIN_BASE + "/dept";
     String USER_INFO = "/userInfo";
     String USER_LIST = "/userList";
     String DELETE_USER = "/deleteUser";
+    String ROLE_LIST = "/roleList";
+    String DEPT_LIST = "/deptList";
 }
