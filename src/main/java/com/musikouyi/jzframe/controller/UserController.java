@@ -3,6 +3,7 @@ package com.musikouyi.jzframe.controller;
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.dto.ListReqDto;
+import com.musikouyi.jzframe.dto.UserReqDto;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
@@ -31,5 +32,10 @@ public class UserController {
     @PostMapping(ControllerMapping.DELETE_USER)
     public Result deleteUser(Integer id) {
         return SpringContextHolder.getBean(IUserService.class).deleteUser(id);
+    }
+
+    @PostMapping(ControllerMapping.CREATE_USER)
+    public Result createUser(@RequestBody UserReqDto userReqDto) {
+        return SpringContextHolder.getBean(IUserService.class).createUser(userReqDto);
     }
 }

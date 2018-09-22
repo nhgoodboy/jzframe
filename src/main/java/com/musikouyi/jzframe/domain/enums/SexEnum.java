@@ -28,4 +28,13 @@ public enum SexEnum {
         }
         return null;
     }
+
+    public static Integer toCode(String msg) {
+        for (SexEnum sexEnum : SexEnum.values()) {
+            if (sexEnum.msg.equals(msg)) {
+                return sexEnum.code;
+            }
+        }
+        return null;
+    }
 }

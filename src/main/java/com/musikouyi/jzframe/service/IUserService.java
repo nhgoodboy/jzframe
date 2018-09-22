@@ -3,6 +3,7 @@ package com.musikouyi.jzframe.service;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.dto.ListReqDto;
+import com.musikouyi.jzframe.dto.UserReqDto;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,4 +56,9 @@ public interface IUserService {
      * 删除用户(软删除)
      */
     Result deleteUser(Integer id);
+
+    /**
+     * 创建用户
+     */
+    Result createUser(UserReqDto userReqDto);
 }

@@ -4,10 +4,9 @@ import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.domain.enums.SexEnum;
 import com.musikouyi.jzframe.domain.enums.UserStatusEnum;
-import com.musikouyi.jzframe.dto.ListReqDto;
-import com.musikouyi.jzframe.dto.ListRespDto;
-import com.musikouyi.jzframe.dto.UserInfoRespDto;
-import com.musikouyi.jzframe.dto.UserRespDto;
+import com.musikouyi.jzframe.dto.*;
+import com.musikouyi.jzframe.repository.DeptRepository;
+import com.musikouyi.jzframe.repository.RoleRepository;
 import com.musikouyi.jzframe.repository.UserRepository;
 import com.musikouyi.jzframe.service.IDeptService;
 import com.musikouyi.jzframe.service.IRoleService;
@@ -21,14 +20,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {
 
+    private final UserRepository userRepository;
+
+    private final RoleRepository roleRepository;
+
+    private final DeptRepository deptRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, DeptRepository deptRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.deptRepository = deptRepository;
+    }
 
     @Override
     public int setStatus(Integer userId, int status) {
@@ -93,6 +103,24 @@ public class UserServiceImpl implements IUserService {
         Optional<User> userOptional = userRepository.findById(id);
         User user = userOptional.get();
         user.setStatus(UserStatusEnum.DELETED.getCode());
+        userRepository.saveAndFlush(user);
+        return ResultUtil.success();
+    }
+
+    @Override
+    @Transactional
+    public Result createUser(UserReqDto userReqDto) {
+        User user = new User();
+        user.setAccount(userReqDto.getAccount());
+        user.setPhone(userReqDto.getPhone());
+        user.setEmail(userReqDto.getEmail());
+        user.setPassword(userReqDto.getPassword());
+        user.setName(userReqDto.getName());
+        user.setStatus(UserStatusEnum.toCode(userReqDto.getStatus()));
+        user.setSex(SexEnum.toCode(userReqDto.getSex()));
+        user.setCreatetime(new Date());
+        user.setRoleid(roleRepository.findIdByName(userReqDto.getRole()));
+        user.setDeptid(deptRepository.findIdByName(userReqDto.getDept()));
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
     }
