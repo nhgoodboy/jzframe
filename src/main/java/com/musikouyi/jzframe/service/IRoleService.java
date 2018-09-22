@@ -71,5 +71,5 @@ public interface IRoleService {
     /**
      * 获取角色列表
      */
-    Result getRoleList();
+    Result getRoleNameList();
 }

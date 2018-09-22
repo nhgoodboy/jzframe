@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(ControllerMapping.ROLE)
 public class RoleController {
 
-    @GetMapping(ControllerMapping.ROLE_LIST)
+    @GetMapping(ControllerMapping.ROLE_NAME_LIST)
     public Result getRoleList() {
-        return SpringContextHolder.getBean(IRoleService.class).getRoleList();
+        return SpringContextHolder.getBean(IRoleService.class).getRoleNameList();
     }
 }

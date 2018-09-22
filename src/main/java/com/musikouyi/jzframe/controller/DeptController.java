@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(ControllerMapping.DEPT)
 public class DeptController {
 
-    @GetMapping(ControllerMapping.DEPT_LIST)
+    @GetMapping(ControllerMapping.DEPT_NAME_LIST)
     public Result getDeptList() {
-        return SpringContextHolder.getBean(IDeptService.class).getDeptList();
+        return SpringContextHolder.getBean(IDeptService.class).getDeptNameList();
     }
 }

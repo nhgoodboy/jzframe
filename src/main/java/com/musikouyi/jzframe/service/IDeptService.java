@@ -15,6 +15,6 @@ public interface IDeptService {
     /**
      * 获取部门列表
      */
-    Result getDeptList();
+    Result getDeptNameList();
 
 }

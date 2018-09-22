@@ -20,6 +20,6 @@ public interface ControllerMapping {
     String USER_INFO = "/userInfo";
     String USER_LIST = "/userList";
     String DELETE_USER = "/deleteUser";
-    String ROLE_LIST = "/roleList";
-    String DEPT_LIST = "/deptList";
+    String ROLE_NAME_LIST = "/roleNameList";
+    String DEPT_NAME_LIST = "/deptNameList";
 }

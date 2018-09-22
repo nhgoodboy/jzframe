@@ -5,6 +5,7 @@ import com.musikouyi.jzframe.domain.entity.Role;
 import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import com.musikouyi.jzframe.repository.RoleRepository;
 import com.musikouyi.jzframe.service.IRoleService;
+import com.musikouyi.jzframe.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,8 +62,8 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public Result getRoleList() {
-//        List<String> roleList = roleRepository.find
-        return null;
+    public Result getRoleNameList() {
+        List<String> roleNameList = roleRepository.findName();
+        return ResultUtil.success(roleNameList);
     }
 }
