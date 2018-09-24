@@ -46,11 +46,6 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public int changePwd(Integer userId, String pwd) {
-        return 0;
-    }
-
-    @Override
     public int setRoles(Integer userId, String roleIds) {
         return 0;
     }
@@ -121,6 +116,32 @@ public class UserServiceImpl implements IUserService {
         user.setCreatetime(new Date());
         user.setRoleid(roleRepository.findIdByName(userReqDto.getRole()));
         user.setDeptid(deptRepository.findIdByName(userReqDto.getDept()));
+        userRepository.saveAndFlush(user);
+        return ResultUtil.success();
+    }
+
+    @Override
+    @Transactional
+    public Result modifyUser(UserReqDto userReqDto) {
+        Optional<User> userOptional = userRepository.findById(userReqDto.getId());
+        User user = userOptional.get();
+        user.setPhone(userReqDto.getPhone());
+        user.setEmail(userReqDto.getEmail());
+        user.setName(userReqDto.getName());
+        user.setStatus(UserStatusEnum.toCode(userReqDto.getStatus()));
+        user.setSex(SexEnum.toCode(userReqDto.getSex()));
+        user.setRoleid(roleRepository.findIdByName(userReqDto.getRole()));
+        user.setDeptid(deptRepository.findIdByName(userReqDto.getDept()));
+        userRepository.saveAndFlush(user);
+        return ResultUtil.success();
+    }
+
+    @Override
+    @Transactional
+    public Result changePwd(Integer id, String newPassword) {
+        Optional<User> userOption = userRepository.findById(id);
+        User user = userOption.get();
+        user.setPassword(newPassword);
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
     }

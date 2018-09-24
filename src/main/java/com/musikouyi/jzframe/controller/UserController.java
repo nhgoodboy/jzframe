@@ -38,4 +38,15 @@ public class UserController {
     public Result createUser(@RequestBody UserReqDto userReqDto) {
         return SpringContextHolder.getBean(IUserService.class).createUser(userReqDto);
     }
+
+    @PostMapping(ControllerMapping.MODIFY_USER)
+    public Result modifyUser(@RequestBody UserReqDto userReqDto) {
+        return SpringContextHolder.getBean(IUserService.class).modifyUser(userReqDto);
+    }
+
+    @PostMapping(ControllerMapping.CHANGE_PWD)
+    public Result changePwd(Integer id, String newPassword) {
+        System.out.println(id + "...." + newPassword);
+        return SpringContextHolder.getBean(IUserService.class).changePwd(id, newPassword);
+    }
 }

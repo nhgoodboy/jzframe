@@ -23,11 +23,6 @@ public interface IUserService {
     int setStatus(@Param("userId") Integer userId, @Param("status") int status);
 
     /**
-     * 修改密码
-     */
-    int changePwd(@Param("userId") Integer userId, @Param("pwd") String pwd);
-
-    /**
      * 根据条件查询用户列表
      */
 //    List<Map<String, Object>> selectUsers(@Param("dataScope") DataScope dataScope, @Param("name") String name, @Param("beginTime") String beginTime, @Param("endTime") String endTime, @Param("deptid") Integer deptid);
@@ -61,4 +56,14 @@ public interface IUserService {
      * 创建用户
      */
     Result createUser(UserReqDto userReqDto);
+
+    /**
+     * 修改用户
+     */
+    Result modifyUser(UserReqDto userReqDto);
+
+    /**
+     * 更改密码
+     */
+    Result changePwd(Integer id, String newPassword);
 }

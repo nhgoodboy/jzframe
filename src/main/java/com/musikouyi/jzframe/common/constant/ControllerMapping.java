@@ -20,6 +20,8 @@ public interface ControllerMapping {
     String USER_LIST = "/userList";
     String DELETE_USER = "/deleteUser";
     String CREATE_USER = "/createUser";
+    String MODIFY_USER = "/modifyUser";
+    String CHANGE_PWD = "/changePwd";
     //role
     String ROLE = ADMIN_BASE + "/role";
     String ROLE_NAME_LIST = "/roleNameList";

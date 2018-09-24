@@ -14,6 +14,7 @@ import java.util.Date;
 @Data
 public class UserReqDto {
 
+    private Integer id;
     private String account;
     private String name;
     private String sex;
