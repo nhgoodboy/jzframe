@@ -5,7 +5,6 @@ import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.UserReqDto;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -43,7 +42,7 @@ public interface IUserService {
     Result findById(Integer userId);
 
     /**
-     * 获取用户列表
+     * 获取用户列表(排除status为deleted的)
      */
     Result findAll(ListReqDto listReqDto);
 

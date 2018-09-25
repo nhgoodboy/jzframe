@@ -67,7 +67,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Result findAll(ListReqDto listReqDto) {
-        Page<User> userPage = userRepository.findAll(PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
+//        Page<User> userPage = userRepository.findAll(PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
+        Page<User> userPage = userRepository.findByStatusIsNot(UserStatusEnum.DELETED.getCode() ,PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
         List<User> userList = userPage.getContent();
         ListRespDto<UserRespDto> listRespDto = new ListRespDto<>();
         List<UserRespDto> userRespDtoList = new ArrayList<>();
