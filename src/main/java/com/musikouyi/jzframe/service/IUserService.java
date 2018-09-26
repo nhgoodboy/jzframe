@@ -49,17 +49,17 @@ public interface IUserService {
     /**
      * 删除用户(软删除)
      */
-    Result deleteUser(Integer id);
+    Result delete(Integer id);
 
     /**
      * 创建用户
      */
-    Result createUser(UserReqDto userReqDto);
+    Result create(UserReqDto userReqDto);
 
     /**
      * 修改用户
      */
-    Result modifyUser(UserReqDto userReqDto);
+    Result modify(UserReqDto userReqDto);
 
     /**
      * 更改密码

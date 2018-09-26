@@ -4,6 +4,7 @@ import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.Role;
 import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import com.musikouyi.jzframe.dto.ListReqDto;
+import com.musikouyi.jzframe.dto.UserReqDto;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -78,4 +79,9 @@ public interface IRoleService {
      * 获取角色列表
      */
     Result findAll(ListReqDto listReqDto);
+
+    /**
+     * 删除角色
+     */
+    Result delete(Integer id);
 }

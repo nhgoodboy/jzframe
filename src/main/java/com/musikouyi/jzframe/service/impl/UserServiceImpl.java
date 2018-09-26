@@ -94,7 +94,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public Result deleteUser(Integer id) {
+    public Result delete(Integer id) {
         Optional<User> userOptional = userRepository.findById(id);
         User user = userOptional.get();
         user.setStatus(UserStatusEnum.DELETED.getCode());
@@ -104,7 +104,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public Result createUser(UserReqDto userReqDto) {
+    public Result create(UserReqDto userReqDto) {
         User user = new User();
         user.setAccount(userReqDto.getAccount());
         user.setPhone(userReqDto.getPhone());
@@ -122,7 +122,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public Result modifyUser(UserReqDto userReqDto) {
+    public Result modify(UserReqDto userReqDto) {
         Optional<User> userOptional = userRepository.findById(userReqDto.getId());
         User user = userOptional.get();
         user.setPhone(userReqDto.getPhone());

@@ -25,23 +25,23 @@ public class UserController {
     }
 
     @GetMapping(ControllerMapping.LIST)
-    public Result userList(ListReqDto listReqDto) {
+    public Result list(ListReqDto listReqDto) {
         return SpringContextHolder.getBean(IUserService.class).findAll(listReqDto);
     }
 
     @PostMapping(ControllerMapping.DELETE)
-    public Result deleteUser(Integer id) {
-        return SpringContextHolder.getBean(IUserService.class).deleteUser(id);
+    public Result delete(Integer id) {
+        return SpringContextHolder.getBean(IUserService.class).delete(id);
     }
 
     @PostMapping(ControllerMapping.CREATE)
-    public Result createUser(@RequestBody UserReqDto userReqDto) {
-        return SpringContextHolder.getBean(IUserService.class).createUser(userReqDto);
+    public Result create(@RequestBody UserReqDto userReqDto) {
+        return SpringContextHolder.getBean(IUserService.class).create(userReqDto);
     }
 
     @PostMapping(ControllerMapping.MODIFY)
-    public Result modifyUser(@RequestBody UserReqDto userReqDto) {
-        return SpringContextHolder.getBean(IUserService.class).modifyUser(userReqDto);
+    public Result modify(@RequestBody UserReqDto userReqDto) {
+        return SpringContextHolder.getBean(IUserService.class).modify(userReqDto);
     }
 
     @PostMapping(ControllerMapping.CHANGE_PWD)

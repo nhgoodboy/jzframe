@@ -6,6 +6,7 @@ import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.service.IRoleService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,12 @@ public class RoleController {
     }
 
     @GetMapping(ControllerMapping.LIST)
-    public Result roleList(ListReqDto listReqDto) {
+    public Result list(ListReqDto listReqDto) {
         return SpringContextHolder.getBean(IRoleService.class).findAll(listReqDto);
+    }
+
+    @PostMapping(ControllerMapping.DELETE)
+    public Result delete(Integer id) {
+        return SpringContextHolder.getBean(IRoleService.class).delete(id);
     }
 }

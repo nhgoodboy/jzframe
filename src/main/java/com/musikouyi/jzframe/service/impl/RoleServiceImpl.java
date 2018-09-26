@@ -3,11 +3,11 @@ package com.musikouyi.jzframe.service.impl;
 import com.musikouyi.jzframe.common.constant.Global;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.Role;
+import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.ListRespDto;
 import com.musikouyi.jzframe.dto.RoleRespDto;
-import com.musikouyi.jzframe.dto.UserRespDto;
 import com.musikouyi.jzframe.repository.DeptRepository;
 import com.musikouyi.jzframe.repository.RoleRepository;
 import com.musikouyi.jzframe.service.IRoleService;
@@ -16,11 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 
 /**
  * Create with IDEA
@@ -97,5 +99,15 @@ public class RoleServiceImpl implements IRoleService {
         listRespDto.setItems(roleRespDtoList);
         listRespDto.setTotal(rolePage.getTotalElements());
         return ResultUtil.success(listRespDto);
+    }
+
+    @Override
+    @Transactional
+    public Result delete(Integer id) {
+        if(Global.SUPER_ROLE_ID == id){
+            return ResultUtil.error(ResultEnum.FORBIDDEN);
+        }
+        roleRepository.deleteById(id);
+        return ResultUtil.success();
     }
 }
