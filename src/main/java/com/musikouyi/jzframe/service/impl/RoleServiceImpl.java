@@ -7,6 +7,7 @@ import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.ListRespDto;
+import com.musikouyi.jzframe.dto.RoleReqDto;
 import com.musikouyi.jzframe.dto.RoleRespDto;
 import com.musikouyi.jzframe.repository.DeptRepository;
 import com.musikouyi.jzframe.repository.RoleRepository;
@@ -32,12 +33,15 @@ import java.util.Optional;
 @Service
 public class RoleServiceImpl implements IRoleService {
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
+
+    private final DeptRepository deptRepository;
 
     @Autowired
-    private DeptRepository deptRepository;
-
+    public RoleServiceImpl(RoleRepository roleRepository, DeptRepository deptRepository) {
+        this.roleRepository = roleRepository;
+        this.deptRepository = deptRepository;
+    }
 
     @Override
     public void setAuthority(Integer roleId, String ids) {
@@ -108,6 +112,28 @@ public class RoleServiceImpl implements IRoleService {
             return ResultUtil.error(ResultEnum.FORBIDDEN);
         }
         roleRepository.deleteById(id);
+        return ResultUtil.success();
+    }
+
+    @Override
+    @Transactional
+    public Result create(RoleReqDto roleReqDto) {
+        Role role = new Role();
+        role.setName(roleReqDto.getName());
+        role.setPid(roleRepository.findIdByName(roleReqDto.getParent_role()));
+        role.setDeptid(deptRepository.findIdByName(roleReqDto.getDept()));
+        roleRepository.saveAndFlush(role);
+        return ResultUtil.success();
+    }
+
+    @Override
+    @Transactional
+    public Result modify(RoleReqDto roleReqDto) {
+        Role role = roleRepository.findById(roleReqDto.getId()).get();
+        role.setName(roleReqDto.getName());
+        role.setPid(roleRepository.findIdByName(roleReqDto.getParent_role()));
+        role.setDeptid(deptRepository.findIdByName(roleReqDto.getDept()));
+        roleRepository.saveAndFlush(role);
         return ResultUtil.success();
     }
 }
