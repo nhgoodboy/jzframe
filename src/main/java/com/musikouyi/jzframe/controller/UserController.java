@@ -46,7 +46,6 @@ public class UserController {
 
     @PostMapping(ControllerMapping.CHANGE_PWD)
     public Result changePwd(Integer id, String newPassword) {
-        System.out.println(id + "...." + newPassword);
         return SpringContextHolder.getBean(IUserService.class).changePwd(id, newPassword);
     }
 }

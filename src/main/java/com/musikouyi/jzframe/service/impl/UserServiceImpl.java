@@ -1,7 +1,9 @@
 package com.musikouyi.jzframe.service.impl;
 
+import com.musikouyi.jzframe.common.constant.Global;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
+import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.domain.enums.SexEnum;
 import com.musikouyi.jzframe.domain.enums.UserStatusEnum;
 import com.musikouyi.jzframe.dto.*;
@@ -95,6 +97,9 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public Result delete(Integer id) {
+        if(Global.SUPER_USER_ID == id){
+            return ResultUtil.error(ResultEnum.FORBIDDEN);
+        }
         Optional<User> userOptional = userRepository.findById(id);
         User user = userOptional.get();
         user.setStatus(UserStatusEnum.DELETED.getCode());
