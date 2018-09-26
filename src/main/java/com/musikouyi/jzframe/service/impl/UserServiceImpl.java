@@ -72,8 +72,7 @@ public class UserServiceImpl implements IUserService {
         List<User> userList = userPage.getContent();
         ListRespDto<UserRespDto> listRespDto = new ListRespDto<>();
         List<UserRespDto> userRespDtoList = new ArrayList<>();
-        for (User user :
-                userList) {
+        for (User user : userList) {
             UserRespDto userRespDto = new UserRespDto(
                     user.getId(),
                     user.getAccount(),

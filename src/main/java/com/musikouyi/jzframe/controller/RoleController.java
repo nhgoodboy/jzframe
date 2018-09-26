@@ -2,6 +2,7 @@ package com.musikouyi.jzframe.controller;
 
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.domain.entity.Result;
+import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.service.IRoleService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,5 +16,10 @@ public class RoleController {
     @GetMapping(ControllerMapping.ROLE_NAME_LIST)
     public Result getRoleList() {
         return SpringContextHolder.getBean(IRoleService.class).getRoleNameList();
+    }
+
+    @GetMapping(ControllerMapping.LIST)
+    public Result roleList(ListReqDto listReqDto) {
+        return SpringContextHolder.getBean(IRoleService.class).findAll(listReqDto);
     }
 }

@@ -24,22 +24,22 @@ public class UserController {
         return SpringContextHolder.getBean(IUserService.class).findById(Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token)));
     }
 
-    @GetMapping(ControllerMapping.USER_LIST)
+    @GetMapping(ControllerMapping.LIST)
     public Result userList(ListReqDto listReqDto) {
         return SpringContextHolder.getBean(IUserService.class).findAll(listReqDto);
     }
 
-    @PostMapping(ControllerMapping.DELETE_USER)
+    @PostMapping(ControllerMapping.DELETE)
     public Result deleteUser(Integer id) {
         return SpringContextHolder.getBean(IUserService.class).deleteUser(id);
     }
 
-    @PostMapping(ControllerMapping.CREATE_USER)
+    @PostMapping(ControllerMapping.CREATE)
     public Result createUser(@RequestBody UserReqDto userReqDto) {
         return SpringContextHolder.getBean(IUserService.class).createUser(userReqDto);
     }
 
-    @PostMapping(ControllerMapping.MODIFY_USER)
+    @PostMapping(ControllerMapping.MODIFY)
     public Result modifyUser(@RequestBody UserReqDto userReqDto) {
         return SpringContextHolder.getBean(IUserService.class).modifyUser(userReqDto);
     }

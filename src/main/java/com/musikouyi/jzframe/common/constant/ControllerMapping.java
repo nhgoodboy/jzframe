@@ -12,15 +12,16 @@ public interface ControllerMapping {
 
     String DO_LOGIN = "/doLogin";    //登录
     String DO_LOGOUT = "/doLogout";    //登出
+
+    String DELETE = "/delete";
+    String CREATE = "/create";
+    String MODIFY = "/modify";
+    String LIST = "/list";
     //test
     String TEST = ADMIN_BASE + "/test";
     //user
     String USER = ADMIN_BASE + "/user";
     String USER_INFO = "/userInfo";
-    String USER_LIST = "/userList";
-    String DELETE_USER = "/deleteUser";
-    String CREATE_USER = "/createUser";
-    String MODIFY_USER = "/modifyUser";
     String CHANGE_PWD = "/changePwd";
     //role
     String ROLE = ADMIN_BASE + "/role";
