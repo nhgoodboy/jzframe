@@ -3,10 +3,8 @@ package com.musikouyi.jzframe.controller;
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.dto.ListReqDto;
-import com.musikouyi.jzframe.dto.RoleReqDto;
-import com.musikouyi.jzframe.dto.UserReqDto;
+import com.musikouyi.jzframe.dto.RoleDto;
 import com.musikouyi.jzframe.service.IRoleService;
-import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class RoleController {
 
     @GetMapping(ControllerMapping.ROLE_NAME_LIST)
-    public Result getRoleList() {
+    public Result getRoleNameList() {
         return SpringContextHolder.getBean(IRoleService.class).getRoleNameList();
     }
 
@@ -30,12 +28,12 @@ public class RoleController {
     }
 
     @PostMapping(ControllerMapping.CREATE)
-    public Result create(@RequestBody RoleReqDto roleReqDto) {
-        return SpringContextHolder.getBean(IRoleService.class).create(roleReqDto);
+    public Result create(@RequestBody RoleDto roleDto) {
+        return SpringContextHolder.getBean(IRoleService.class).create(roleDto);
     }
 
     @PostMapping(ControllerMapping.MODIFY)
-    public Result modify(@RequestBody RoleReqDto roleReqDto) {
-        return SpringContextHolder.getBean(IRoleService.class).modify(roleReqDto);
+    public Result modify(@RequestBody RoleDto roleDto) {
+        return SpringContextHolder.getBean(IRoleService.class).modify(roleDto);
     }
 }

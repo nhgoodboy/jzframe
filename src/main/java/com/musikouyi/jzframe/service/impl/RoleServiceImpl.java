@@ -7,8 +7,7 @@ import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.ListRespDto;
-import com.musikouyi.jzframe.dto.RoleReqDto;
-import com.musikouyi.jzframe.dto.RoleRespDto;
+import com.musikouyi.jzframe.dto.RoleDto;
 import com.musikouyi.jzframe.repository.DeptRepository;
 import com.musikouyi.jzframe.repository.RoleRepository;
 import com.musikouyi.jzframe.service.IRoleService;
@@ -89,18 +88,18 @@ public class RoleServiceImpl implements IRoleService {
     public Result findAll(ListReqDto listReqDto) {
         Page<Role> rolePage = roleRepository.findAll(PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
         List<Role> roleList = rolePage.getContent();
-        ListRespDto<RoleRespDto> listRespDto = new ListRespDto<>();
-        List<RoleRespDto> roleRespDtoList = new ArrayList<>();
+        ListRespDto<RoleDto> listRespDto = new ListRespDto<>();
+        List<RoleDto> roleDtoList = new ArrayList<>();
         for (Role role : roleList) {
-            RoleRespDto roleRespDto = new RoleRespDto(
+            RoleDto roleRespDto = new RoleDto(
                     role.getId(),
                     role.getName(),
                     role.getPid() == Global.SUPER_ROLE_PARENT ? null : roleRepository.findById(role.getPid()).get().getName(),
                     deptRepository.findById(role.getDeptid()).get().getFullname()
             );
-            roleRespDtoList.add(roleRespDto);
+            roleDtoList.add(roleRespDto);
         }
-        listRespDto.setItems(roleRespDtoList);
+        listRespDto.setItems(roleDtoList);
         listRespDto.setTotal(rolePage.getTotalElements());
         return ResultUtil.success(listRespDto);
     }
@@ -117,22 +116,22 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional
-    public Result create(RoleReqDto roleReqDto) {
+    public Result create(RoleDto roleDto) {
         Role role = new Role();
-        role.setName(roleReqDto.getName());
-        role.setPid(roleRepository.findIdByName(roleReqDto.getParent_role()));
-        role.setDeptid(deptRepository.findIdByName(roleReqDto.getDept()));
+        role.setName(roleDto.getName());
+        role.setPid(roleRepository.findIdByName(roleDto.getParent_role()));
+        role.setDeptid(deptRepository.findIdByName(roleDto.getDept()));
         roleRepository.saveAndFlush(role);
         return ResultUtil.success();
     }
 
     @Override
     @Transactional
-    public Result modify(RoleReqDto roleReqDto) {
-        Role role = roleRepository.findById(roleReqDto.getId()).get();
-        role.setName(roleReqDto.getName());
-        role.setPid(roleRepository.findIdByName(roleReqDto.getParent_role()));
-        role.setDeptid(deptRepository.findIdByName(roleReqDto.getDept()));
+    public Result modify(RoleDto roleDto) {
+        Role role = roleRepository.findById(roleDto.getId()).get();
+        role.setName(roleDto.getName());
+        role.setPid(roleRepository.findIdByName(roleDto.getParent_role()));
+        role.setDeptid(deptRepository.findIdByName(roleDto.getDept()));
         roleRepository.saveAndFlush(role);
         return ResultUtil.success();
     }

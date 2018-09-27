@@ -1,9 +1,13 @@
 package com.musikouyi.jzframe.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class RoleReqDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class RoleDto {
 
     private Integer id;
     private String name;
