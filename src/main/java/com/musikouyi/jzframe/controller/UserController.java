@@ -3,6 +3,7 @@ package com.musikouyi.jzframe.controller;
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.dto.ListReqDto;
+import com.musikouyi.jzframe.dto.UserInfoReqDto;
 import com.musikouyi.jzframe.dto.UserReqDto;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
@@ -21,7 +22,7 @@ public class UserController {
 
     @GetMapping(ControllerMapping.USER_INFO)
     public Result userInfo(@RequestParam("token") String token) {
-        return SpringContextHolder.getBean(IUserService.class).findById(Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token)));
+        return SpringContextHolder.getBean(IUserService.class).userInfo(Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token)));
     }
 
     @GetMapping(ControllerMapping.LIST)
@@ -47,5 +48,11 @@ public class UserController {
     @PostMapping(ControllerMapping.CHANGE_PWD)
     public Result changePwd(Integer id, String newPassword) {
         return SpringContextHolder.getBean(IUserService.class).changePwd(id, newPassword);
+    }
+
+    @PostMapping(ControllerMapping.EDIT_USER_INFO)
+    public Result editUserInfo(@RequestBody UserInfoReqDto userInfoReqDto) {
+        System.out.println(userInfoReqDto.toString());
+        return SpringContextHolder.getBean(IUserService.class).editUserInfo(userInfoReqDto);
     }
 }

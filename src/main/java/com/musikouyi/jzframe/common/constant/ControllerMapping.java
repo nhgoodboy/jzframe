@@ -23,6 +23,7 @@ public interface ControllerMapping {
     String USER = ADMIN_BASE + "/user";
     String USER_INFO = "/userInfo";
     String CHANGE_PWD = "/changePwd";
+    String EDIT_USER_INFO = "/editUserInfo";
     //role
     String ROLE = ADMIN_BASE + "/role";
     String ROLE_NAME_LIST = "/roleNameList";

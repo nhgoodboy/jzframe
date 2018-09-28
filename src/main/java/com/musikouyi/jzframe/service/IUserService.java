@@ -3,6 +3,7 @@ package com.musikouyi.jzframe.service;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.dto.ListReqDto;
+import com.musikouyi.jzframe.dto.UserInfoReqDto;
 import com.musikouyi.jzframe.dto.UserReqDto;
 import org.springframework.data.repository.query.Param;
 
@@ -39,7 +40,7 @@ public interface IUserService {
     /**
      * 通过userid获取用户信息
      */
-    Result findById(Integer userId);
+    Result userInfo(Integer userId);
 
     /**
      * 获取用户列表(排除status为deleted的)
@@ -65,4 +66,9 @@ public interface IUserService {
      * 更改密码
      */
     Result changePwd(Integer id, String newPassword);
+
+    /**
+     * 修改用户信息
+     */
+    Result editUserInfo(UserInfoReqDto userInfoReqDto);
 }

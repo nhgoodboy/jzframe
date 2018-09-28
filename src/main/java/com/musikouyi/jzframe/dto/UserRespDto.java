@@ -24,7 +24,7 @@ public class UserRespDto {
     private String dept;
     private String email;
     private String phone;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")    //Date类型转String
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")    //Date类型转String
     private Date createtime;
     private String status;
 

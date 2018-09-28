@@ -13,6 +13,7 @@ import com.musikouyi.jzframe.repository.UserRepository;
 import com.musikouyi.jzframe.service.IDeptService;
 import com.musikouyi.jzframe.service.IRoleService;
 import com.musikouyi.jzframe.service.IUserService;
+import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,12 +59,22 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Result findById(Integer userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        User user = optionalUser.get();
+    public Result userInfo(Integer userId) {
+        User user = userRepository.findById(userId).get();
         List<String> roleNameList = new ArrayList<>();
-        roleNameList.add(SpringContextHolder.getBean(IRoleService.class).findById(user.getRoleid()).getTips());
-        UserInfoRespDto userInfoRespDto = new UserInfoRespDto(user.getName(), user.getAvatar(), roleNameList);
+        roleNameList.add(roleRepository.findById(user.getRoleid()).get().getTips());
+        UserInfoRespDto userInfoRespDto = new UserInfoRespDto();
+        userInfoRespDto.setAvatar(user.getAvatar());
+        userInfoRespDto.setAccount(user.getAccount());
+        userInfoRespDto.setName(user.getName());
+        userInfoRespDto.setSex(SexEnum.fromCode(user.getSex()));
+        userInfoRespDto.setRoles(roleNameList);
+        userInfoRespDto.setRole(roleRepository.findById(user.getRoleid()).get().getName());
+        userInfoRespDto.setDept(deptRepository.findById(user.getDeptid()).get().getFullname());
+        userInfoRespDto.setEmail(user.getEmail());
+        userInfoRespDto.setPhone(user.getPhone());
+        userInfoRespDto.setBirthday(user.getBirthday());
+        userInfoRespDto.setCreatetime(user.getCreatetime());
         return ResultUtil.success(userInfoRespDto);
     }
 
@@ -147,6 +158,19 @@ public class UserServiceImpl implements IUserService {
         Optional<User> userOption = userRepository.findById(id);
         User user = userOption.get();
         user.setPassword(newPassword);
+        userRepository.saveAndFlush(user);
+        return ResultUtil.success();
+    }
+
+    @Override
+    @Transactional
+    public Result editUserInfo(UserInfoReqDto userInfoReqDto) {
+        User user = userRepository.findById(Integer.valueOf(JwtTokenUtil.getUserIdFromToken(userInfoReqDto.getToken()))).get();
+        user.setName(userInfoReqDto.getName());
+        user.setSex(SexEnum.toCode(userInfoReqDto.getSex()));
+        user.setEmail(userInfoReqDto.getEmail());
+        user.setPhone(userInfoReqDto.getPhone());
+        user.setBirthday(userInfoReqDto.getBirthday());
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
     }
