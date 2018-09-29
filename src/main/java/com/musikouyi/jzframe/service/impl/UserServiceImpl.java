@@ -10,12 +10,9 @@ import com.musikouyi.jzframe.dto.*;
 import com.musikouyi.jzframe.repository.DeptRepository;
 import com.musikouyi.jzframe.repository.RoleRepository;
 import com.musikouyi.jzframe.repository.UserRepository;
-import com.musikouyi.jzframe.service.IDeptService;
-import com.musikouyi.jzframe.service.IRoleService;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
-import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,16 +38,6 @@ public class UserServiceImpl implements IUserService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.deptRepository = deptRepository;
-    }
-
-    @Override
-    public int setStatus(Integer userId, int status) {
-        return 0;
-    }
-
-    @Override
-    public int setRoles(Integer userId, String roleIds) {
-        return 0;
     }
 
     @Override
@@ -80,7 +67,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Result findAll(ListReqDto listReqDto) {
-//        Page<User> userPage = userRepository.findAll(PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
         Page<User> userPage = userRepository.findByStatusIsNot(UserStatusEnum.DELETED.getCode() ,PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
         List<User> userList = userPage.getContent();
         ListRespDto<UserRespDto> listRespDto = new ListRespDto<>();
@@ -91,8 +77,8 @@ public class UserServiceImpl implements IUserService {
                     user.getAccount(),
                     user.getName(),
                     SexEnum.fromCode(user.getSex()),
-                    SpringContextHolder.getBean(IRoleService.class).findById(user.getRoleid()).getName(),
-                    SpringContextHolder.getBean(IDeptService.class).findById(user.getDeptid()).getFullname(),
+                    roleRepository.findById(user.getRoleid()).get().getName(),
+                    deptRepository.findById(user.getDeptid()).get().getFullname(),
                     user.getEmail(),
                     user.getPhone(),
                     user.getCreatetime(),
@@ -155,8 +141,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public Result changePwd(Integer id, String newPassword) {
-        Optional<User> userOption = userRepository.findById(id);
-        User user = userOption.get();
+        User user = userRepository.findById(id).get();
         user.setPassword(newPassword);
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
