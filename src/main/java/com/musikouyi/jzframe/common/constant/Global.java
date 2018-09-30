@@ -16,7 +16,8 @@ public interface Global {
     int SUPER_DEPT_PARENT = 0;   // 总部门的父部门的id
 
     //目录
-    String TEMP_DIR = "temp";
     String CLASSPATH = "classpath:";
-    String IMAGES_DIR = "/static/images/";
+    String TEMP_DIR = File.separator + "static" + File.separator + "temp" + File.separator;
+    String TEMP_PATH = "static/temp/";
+    String UPLOAD_DIR = File.separator + "static" + File.separator + "upload" + File.separator;
 }
