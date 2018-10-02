@@ -65,7 +65,7 @@ public class DeptServiceImpl implements IDeptService {
     @Override
     @Transactional
     public Result delete(Integer id) {
-        if(Global.SUPER_DEPT_ID == id){
+        if (Global.SUPER_DEPT_ID == id) {
             return ResultUtil.error(ResultEnum.FORBIDDEN);
         }
         deptRepository.deleteById(id);

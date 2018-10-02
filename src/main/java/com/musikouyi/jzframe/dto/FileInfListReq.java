@@ -5,15 +5,15 @@ import lombok.Setter;
 
 /**
  * 系统文件列表请求条件
- * @author Jim
  *
+ * @author Jim
  */
 @Getter
 @Setter
 public class FileInfListReq {
-	private String businessTypeCode;
-	private String ifFailUse;
-	private String fileNm;
-	private Integer businessObjectId;
+    private String businessTypeCode;
+    private String ifFailUse;
+    private String fileNm;
+    private Integer businessObjectId;
 
 }

@@ -67,7 +67,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Result findAll(ListReqDto listReqDto) {
-        Page<User> userPage = userRepository.findByStatusIsNot(UserStatusEnum.DELETED.getCode() ,PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
+        Page<User> userPage = userRepository.findByStatusIsNot(UserStatusEnum.DELETED.getCode(), PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
         List<User> userList = userPage.getContent();
         ListRespDto<UserRespDto> listRespDto = new ListRespDto<>();
         List<UserRespDto> userRespDtoList = new ArrayList<>();
@@ -94,7 +94,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public Result delete(Integer id) {
-        if(Global.SUPER_USER_ID == id){
+        if (Global.SUPER_USER_ID == id) {
             return ResultUtil.error(ResultEnum.FORBIDDEN);
         }
         Optional<User> userOptional = userRepository.findById(id);

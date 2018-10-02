@@ -13,8 +13,8 @@ public class ToolUtil {
      * @param split 被转换的值
      * @return 结果
      */
-    public static Integer[] toIntArray(String str) {
-        return toIntArray(",", str);
+    public static Integer[] toIntArray(String split) {
+        return toIntArray(",", split);
     }
 
     /**
@@ -26,7 +26,7 @@ public class ToolUtil {
      */
     public static Integer[] toIntArray(String split, String str) {
         if (StrKit.isEmpty(str)) {
-            return new Integer[] {};
+            return new Integer[]{};
         }
         String[] arr = str.split(split);
         final Integer[] ints = new Integer[arr.length];
@@ -42,7 +42,7 @@ public class ToolUtil {
      * 如果给定的值为空，或者转换失败，返回默认值<br>
      * 转换失败不会报错
      *
-     * @param value 被转换的值
+     * @param value        被转换的值
      * @param defaultValue 转换错误时的默认值
      * @return 结果
      */
@@ -72,7 +72,7 @@ public class ToolUtil {
      * 如果给定的值为null，或者转换失败，返回默认值<br>
      * 转换失败不会报错
      *
-     * @param value 被转换的值
+     * @param value        被转换的值
      * @param defaultValue 转换错误时的默认值
      * @return 结果
      */

@@ -58,9 +58,10 @@ public enum BoolCodeEnum {
     }
 
     public static String toCode(boolean value) {
-        if (value) {
-            return YES.getMsg();
-        }
-        return NO.getMsg();
+        return value ? YES.getMsg() : NO.getMsg();
+    }
+
+    public static BoolCodeEnum fromValue(boolean value) {
+        return value ? YES : NO;
     }
 }

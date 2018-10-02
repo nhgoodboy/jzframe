@@ -7,7 +7,6 @@ import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,19 +29,19 @@ public class RestApiInteceptor extends HandlerInterceptorAdapter {
             return true;
         }
 //        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        System.out.println("rest api鉴权拦截");
+        logger.info("rest api鉴权拦截");
         return check(request, response);
     }
 
     private boolean check(HttpServletRequest request, HttpServletResponse response) {
         final String requestMethod = request.getMethod();
-        if("OPTIONS".equals(requestMethod)){   //
+        if ("OPTIONS".equals(requestMethod)) {
             return true;
         }
-        final String requestHeader = request.getHeader(JwtConstants.X_TOKEN);
+        final String requestHeader = request.getHeader(JwtConstants.AUTH_HEADER);
         String authToken;
-        if (requestHeader != null) {
-            authToken = requestHeader;
+        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
+            authToken = requestHeader.substring(7);
 
             //验证token是否过期,包含了验证jwt是否正确
             try {

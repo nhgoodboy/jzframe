@@ -7,7 +7,6 @@ import com.musikouyi.jzframe.dto.UserInfoReqDto;
 import com.musikouyi.jzframe.dto.UserReqDto;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
-import com.musikouyi.jzframe.utils.ResultUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.web.bind.annotation.*;
 

@@ -107,7 +107,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     @Transactional
     public Result delete(Integer id) {
-        if(Global.SUPER_ROLE_ID == id){
+        if (Global.SUPER_ROLE_ID == id) {
             return ResultUtil.error(ResultEnum.FORBIDDEN);
         }
         roleRepository.deleteById(id);

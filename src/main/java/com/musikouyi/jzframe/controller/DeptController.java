@@ -2,8 +2,8 @@ package com.musikouyi.jzframe.controller;
 
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.domain.entity.Result;
-import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.DeptDto;
+import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.service.IDeptService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.web.bind.annotation.*;

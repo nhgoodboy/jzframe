@@ -1,7 +1,5 @@
 package com.musikouyi.jzframe.config;
 
-import com.musikouyi.jzframe.common.constant.ControllerMapping;
-import com.musikouyi.jzframe.common.intercept.RestApiInteceptor;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +34,10 @@ public class SpringWebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:9528")
+                .allowedMethods("*")
+                .allowCredentials(false).maxAge(3600);
     }
 
     /**

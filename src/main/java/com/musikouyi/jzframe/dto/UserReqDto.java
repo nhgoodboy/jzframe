@@ -1,9 +1,6 @@
 package com.musikouyi.jzframe.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-
-import java.util.Date;
 
 /**
  * Create with IDEA

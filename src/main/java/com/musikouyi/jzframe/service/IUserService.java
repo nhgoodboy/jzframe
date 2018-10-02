@@ -5,7 +5,6 @@ import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.UserInfoReqDto;
 import com.musikouyi.jzframe.dto.UserReqDto;
-import org.springframework.data.repository.query.Param;
 
 /**
  * <p>

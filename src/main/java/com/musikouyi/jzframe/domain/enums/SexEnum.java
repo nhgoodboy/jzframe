@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public enum SexEnum{
+public enum SexEnum {
 
     MALE(1, "男"),
     FEMALE(2, "女");
@@ -22,12 +22,13 @@ public enum SexEnum{
 
     /**
      * from code to msg
+     *
      * @param code
      * @return
      */
-    public static String fromCode(Integer code){
-        for (SexEnum sexEnum: SexEnum.values()) {
-            if(sexEnum.code.equals(code)){
+    public static String fromCode(Integer code) {
+        for (SexEnum sexEnum : SexEnum.values()) {
+            if (sexEnum.code.equals(code)) {
                 return sexEnum.msg;
             }
         }
@@ -36,6 +37,7 @@ public enum SexEnum{
 
     /**
      * from msg to code
+     *
      * @param msg
      * @return
      */

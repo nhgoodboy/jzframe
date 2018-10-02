@@ -2,10 +2,8 @@ package com.musikouyi.jzframe.common.filter;
 
 import com.musikouyi.jzframe.utils.WebContextHolder;
 import com.musikouyi.jzframe.utils.WebSessionContext;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,6 +24,7 @@ public class WebContextFilter implements Filter {
         WebContextHolder.setSessionContextStore(new WebSessionContext((HttpServletRequest) request, (HttpServletResponse) response));
         chain.doFilter(request, response);
     }
+
     public void destroy() {
         System.out.println("WebContextFilter.destroy");
     }

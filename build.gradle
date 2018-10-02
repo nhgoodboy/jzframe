@@ -41,5 +41,12 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.2'
     // https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring
     compile group: 'org.apache.shiro', name: 'shiro-spring', version: '1.4.0'
+    // https://mvnrepository.com/artifact/com.lmax/disruptor
+    compile group: 'com.lmax', name: 'disruptor', version: '3.4.2'
+    //内存队列见http://lmax-exchange.github.com/disruptor多线程创建和消费队列
+    // https://mvnrepository.com/artifact/net.coobird/thumbnailator
+    compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
 
 }
