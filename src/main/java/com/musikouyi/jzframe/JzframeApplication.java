@@ -1,18 +1,17 @@
 package com.musikouyi.jzframe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@Slf4j
 @SpringBootApplication
 //@ServletComponentScan
 public class JzframeApplication {
 
-    private static final Logger logger = LoggerFactory.getLogger(JzframeApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(JzframeApplication.class, args);
-        logger.info("JzframeApplication启动成功");
+        log.info("JzframeApplication启动成功");
     }
 }

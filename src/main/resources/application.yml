@@ -9,7 +9,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource   #阿里巴巴Driud连接池
   jpa:
     hibernate:
-      ddl-auto: none   #建表方式
+      ddl-auto: update   #建表方式
     show-sql: true   #显示sql语句
   resources:
     static-locations: classpath:/static   #用于描述静态资源的存放位置

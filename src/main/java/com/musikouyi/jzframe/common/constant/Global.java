@@ -18,9 +18,9 @@ public interface Global {
     //目录
     String CLASSPATH = "classpath:";
     String TEMP_DIR = "temp";
+    String STATIC_DIR = "static";
     String SMALL_PICT_DIR = "smallpict";
-    String TEMP_PATH = "static/temp/";
-    String UPLOAD_DIR = File.separator + "static" + File.separator + "upload" + File.separator;
+    String UPLOAD_DIR = "upload";
 
     //4个entity需要自动保存到文件系统的变量命名后缀
     String PICT_ID_FIELD_SUFFIX = "PictId";

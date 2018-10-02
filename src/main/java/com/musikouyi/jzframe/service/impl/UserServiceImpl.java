@@ -10,19 +10,18 @@ import com.musikouyi.jzframe.dto.*;
 import com.musikouyi.jzframe.repository.DeptRepository;
 import com.musikouyi.jzframe.repository.RoleRepository;
 import com.musikouyi.jzframe.repository.UserRepository;
+import com.musikouyi.jzframe.service.IFileInfService;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
+import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -158,5 +157,17 @@ public class UserServiceImpl implements IUserService {
         user.setBirthday(userInfoReqDto.getBirthday());
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
+    }
+
+    @Override
+    @Transactional
+    public Result changeAvatar(Integer userHeadId,Integer userId) {
+        User user = userRepository.findById(userId).get();
+        user.setUserHeadPictId(userHeadId);
+        userRepository.save(user);
+        Map map = SpringContextHolder.getBean(IFileInfService.class).syncBusinessObject(user.getId(), user, null, User.class);
+        System.out.println(map);
+        userRepository.saveAndFlush(user);
+        return null;
     }
 }

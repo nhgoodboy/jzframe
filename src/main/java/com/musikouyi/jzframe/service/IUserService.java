@@ -55,4 +55,11 @@ public interface IUserService {
      * 修改用户信息
      */
     Result editUserInfo(UserInfoReqDto userInfoReqDto);
+
+    /**
+     * 修改用户头像
+     * @param userHeadId
+     * @return
+     */
+    Result changeAvatar(Integer userHeadId, Integer userId);
 }

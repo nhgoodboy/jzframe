@@ -20,6 +20,4 @@ public class FileInfController {
     public Result upload(@RequestParam("file") MultipartFile file) throws IOException {
         return SpringContextHolder.getBean(IFileInfService.class).saveTempFile(file.getOriginalFilename(), file.getInputStream());
     }
-
-
 }

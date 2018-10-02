@@ -40,10 +40,10 @@ public class FileInf implements Serializable {
     @Column(name = "FILE_NM", nullable = false, length = 60)
     private String fileNm;
 
-    @Column(name = "FILE_TYPE_NM", nullable = true, length = 4)
+    @Column(name = "FILE_TYPE_NM", length = 4)
     private String fileTypeNm;
 
-    @Column(name = "FILE_SIZE_KB", nullable = true, length = 10)
+    @Column(name = "FILE_SIZE_KB", length = 10)
     private Integer fileSizeKb;
 
     @Temporal(TemporalType.TIMESTAMP)

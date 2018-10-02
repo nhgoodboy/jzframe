@@ -2,15 +2,17 @@ package com.musikouyi.jzframe.common.filter;
 
 import com.musikouyi.jzframe.utils.WebContextHolder;
 import com.musikouyi.jzframe.utils.WebSessionContext;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-//@Component
-//@WebFilter(filterName = "webContextFilter", urlPatterns = "/")
+@Component
+@WebFilter(filterName = "webContextFilter", urlPatterns = "/")
 public class WebContextFilter implements Filter {
 
     public void init(FilterConfig filterConfig) {

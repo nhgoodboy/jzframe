@@ -29,6 +29,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -74,7 +75,8 @@ public class FileInfServiceImpl implements IFileInfService {
             String fileTypeNm = FilenameUtils.getExtension(fileName);
             String fileUUID = UUID.randomUUID().toString();
             String filePath = new StringBuilder(Global.TEMP_DIR).append(File.separator).append(fileUUID).append(".").append(fileTypeNm).toString();
-            StringBuilder outputFilePath = new StringBuilder(WebContextHolder.getWarPath()).append(File.separator).append(filePath);
+            StringBuilder outputFilePath = new StringBuilder(
+                    ResourceUtils.getURL(Global.CLASSPATH).getPath()).append(File.separator).append(Global.STATIC_DIR).append(File.separator).append(filePath);
             fileOutputStream = new FileOutputStream(outputFilePath.toString());
             IOUtils.copy(fileStream, fileOutputStream);
             FileInfDto fileInfDto = new FileInfDto();
@@ -83,7 +85,7 @@ public class FileInfServiceImpl implements IFileInfService {
             fileInfDto.setFileTypeNm(fileTypeNm);
 
             //TODO 下面语句可以添加CDN或流量地址转换
-            fileInfDto.setFileUrl(new StringBuilder(WebContextHolder.getContextPath()).append("/").append(Global.TEMP_DIR).append("/").append(fileUUID).append(".").append(fileTypeNm).toString());
+            fileInfDto.setFileUrl(new StringBuilder(ResourceUtils.getURL(Global.CLASSPATH).getPath()).append(File.separator).append(Global.STATIC_DIR).append("/").append(Global.TEMP_DIR).append("/").append(fileUUID).append(".").append(fileTypeNm).toString());
             synchronized (this) {
                 fileInfDto.setFileInfId(-(((int) (System.currentTimeMillis() & 0xffffffL) << 7) + seed)); //保证在一个会话里时间ID不一样，为负数的是临时ID
                 seed = (seed + 1) & 0xaf;

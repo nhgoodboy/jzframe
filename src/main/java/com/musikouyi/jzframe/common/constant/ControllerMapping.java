@@ -33,4 +33,5 @@ public interface ControllerMapping {
     //文件管理
     String ADMIN_FILE_INF_BASE = ADMIN_BASE + "/fileInf"; //文件管理
     String UPLOAD = "/upload"; //文件上传
+    String CHANGE_AVATAR = "/changeAvatar";
 }

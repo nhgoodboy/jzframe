@@ -13,21 +13,6 @@ import javax.servlet.MultipartConfigElement;
 public class SpringWebMvcConfig implements WebMvcConfigurer {
 
     /**
-     * 在配置文件中配置的文件保存路径
-     */
-//    @Value("${img.location}")
-//    private String location;
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        //文件最大KB,MB
-        factory.setMaxFileSize("2MB");
-        //设置总上传数据总大小
-        factory.setMaxRequestSize("10MB");
-        return factory.createMultipartConfig();
-    }
-
-    /**
      * 解决跨域访问
      *
      * @param registry

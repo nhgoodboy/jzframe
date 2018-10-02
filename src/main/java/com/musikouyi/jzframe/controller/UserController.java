@@ -5,10 +5,13 @@ import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.UserInfoReqDto;
 import com.musikouyi.jzframe.dto.UserReqDto;
+import com.musikouyi.jzframe.service.IFileInfService;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Create with IDEA
@@ -20,8 +23,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @GetMapping(ControllerMapping.USER_INFO)
-    public Result userInfo(@RequestParam("token") String token) {
-        return SpringContextHolder.getBean(IUserService.class).userInfo(Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token)));
+    public Result userInfo(@RequestHeader("Authorization") String token) {
+        return SpringContextHolder.getBean(IUserService.class).userInfo(
+                Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token.substring(7))));
     }
 
     @GetMapping(ControllerMapping.LIST)
@@ -53,5 +57,11 @@ public class UserController {
     public Result editUserInfo(@RequestBody UserInfoReqDto userInfoReqDto) {
         System.out.println(userInfoReqDto.toString());
         return SpringContextHolder.getBean(IUserService.class).editUserInfo(userInfoReqDto);
+    }
+
+    @PostMapping(ControllerMapping.CHANGE_AVATAR)
+    public Result changeAvatar(Integer userHeadId, @RequestHeader("Authorization") String token) {
+        return SpringContextHolder.getBean(IUserService.class).changeAvatar(userHeadId,
+                Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token.substring(7))));
     }
 }
