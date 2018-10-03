@@ -22,7 +22,6 @@ public class WebContextHolder {
      */
     public static void setWarPath(String warPath) {
         WebContextHolder.warPath = jettyToTomcatPathConvert(warPath);
-        System.out.println(warPath);
     }
 
     private static ThreadLocal<ISessionContext> sessionContextStore = new ThreadLocal<>();

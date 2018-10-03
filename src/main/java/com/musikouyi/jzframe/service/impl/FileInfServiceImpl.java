@@ -15,7 +15,10 @@ import com.musikouyi.jzframe.repository.FileInfRepository;
 import com.musikouyi.jzframe.repository.SmallPictRepository;
 import com.musikouyi.jzframe.repository.SmallPictSetupRepository;
 import com.musikouyi.jzframe.service.IFileInfService;
-import com.musikouyi.jzframe.utils.*;
+import com.musikouyi.jzframe.utils.FileUrlHelper;
+import com.musikouyi.jzframe.utils.ResultUtil;
+import com.musikouyi.jzframe.utils.SmallPictUtil;
+import com.musikouyi.jzframe.utils.WebContextHolder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.commons.collections4.CollectionUtils;
@@ -73,8 +76,7 @@ public class FileInfServiceImpl implements IFileInfService {
             String fileTypeNm = FilenameUtils.getExtension(fileName);
             String fileUUID = UUID.randomUUID().toString();
             String filePath = Global.TEMP_DIR + File.separator + fileUUID + "." + fileTypeNm;
-            String outputFilePath = ResourceUtils.getURL(Global.CLASSPATH).getPath() +
-                    File.separator + Global.STATIC_DIR + File.separator + filePath;
+            String outputFilePath = ResourceUtils.getURL(Global.CLASSPATH_STATIC_DIR).getPath() + File.separator + filePath;
             fileOutputStream = new FileOutputStream(outputFilePath);
             IOUtils.copy(fileStream, fileOutputStream);
             FileInfDto fileInfDto = new FileInfDto();
@@ -151,9 +153,7 @@ public class FileInfServiceImpl implements IFileInfService {
         Collection<Integer> deleteList = CollectionUtils.subtract(savedFileInfIdList, updateFileInfIdList);
         for (Integer deleteId : deleteList) {
             FileInf fileInf = fileInfRepository.getOne(deleteId);
-            FileUtils.deleteQuietly(new File(ResourceUtils.getURL(Global.CLASSPATH).getPath()
-                    + File.separator + Global.STATIC_DIR + File.separator + fileInf.getFilePath()));
-
+            FileUtils.deleteQuietly(new File(ResourceUtils.getURL(Global.CLASSPATH_STATIC_DIR).getPath() + File.separator + fileInf.getFilePath()));
             fileInfRepository.delete(fileInf);
 
             //删除所有小图
@@ -166,9 +166,7 @@ public class FileInfServiceImpl implements IFileInfService {
                         .append(".")
                         .append(SmallPictUtil.DEFAULT_OUTPUT_FORMAT)
                         .toString();
-                FileUtils.deleteQuietly(new File(ResourceUtils.getURL(Global.CLASSPATH).getPath()
-                        + File.separator + Global.STATIC_DIR + File.separator + smallPictPath));
-
+                FileUtils.deleteQuietly(new File(ResourceUtils.getURL(Global.CLASSPATH_STATIC_DIR).getPath() + File.separator + smallPictPath));
                 smallPictRepository.delete(smallPict);
             }
         }
@@ -177,8 +175,7 @@ public class FileInfServiceImpl implements IFileInfService {
         Map<Integer, Integer> replaceIdMap = new HashMap<>();
         Date now = new Date();
         for (FileInfDto fileInfBarDto : addFileInfBarDto) {
-            File tempFile = new File(ResourceUtils.getURL(Global.CLASSPATH).getPath()
-                    + File.separator + Global.STATIC_DIR + File.separator + fileInfBarDto.getFilePath());
+            File tempFile = new File(ResourceUtils.getURL(Global.CLASSPATH_STATIC_DIR).getPath() + File.separator + fileInfBarDto.getFilePath());
             Calendar calender = Calendar.getInstance();
 
             String moveDirPath = new StringBuilder(Global.UPLOAD_DIR)
@@ -190,8 +187,7 @@ public class FileInfServiceImpl implements IFileInfService {
                     .append(calender.get(Calendar.DAY_OF_MONTH)).toString();
             try {
                 //本地文件的策略
-                FileUtils.moveFileToDirectory(tempFile, new File(ResourceUtils.getURL(Global.CLASSPATH).getPath()
-                        + File.separator + Global.STATIC_DIR + File.separator + moveDirPath), true);
+                FileUtils.moveFileToDirectory(tempFile, new File(ResourceUtils.getURL(Global.CLASSPATH_STATIC_DIR).getPath() + File.separator + moveDirPath), true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -214,7 +210,7 @@ public class FileInfServiceImpl implements IFileInfService {
                 int fileSizeKb = SmallPictUtil.generateSmallPict(
                         Global.DEFAULT_SMALL_PICT_SIZE,
                         Global.DEFAULT_SMALL_PICT_SIZE,
-                        ResourceUtils.getURL(Global.CLASSPATH).getPath() + File.separator + Global.STATIC_DIR + File.separator + fileInf.getFilePath(),
+                        ResourceUtils.getURL(Global.CLASSPATH_STATIC_DIR).getPath() + File.separator + fileInf.getFilePath(),
                         true
                 );
                 if (fileSizeKb != -1) { //原位置有图片则忽略

@@ -1,9 +1,12 @@
 package com.musikouyi.jzframe.controller;
 
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
+import com.musikouyi.jzframe.common.constant.Global;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.service.IFileInfService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +22,6 @@ public class FileInfController {
 
     @PostMapping(ControllerMapping.UPLOAD)
     public Result upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
-        System.out.println(request.getContextPath());
         return SpringContextHolder.getBean(IFileInfService.class).saveTempFile(file.getOriginalFilename(), file.getInputStream());
     }
 }

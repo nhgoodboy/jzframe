@@ -17,8 +17,9 @@ public interface Global {
 
     //目录
     String CLASSPATH = "classpath:";
-    String TEMP_DIR = "temp";
     String STATIC_DIR = "static";
+    String CLASSPATH_STATIC_DIR = "classpath:static";
+    String TEMP_DIR = "temp";
     String SMALL_PICT_DIR = "smallpict";
     String UPLOAD_DIR = "upload";
     String SMALL_PICT_DEFAULT_DIR = "default";
