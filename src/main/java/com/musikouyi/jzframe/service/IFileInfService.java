@@ -19,4 +19,5 @@ public interface IFileInfService {
 
     Map<String, String> syncBusinessObject(Integer businessObjectId, Object newEntity, Object savedEntity, Class<?> entityClass) throws FileNotFoundException;
 
+    String getSmallPictUrl(Integer fileInfId, int width, int height);
 }

@@ -15,10 +15,7 @@ import com.musikouyi.jzframe.repository.FileInfRepository;
 import com.musikouyi.jzframe.repository.SmallPictRepository;
 import com.musikouyi.jzframe.repository.SmallPictSetupRepository;
 import com.musikouyi.jzframe.service.IFileInfService;
-import com.musikouyi.jzframe.utils.FileUrlHelper;
-import com.musikouyi.jzframe.utils.ResultUtil;
-import com.musikouyi.jzframe.utils.SmallPictUtil;
-import com.musikouyi.jzframe.utils.WebContextHolder;
+import com.musikouyi.jzframe.utils.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.commons.collections4.CollectionUtils;
@@ -29,6 +26,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
@@ -50,6 +48,7 @@ public class FileInfServiceImpl implements IFileInfService {
     @Autowired
     private SmallPictRepository smallPictRepository;
 
+    @Autowired
     private SmallPictImageQueueHelper smallPictImageQueueHelper;
 
     public void setSmallPictImageQueueHelper(SmallPictImageQueueHelper smallPictImageQueueHelper) {
@@ -360,6 +359,160 @@ public class FileInfServiceImpl implements IFileInfService {
                 }
             }
         }
+    }
 
+    /**
+     * 获得文件的对应服务器地址，支持负数（临时文件）.
+     *
+     * @param fileInfId 如果是负数则和sessionId一并获得临时会话的文件地址，否则获得文件库的文件地址。
+     * @param sessionId
+     * @return
+     */
+    public String getFilePath(Integer fileInfId, String sessionId) {
+        if (fileInfId < 0) {
+            FileInfDto fileInfDto = tempFileCache.get(sessionId + fileInfId);
+            if (fileInfDto == null) {
+                return null;
+            } else {
+                return fileInfDto.getFilePath();
+            }
+        } else {
+            return fileInfRepository.findById(fileInfId).get().getFilePath();
+        }
+    }
+
+    /**
+     * 获取图片地址，如果图片没有，则返回150x150的暂无图像地址
+     *
+     * @param fileInfId
+     * @return
+     */
+    public String getPictUrl(Integer fileInfId) {
+        if (fileInfId == null) {
+            return new StringBuilder(WebContextHolder.getContextPath()).append('/')
+                    .append(Global.SMALL_PICT_DIR).append('/')
+                    .append(Global.SMALL_PICT_DEFAULT_DIR).append('/')
+                    .append(Global.SMALL_PICT_COMMON_DIR)
+                    .append('/').append(Global.DEFAULT_SMALL_PICT_SIZE)
+                    .append(Global.SMALL_PICT_SIZE_SPLIT_CHAR).append(Global.DEFAULT_SMALL_PICT_SIZE)
+                    .append(".png")
+                    .toString();
+        } else {
+            return WebContextHolder.getContextPath() + '/' + fileInfRepository.findById(fileInfId).get().getFilePath().replace('\\', '/');
+        }
+    }
+
+    /**
+     * 如果图片ID为空或没有该记录，则返回默认的指定大小的图片.
+     * 默认图片放到/war/smallpict/default/common下，以 长x宽 的格式存放，例如100x100.jpg
+     *
+     * @param fileInfId
+     * @param width
+     * @param height
+     * @return
+     */
+    @Override
+    public String getSmallPictUrl(Integer fileInfId, int width, int height) {
+        return getSmallPictUrl(fileInfId, width, height, Global.SMALL_PICT_COMMON_DIR + '/' + width + Global.SMALL_PICT_SIZE_SPLIT_CHAR + height + ".png");
+    }
+
+    /**
+     * 获得小图的服务器相对地址
+     *
+     * @param fileInfId       文件ID
+     * @param width           小图宽
+     * @param height          小图高
+     * @param defaultPictPath 默认的（在war/smallpict/default/下的地址，支持按目录存放，目录使用url路径/ ）
+     * @return 小图的地址
+     */
+    public String getSmallPictUrl(Integer fileInfId, int width, int height, String defaultPictPath) {
+        FileInf fileInf = null;
+        if (fileInfId != null) {
+            fileInf = fileInfRepository.findById(fileInfId).get();
+        }
+        if (fileInf == null) {
+            return new StringBuilder(WebContextHolder.getContextPath()).append('/')
+                    .append(Global.SMALL_PICT_DIR).append('/')
+                    .append(Global.SMALL_PICT_DEFAULT_DIR).append('/')
+                    .append(defaultPictPath)
+                    .toString();
+        }
+        String filePath = fileInfRepository.findById(fileInfId).get().getFilePath();
+        int extSeperatorIndex = filePath.lastIndexOf(".");
+        return new StringBuilder(WebContextHolder.getContextPath())
+                .append('/').append(
+                        filePath.replace(File.separatorChar, '/')
+                                .substring(0, extSeperatorIndex)
+                                .replaceFirst(Global.UPLOAD_DIR, Global.SMALL_PICT_DIR)
+                ).append('_').append(width).append(Global.SMALL_PICT_SIZE_SPLIT_CHAR).append(height).append(".jpg").toString();
+    }
+
+    /**
+     * 异步处理所有的预置图片
+     */
+    @SuppressWarnings("unchecked")
+    @Async
+    @Transactional
+    public void processInitFile() {
+//        Date now = new Date();
+//        for(InitImageSaveRow initImageSaveRow: InitFileReplacementProcessor.getInitImageSaveRowList()){
+//            BaseService<Serializable,Integer,BaseRepository<Serializable,Integer>> baseService = (BaseService<Serializable,Integer,BaseRepository<Serializable,Integer>>)SpringContextHelper.getBean(
+//                    Character.toLowerCase(initImageSaveRow.getBusinessClassNm().charAt(0)) + initImageSaveRow.getBusinessClassNm().substring(1) + "Service"
+//            );
+//            Integer businessObjectId = baseService.getIdByKey(initImageSaveRow.getColumnNm(), initImageSaveRow.getSysFileInfId());
+//            if(businessObjectId == null) {
+//                continue;
+//            }
+//
+//            Calendar calender = Calendar.getInstance();
+//            File sourceFile = new File(InitFileReplacementProcessor.getInitImageDir() + initImageSaveRow.getInitImageNm().replace('\\', File.separatorChar));
+//            String copyToDirPath = new StringBuilder(GlobalEx.UPLOAD_DIR)
+//                    .append(File.separator)
+//                    .append(calender.get(Calendar.YEAR))
+//                    .append(File.separator)
+//                    .append(calender.get(Calendar.MONTH) + 1)
+//                    .append(File.separator)
+//                    .append(calender.get(Calendar.DAY_OF_MONTH)).toString();
+//            try {
+//                //本地文件的策略
+//                FileUtils.copyFileToDirectory(sourceFile, new File(WebContextHolder.getWarPath() + File.separator + copyToDirPath));
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//            String fileName = initImageSaveRow.getInitImageNm().substring(initImageSaveRow.getInitImageNm().lastIndexOf("\\")+1);
+//            FileInf fileInf = new FileInf();
+//            fileInf.setFileInfId(initImageSaveRow.getSysFileInfId()); //由于采用sequence策略，初始化时非序列手动插入值
+//            fileInf.setFileNm(fileName);
+//            fileInf.setFileTypeNm(fileName.substring(fileName.lastIndexOf('.')+1));
+//            fileInf.setBusinessClassNm(initImageSaveRow.getBusinessClassNm());
+//            boolean isPict = fileInf.getFileTypeNm().equalsIgnoreCase("png")|| fileInf.getFileTypeNm().equalsIgnoreCase("jpg")|| fileInf.getFileTypeNm().equalsIgnoreCase("gif");
+//            fileInf.setIfPict(BoolCodeEnum.fromValue(isPict).toCode());
+//            fileInf.setFileTime(now);
+//            fileInf.setFileSizeKb(new Long(sourceFile.length() / 1024).intValue());
+//            fileInf.setFilePath(copyToDirPath + File.separator + fileName);
+//            fileInf.setBusinessObjectId(businessObjectId);
+//            SpringContextHelper.getBean(this.getClass()).save(fileInf);
+//
+//            //小图逻辑：同步生成150x150内裁切小图，然后异步生成其它小图
+//            if(isPict) {
+//                SmallPict smallPict = new SmallPict();
+//                int fileSizeKb = SmallPictUtil.generateSmallPict(
+//                        Global.DEFAULT_SMALL_PICT_SIZE,
+//                        Global.DEFAULT_SMALL_PICT_SIZE,
+//                        WebContextHolder.getWarPath() + File.separator + fileInf.getFilePath(),
+//                        true
+//                );
+//                if(fileSizeKb != -1) { //原位置有图片则忽略
+//                    smallPict.setFileInfId(fileInf.getFileInfId());
+//                    smallPict.setFileSizeKb(fileSizeKb);
+//                    smallPict.setSmallPictWidth(Global.DEFAULT_SMALL_PICT_SIZE);
+//                    smallPict.setSmallPictHeight(Global.DEFAULT_SMALL_PICT_SIZE);
+//                    smallPict.setFileTime(new Date());
+//                    SpringContextHelper.getBean(SmallPictService.class).save(smallPict);
+//                }
+//                this.syncFileSmallPicts(initImageSaveRow.getBusinessClassNm(), initImageSaveRow.getColumnNm(), fileInf.getFileInfId().toString(), false); //只处理单图片逻辑
+//            }
+//        }
     }
 }

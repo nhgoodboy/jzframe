@@ -22,7 +22,7 @@ public class WebContextFilter implements Filter {
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("WebContextFilter.doFilter");
+//        System.out.println("WebContextFilter.doFilter");
         WebContextHolder.setSessionContextStore(new WebSessionContext((HttpServletRequest) request, (HttpServletResponse) response));
         chain.doFilter(request, response);
     }

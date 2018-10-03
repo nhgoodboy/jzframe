@@ -21,6 +21,8 @@ public interface Global {
     String STATIC_DIR = "static";
     String SMALL_PICT_DIR = "smallpict";
     String UPLOAD_DIR = "upload";
+    String SMALL_PICT_DEFAULT_DIR = "default";
+    String SMALL_PICT_COMMON_DIR = "common";
 
     //4个entity需要自动保存到文件系统的变量命名后缀
     String PICT_ID_FIELD_SUFFIX = "PictId";
@@ -32,4 +34,5 @@ public interface Global {
     String SMALL_PICT_SIZE_SPLIT_CHAR = "x";
 
     int DEFAULT_SMALL_PICT_SIZE = 150; //默认小图大小
+
 }

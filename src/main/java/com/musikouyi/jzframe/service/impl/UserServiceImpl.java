@@ -51,7 +51,8 @@ public class UserServiceImpl implements IUserService {
         List<String> roleNameList = new ArrayList<>();
         roleNameList.add(roleRepository.findById(user.getRoleid()).get().getTips());
         UserInfoRespDto userInfoRespDto = new UserInfoRespDto();
-        userInfoRespDto.setAvatar(user.getAvatar());
+        userInfoRespDto.setAvatar(SpringContextHolder.getBean(IFileInfService.class)
+                .getSmallPictUrl(user.getUserHeadPictId(), Global.DEFAULT_SMALL_PICT_SIZE, Global.DEFAULT_SMALL_PICT_SIZE));
         userInfoRespDto.setAccount(user.getAccount());
         userInfoRespDto.setName(user.getName());
         userInfoRespDto.setSex(SexEnum.fromCode(user.getSex()));
@@ -162,13 +163,14 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public Result changeAvatar(Integer userHeadId,Integer userId) throws FileNotFoundException {
+    public Result changeAvatar(Integer userHeadId, Integer userId) throws FileNotFoundException {
         User user = userRepository.findById(userId).get();
         user.setUserHeadPictId(userHeadId);
         userRepository.saveAndFlush(user);
         Map map = SpringContextHolder.getBean(IFileInfService.class).syncBusinessObject(user.getId(), user, null, User.class);
         System.out.println(map);
         userRepository.saveAndFlush(user);
-        return null;
+        String pictPath = SpringContextHolder.getBean(IFileInfService.class).getSmallPictUrl(userRepository.findById(userId).get().getUserHeadPictId(), 150, 150);
+        return ResultUtil.success(pictPath);
     }
 }

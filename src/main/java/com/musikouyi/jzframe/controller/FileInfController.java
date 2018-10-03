@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @RestController
@@ -17,7 +18,8 @@ import java.io.IOException;
 public class FileInfController {
 
     @PostMapping(ControllerMapping.UPLOAD)
-    public Result upload(@RequestParam("file") MultipartFile file) throws IOException {
+    public Result upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+        System.out.println(request.getContextPath());
         return SpringContextHolder.getBean(IFileInfService.class).saveTempFile(file.getOriginalFilename(), file.getInputStream());
     }
 }
