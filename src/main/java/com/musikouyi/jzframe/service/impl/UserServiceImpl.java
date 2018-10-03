@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 @Service
@@ -161,10 +162,10 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public Result changeAvatar(Integer userHeadId,Integer userId) {
+    public Result changeAvatar(Integer userHeadId,Integer userId) throws FileNotFoundException {
         User user = userRepository.findById(userId).get();
         user.setUserHeadPictId(userHeadId);
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
         Map map = SpringContextHolder.getBean(IFileInfService.class).syncBusinessObject(user.getId(), user, null, User.class);
         System.out.println(map);
         userRepository.saveAndFlush(user);

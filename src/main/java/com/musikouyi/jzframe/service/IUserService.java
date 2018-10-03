@@ -6,6 +6,8 @@ import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.UserInfoReqDto;
 import com.musikouyi.jzframe.dto.UserReqDto;
 
+import java.io.FileNotFoundException;
+
 /**
  * <p>
  * 管理员表 Mapper 接口
@@ -61,5 +63,5 @@ public interface IUserService {
      * @param userHeadId
      * @return
      */
-    Result changeAvatar(Integer userHeadId, Integer userId);
+    Result changeAvatar(Integer userHeadId, Integer userId) throws FileNotFoundException;
 }

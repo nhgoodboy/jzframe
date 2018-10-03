@@ -2,6 +2,7 @@ package com.musikouyi.jzframe.service;
 
 import com.musikouyi.jzframe.domain.entity.Result;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -16,6 +17,6 @@ public interface IFileInfService {
      */
     Result saveTempFile(String fileName, InputStream fileStream);
 
-    Map<String, String> syncBusinessObject(Integer businessObjectId, Object newEntity, Object savedEntity, Class<?> entityClass);
+    Map<String, String> syncBusinessObject(Integer businessObjectId, Object newEntity, Object savedEntity, Class<?> entityClass) throws FileNotFoundException;
 
 }

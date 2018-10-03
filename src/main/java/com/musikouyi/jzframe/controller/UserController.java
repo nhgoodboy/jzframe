@@ -12,6 +12,7 @@ import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileNotFoundException;
 
 /**
  * Create with IDEA
@@ -60,7 +61,7 @@ public class UserController {
     }
 
     @PostMapping(ControllerMapping.CHANGE_AVATAR)
-    public Result changeAvatar(Integer userHeadId, @RequestHeader("Authorization") String token) {
+    public Result changeAvatar(Integer userHeadId, @RequestHeader("Authorization") String token) throws FileNotFoundException {
         return SpringContextHolder.getBean(IUserService.class).changeAvatar(userHeadId,
                 Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token.substring(7))));
     }

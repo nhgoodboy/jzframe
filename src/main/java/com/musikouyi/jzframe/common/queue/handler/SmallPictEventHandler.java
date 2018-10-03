@@ -29,7 +29,7 @@ public class SmallPictEventHandler implements WorkHandler<SmallPictEvent> {
     private SmallPictRepository smallPictRepository;
 
     @Override
-    public void onEvent(SmallPictEvent event) throws Exception {
+    public void onEvent(SmallPictEvent event) {
         try {
             SmallPictEventData smallPictEventData = event.getValue();
             int size = SmallPictUtil.generateSmallPict(smallPictEventData.getWidth(), smallPictEventData.getHeight(), WebContextHolder.getWarPath() + File.separator + smallPictEventData.getFilePath(), smallPictEventData.isInnerCut());

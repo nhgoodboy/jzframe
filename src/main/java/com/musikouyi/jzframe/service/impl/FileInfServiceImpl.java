@@ -19,6 +19,8 @@ import com.musikouyi.jzframe.utils.FileUrlHelper;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import com.musikouyi.jzframe.utils.SmallPictUtil;
 import com.musikouyi.jzframe.utils.WebContextHolder;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -31,10 +33,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -74,23 +73,23 @@ public class FileInfServiceImpl implements IFileInfService {
         try {
             String fileTypeNm = FilenameUtils.getExtension(fileName);
             String fileUUID = UUID.randomUUID().toString();
-            String filePath = new StringBuilder(Global.TEMP_DIR).append(File.separator).append(fileUUID).append(".").append(fileTypeNm).toString();
-            StringBuilder outputFilePath = new StringBuilder(
-                    ResourceUtils.getURL(Global.CLASSPATH).getPath()).append(File.separator).append(Global.STATIC_DIR).append(File.separator).append(filePath);
-            fileOutputStream = new FileOutputStream(outputFilePath.toString());
+            String filePath = Global.TEMP_DIR + File.separator + fileUUID + "." + fileTypeNm;
+            String outputFilePath = ResourceUtils.getURL(Global.CLASSPATH).getPath() +
+                    File.separator + Global.STATIC_DIR + File.separator + filePath;
+            fileOutputStream = new FileOutputStream(outputFilePath);
             IOUtils.copy(fileStream, fileOutputStream);
             FileInfDto fileInfDto = new FileInfDto();
             fileInfDto.setFileNm(fileName);
             fileInfDto.setFilePath(filePath);
             fileInfDto.setFileTypeNm(fileTypeNm);
-
             //TODO 下面语句可以添加CDN或流量地址转换
-            fileInfDto.setFileUrl(new StringBuilder(ResourceUtils.getURL(Global.CLASSPATH).getPath()).append(File.separator).append(Global.STATIC_DIR).append("/").append(Global.TEMP_DIR).append("/").append(fileUUID).append(".").append(fileTypeNm).toString());
+            fileInfDto.setFileUrl(WebContextHolder.getContextPath() + "/" + Global.TEMP_DIR + "/" + fileUUID + "." + fileTypeNm);
             synchronized (this) {
                 fileInfDto.setFileInfId(-(((int) (System.currentTimeMillis() & 0xffffffL) << 7) + seed)); //保证在一个会话里时间ID不一样，为负数的是临时ID
                 seed = (seed + 1) & 0xaf;
             }
-            tempFileCache.put(WebContextHolder.getSessionContextStore().getSessionId() + fileInfDto.getFileInfId(), fileInfDto);
+            System.out.println("sessionid: " + WebContextHolder.getSessionContextStore().getSessionId());
+            tempFileCache.put("EC94B8B4B936C1D3B1CAC54412A5977A" + fileInfDto.getFileInfId(), fileInfDto);
             return ResultUtil.success(fileInfDto);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
@@ -123,12 +122,12 @@ public class FileInfServiceImpl implements IFileInfService {
      * @return SyncFileInfResult 包括替换用的map，将文档内容里的temp url替换为upload url，以及替换后新增的文件ID列表
      * @Deprecated 使用syncBusinessObject
      */
-    private SyncFileInfResult syncFileInfList(String businessClassNm, Integer businessObjectId, String savedFileInfIds, String newFileInfIds) {
+    private SyncFileInfResult syncFileInfList(String businessClassNm, Integer businessObjectId, String savedFileInfIds, String newFileInfIds) throws FileNotFoundException {
 
         List<FileInfDto> fileInfBarDtoList = loadFileInfDtoList(newFileInfIds);
 
-        List<FileInf> savedFileInfList = new ArrayList<FileInf>();
-        if (!StringUtils.isEmpty(savedFileInfIds)) {   //待检查
+        List<FileInf> savedFileInfList = new ArrayList<>();
+        if (StringUtils.isNotBlank(savedFileInfIds)) {
             for (String oldFileInfId : savedFileInfIds.split(Global.DEFAULT_TEXT_SPLIT_CHAR)) {
                 savedFileInfList.add(fileInfRepository.getOne(new Integer(oldFileInfId)));
             }
@@ -153,7 +152,8 @@ public class FileInfServiceImpl implements IFileInfService {
         Collection<Integer> deleteList = CollectionUtils.subtract(savedFileInfIdList, updateFileInfIdList);
         for (Integer deleteId : deleteList) {
             FileInf fileInf = fileInfRepository.getOne(deleteId);
-            FileUtils.deleteQuietly(new File(WebContextHolder.getWarPath() + File.separator + fileInf.getFilePath()));
+            FileUtils.deleteQuietly(new File(ResourceUtils.getURL(Global.CLASSPATH).getPath()
+                    + File.separator + Global.STATIC_DIR + File.separator + fileInf.getFilePath()));
 
             fileInfRepository.delete(fileInf);
 
@@ -167,17 +167,19 @@ public class FileInfServiceImpl implements IFileInfService {
                         .append(".")
                         .append(SmallPictUtil.DEFAULT_OUTPUT_FORMAT)
                         .toString();
-                FileUtils.deleteQuietly(new File(WebContextHolder.getWarPath() + File.separator + smallPictPath));
+                FileUtils.deleteQuietly(new File(ResourceUtils.getURL(Global.CLASSPATH).getPath()
+                        + File.separator + Global.STATIC_DIR + File.separator + smallPictPath));
 
                 smallPictRepository.delete(smallPict);
             }
         }
 
-        Map<String, String> replaceMap = new HashMap<String, String>();
-        Map<Integer, Integer> replaceIdMap = new HashMap<Integer, Integer>();
+        Map<String, String> replaceMap = new HashMap<>();
+        Map<Integer, Integer> replaceIdMap = new HashMap<>();
         Date now = new Date();
         for (FileInfDto fileInfBarDto : addFileInfBarDto) {
-            File tempFile = new File(WebContextHolder.getWarPath() + File.separator + fileInfBarDto.getFilePath());
+            File tempFile = new File(ResourceUtils.getURL(Global.CLASSPATH).getPath()
+                    + File.separator + Global.STATIC_DIR + File.separator + fileInfBarDto.getFilePath());
             Calendar calender = Calendar.getInstance();
 
             String moveDirPath = new StringBuilder(Global.UPLOAD_DIR)
@@ -189,7 +191,8 @@ public class FileInfServiceImpl implements IFileInfService {
                     .append(calender.get(Calendar.DAY_OF_MONTH)).toString();
             try {
                 //本地文件的策略
-                FileUtils.moveFileToDirectory(tempFile, new File(WebContextHolder.getWarPath() + File.separator + moveDirPath), true);
+                FileUtils.moveFileToDirectory(tempFile, new File(ResourceUtils.getURL(Global.CLASSPATH).getPath()
+                        + File.separator + Global.STATIC_DIR + File.separator + moveDirPath), true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -212,7 +215,7 @@ public class FileInfServiceImpl implements IFileInfService {
                 int fileSizeKb = SmallPictUtil.generateSmallPict(
                         Global.DEFAULT_SMALL_PICT_SIZE,
                         Global.DEFAULT_SMALL_PICT_SIZE,
-                        WebContextHolder.getWarPath() + File.separator + fileInf.getFilePath(),
+                        ResourceUtils.getURL(Global.CLASSPATH).getPath() + File.separator + Global.STATIC_DIR + File.separator + fileInf.getFilePath(),
                         true
                 );
                 if (fileSizeKb != -1) { //原位置有图片则忽略
@@ -229,7 +232,7 @@ public class FileInfServiceImpl implements IFileInfService {
 
             replaceMap.put(fileInfBarDto.getFileUrl(), FileUrlHelper.getFileSystemUrl(fileInf.getFilePath()));
         }
-        List<String> fileInfIds = new ArrayList<String>();
+        List<String> fileInfIds = new ArrayList<>();
         for (FileInfDto fileInfDto : fileInfBarDtoList) {
             if (fileInfDto.getFileInfId() < 0) { //add
                 fileInfIds.add(replaceIdMap.get(fileInfDto.getFileInfId()).toString());
@@ -246,11 +249,12 @@ public class FileInfServiceImpl implements IFileInfService {
      * @param fileInfIds
      * @return
      */
-    public List<FileInfDto> loadFileInfDtoList(String fileInfIds) {
-        List<FileInfDto> result = new ArrayList<FileInfDto>();
+    private List<FileInfDto> loadFileInfDtoList(String fileInfIds) {
+        List<FileInfDto> result = new ArrayList<>();
         for (String fileInfIdStr : fileInfIds.split(Global.DEFAULT_TEXT_SPLIT_CHAR)) {
             if (fileInfIdStr.startsWith("-")) {
-                FileInfDto fileInfDto = tempFileCache.get(WebContextHolder.getSessionContextStore().getSessionId() + fileInfIdStr);
+                System.out.println("new sessionid: " + WebContextHolder.getSessionContextStore().getSessionId());
+                FileInfDto fileInfDto = tempFileCache.get("EC94B8B4B936C1D3B1CAC54412A5977A" + fileInfIdStr);
                 if (fileInfDto != null) {
                     result.add(fileInfDto);
                 }
@@ -260,7 +264,7 @@ public class FileInfServiceImpl implements IFileInfService {
                 BeanUtils.copyProperties(fileInf, fileInfDto);
 
                 //TODO 下面语句可以添加CDN或流量地址转换
-                fileInfDto.setFileUrl(new StringBuilder(WebContextHolder.getContextPath()).append("/").append(fileInf.getFilePath().replace(File.separatorChar, '/')).toString());
+                fileInfDto.setFileUrl(WebContextHolder.getContextPath() + "/" + fileInf.getFilePath().replace(File.separatorChar, '/'));
                 result.add(fileInfDto);
             }
         }
@@ -286,13 +290,13 @@ public class FileInfServiceImpl implements IFileInfService {
      */
     @Override
     @Transactional
-    public Map<String, String> syncBusinessObject(Integer businessObjectId, Object newEntity, Object savedEntity, Class<?> entityClass) {
+    public Map<String, String> syncBusinessObject(Integer businessObjectId, Object newEntity, Object savedEntity, Class<?> entityClass) throws FileNotFoundException {
         Map<String, String> replaceMap = new HashMap<>();
         for (Field field : entityClass.getDeclaredFields()) {
-            if (Character.isUpperCase(field.getName().charAt(0))) {
+            if (Character.isUpperCase(field.getName().charAt(0))) {   //排除静态字段
                 continue;
             }
-            if (field.getName().endsWith(Global.PICT_ID_FIELD_SUFFIX)
+            if (field.getName().endsWith(Global.PICT_ID_FIELD_SUFFIX)   // 匹配后缀
                     || field.getName().endsWith(Global.PICT_IDS_FIELD_SUFFIX)
                     || field.getName().endsWith(Global.FILE_ID_FIELD_SUFFIX)
                     || field.getName().endsWith(Global.FILE_IDS_FIELD_SUFFIX)
@@ -300,7 +304,11 @@ public class FileInfServiceImpl implements IFileInfService {
                 try {
                     Object newValue = BeanUtils.getPropertyDescriptor(entityClass, field.getName()).getReadMethod().invoke(newEntity);
                     Object oldValue = (savedEntity == null ? null : BeanUtils.getPropertyDescriptor(entityClass, field.getName()).getReadMethod().invoke(savedEntity));
-                    SyncFileInfResult syncFileInfResult = syncFileInfList(entityClass.getSimpleName(), businessObjectId, oldValue == null ? "" : oldValue.toString(), newValue == null ? "" : newValue.toString());
+                    SyncFileInfResult syncFileInfResult = syncFileInfList(
+                            entityClass.getSimpleName(),
+                            businessObjectId,
+                            oldValue == null ? "" : oldValue.toString(),
+                            newValue == null ? "" : newValue.toString());
                     if (field.getName().endsWith(Global.PICT_ID_FIELD_SUFFIX)) {
                         if (StringUtils.isEmpty(syncFileInfResult.getFileInfIds())) {
                             BeanUtils.getPropertyDescriptor(entityClass, field.getName()).getWriteMethod().invoke(newEntity, (Object) null);
@@ -325,30 +333,11 @@ public class FileInfServiceImpl implements IFileInfService {
         return replaceMap;
     }
 
-    public static final class SyncFileInfResult {
+    @Data
+    @AllArgsConstructor
+    private static final class SyncFileInfResult {
         private Map<String, String> replaceMap;
         private String fileInfIds;
-
-        public SyncFileInfResult(Map<String, String> replaceMap, String fileInfIds) {
-            this.replaceMap = replaceMap;
-            this.fileInfIds = fileInfIds;
-        }
-
-        public Map<String, String> getReplaceMap() {
-            return replaceMap;
-        }
-
-        public void setReplaceMap(Map<String, String> replaceMap) {
-            this.replaceMap = replaceMap;
-        }
-
-        public String getFileInfIds() {
-            return fileInfIds;
-        }
-
-        public void setFileInfIds(String fileInfIds) {
-            this.fileInfIds = fileInfIds;
-        }
     }
 
     private void syncFileSmallPicts(String className, String fieldName, String fileInfIds, boolean isMulti) {

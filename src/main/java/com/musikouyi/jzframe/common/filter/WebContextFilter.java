@@ -18,7 +18,7 @@ public class WebContextFilter implements Filter {
     public void init(FilterConfig filterConfig) {
         System.out.println("init");
         WebContextHolder.setContextPath(filterConfig.getServletContext().getContextPath());
-        WebContextHolder.setWarPath(filterConfig.getServletContext().getRealPath("/"));
+        WebContextHolder.setWarPath(filterConfig.getServletContext().getRealPath("/static"));
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
