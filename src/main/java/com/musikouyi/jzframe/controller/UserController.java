@@ -1,6 +1,7 @@
 package com.musikouyi.jzframe.controller;
 
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
+import com.musikouyi.jzframe.common.constant.JwtConstants;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.UserInfoReqDto;
@@ -59,8 +60,9 @@ public class UserController {
         return SpringContextHolder.getBean(IUserService.class).editUserInfo(userInfoReqDto);
     }
 
-    @PostMapping(ControllerMapping.CHANGE_AVATAR)
-    public Result changeAvatar(Integer userHeadId, @RequestHeader("Authorization") String token) throws FileNotFoundException {
+    @PutMapping(ControllerMapping.CHANGE_AVATAR + "/{userHeadId}")   //REST风格
+    public Result changeAvatar(@PathVariable("userHeadId") Integer userHeadId, @RequestHeader(JwtConstants.AUTH_HEADER) String token) throws FileNotFoundException {
+        System.out.println("userHeadId: " + userHeadId);
         return SpringContextHolder.getBean(IUserService.class).changeAvatar(userHeadId,
                 Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token.substring(7))));
     }

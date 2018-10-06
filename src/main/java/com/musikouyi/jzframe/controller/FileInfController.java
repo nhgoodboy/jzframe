@@ -21,7 +21,7 @@ import java.io.IOException;
 public class FileInfController {
 
     @PostMapping(ControllerMapping.UPLOAD)
-    public Result upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+    public Result upload(@RequestParam("file") MultipartFile file) throws IOException {
         return SpringContextHolder.getBean(IFileInfService.class).saveTempFile(file.getOriginalFilename(), file.getInputStream());
     }
 }
