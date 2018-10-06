@@ -1,5 +1,7 @@
 package com.musikouyi.jzframe.domain.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -11,6 +13,7 @@ import java.io.Serializable;
  * @author yjz
  * @since 2018-09-13
  */
+@Data
 @Entity
 @Table(name = "sys_role")
 public class Role implements Serializable {
@@ -24,97 +27,28 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     /**
-     * 序号
-     */
-    private Integer num;
-    /**
      * 父角色id
      */
-    private Integer pid;
+    @Column(name = "PARENT_ID")
+    private Integer parentId;
     /**
      * 角色名称
      */
+    @Column(name = "NAME")
     private String name;
     /**
      * 部门名称
      */
-    private Integer deptid;
+    @Column(name = "DEPT_ID")
+    private Integer deptId;
     /**
      * 提示
      */
+    @Column(name = "TIPS")
     private String tips;
     /**
      * 保留字段(暂时没用）
      */
+    @Column(name = "VERSION")
     private Integer version;
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getNum() {
-        return num;
-    }
-
-    public void setNum(Integer num) {
-        this.num = num;
-    }
-
-    public Integer getPid() {
-        return pid;
-    }
-
-    public void setPid(Integer pid) {
-        this.pid = pid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getDeptid() {
-        return deptid;
-    }
-
-    public void setDeptid(Integer deptid) {
-        this.deptid = deptid;
-    }
-
-    public String getTips() {
-        return tips;
-    }
-
-    public void setTips(String tips) {
-        this.tips = tips;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", num=" + num +
-                ", pid=" + pid +
-                ", name=" + name +
-                ", deptid=" + deptid +
-                ", tips=" + tips +
-                ", version=" + version +
-                "}";
-    }
 }

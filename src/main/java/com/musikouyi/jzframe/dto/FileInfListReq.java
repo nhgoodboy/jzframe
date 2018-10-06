@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FileInfListReq {
+
     private String businessTypeCode;
     private String ifFailUse;
     private String fileNm;

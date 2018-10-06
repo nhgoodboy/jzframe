@@ -54,11 +54,11 @@ public class Dict implements Serializable {
         this.num = num;
     }
 
-    public Integer getPid() {
+    public Integer getParentId() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
+    public void setParentId(Integer pid) {
         this.pid = pid;
     }
 

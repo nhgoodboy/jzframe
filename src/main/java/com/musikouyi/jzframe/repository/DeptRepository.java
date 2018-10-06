@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface DeptRepository extends JpaRepository<Dept, Integer> {
 
-    @Query("select d.fullname from Dept d")
+    @Query("select d.fullName from Dept d")
     List<String> findName();
 
-    @Query("select d.id from Dept d where d.fullname = :name")
+    @Query("select d.id from Dept d where d.fullName = :name")
     Integer findIdByName(@Param("name") String name);
 }

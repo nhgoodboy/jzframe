@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class DeptDto {
 
     private int id;
-    private String fullname;
+    private String fullName;
     private String parent_dept;
 }

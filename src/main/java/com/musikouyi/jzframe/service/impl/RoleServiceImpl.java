@@ -94,8 +94,8 @@ public class RoleServiceImpl implements IRoleService {
             RoleDto roleRespDto = new RoleDto(
                     role.getId(),
                     role.getName(),
-                    role.getPid() == Global.SUPER_ROLE_PARENT ? null : roleRepository.findById(role.getPid()).get().getName(),
-                    deptRepository.findById(role.getDeptid()).get().getFullname()
+                    role.getParentId() == Global.SUPER_ROLE_PARENT ? null : roleRepository.findById(role.getParentId()).get().getName(),
+                    deptRepository.findById(role.getDeptId()).get().getFullName()
             );
             roleDtoList.add(roleRespDto);
         }
@@ -119,8 +119,8 @@ public class RoleServiceImpl implements IRoleService {
     public Result create(RoleDto roleDto) {
         Role role = new Role();
         role.setName(roleDto.getName());
-        role.setPid(roleRepository.findIdByName(roleDto.getParent_role()));
-        role.setDeptid(deptRepository.findIdByName(roleDto.getDept()));
+        role.setParentId(roleRepository.findIdByName(roleDto.getParent_role()));
+        role.setDeptId(deptRepository.findIdByName(roleDto.getDept()));
         roleRepository.saveAndFlush(role);
         return ResultUtil.success();
     }
@@ -130,8 +130,8 @@ public class RoleServiceImpl implements IRoleService {
     public Result modify(RoleDto roleDto) {
         Role role = roleRepository.findById(roleDto.getId()).get();
         role.setName(roleDto.getName());
-        role.setPid(roleRepository.findIdByName(roleDto.getParent_role()));
-        role.setDeptid(deptRepository.findIdByName(roleDto.getDept()));
+        role.setParentId(roleRepository.findIdByName(roleDto.getParent_role()));
+        role.setDeptId(deptRepository.findIdByName(roleDto.getDept()));
         roleRepository.saveAndFlush(role);
         return ResultUtil.success();
     }

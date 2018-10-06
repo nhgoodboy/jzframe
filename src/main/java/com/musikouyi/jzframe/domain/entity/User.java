@@ -29,11 +29,6 @@ public class User implements Serializable {
     @Column(name = "ID", nullable = false, length = 10)
     private Integer id;
     /**
-     * 头像
-     */
-    @Column(name = "AVATAR")
-    private String avatar;
-    /**
      * 头像id
      */
     @Column(name = "USER_HEAD_PICT_ID", length = 10)
@@ -44,6 +39,11 @@ public class User implements Serializable {
     @Column(name = "ACCOUNT", nullable = false)
     private String account;
     /**
+     * 名字
+     */
+    @Column(name = "NAME")
+    private String name;
+    /**
      * 密码
      */
     @Column(name = "PASSWORD", nullable = false)
@@ -53,11 +53,6 @@ public class User implements Serializable {
      */
     @Column(name = "SALT")
     private String salt;
-    /**
-     * 名字
-     */
-    @Column(name = "NAME")
-    private String name;
     /**
      * 生日
      */
@@ -76,18 +71,18 @@ public class User implements Serializable {
     /**
      * 电话
      */
-    @Column(name = "PHONE")
+    @Column(name = "PHONE", length = 11)
     private String phone;
     /**
      * 角色id
      */
-//    @Column(name = "ROLE_ID", nullable = false)
-    private Integer roleid;
+    @Column(name = "ROLE_ID", nullable = false)
+    private Integer roleId;
     /**
      * 部门id
      */
-//    @Column(name = "DEPT_ID", nullable = false)
-    private Integer deptid;
+    @Column(name = "DEPT_ID", nullable = false)
+    private Integer deptId;
     /**
      * 状态(1：启用  2：冻结  3：删除）
      */
@@ -96,8 +91,8 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
-//    @Column(name = "CREATE_TIME")
-    private Date createtime;
+    @Column(name = "CREATE_TIME")
+    private Date createTime;
     /**
      * 保留字段
      */

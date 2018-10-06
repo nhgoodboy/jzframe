@@ -49,7 +49,7 @@ public class UserServiceImpl implements IUserService {
     public Result userInfo(Integer userId) {
         User user = userRepository.findById(userId).get();
         List<String> roleNameList = new ArrayList<>();
-        roleNameList.add(roleRepository.findById(user.getRoleid()).get().getTips());
+        roleNameList.add(roleRepository.findById(user.getRoleId()).get().getTips());
         UserInfoRespDto userInfoRespDto = new UserInfoRespDto();
         userInfoRespDto.setAvatar(SpringContextHolder.getBean(IFileInfService.class)
                 .getSmallPictUrl(user.getUserHeadPictId(), Global.DEFAULT_SMALL_PICT_SIZE, Global.DEFAULT_SMALL_PICT_SIZE));
@@ -57,12 +57,12 @@ public class UserServiceImpl implements IUserService {
         userInfoRespDto.setName(user.getName());
         userInfoRespDto.setSex(SexEnum.fromCode(user.getSex()));
         userInfoRespDto.setRoles(roleNameList);
-        userInfoRespDto.setRole(roleRepository.findById(user.getRoleid()).get().getName());
-        userInfoRespDto.setDept(deptRepository.findById(user.getDeptid()).get().getFullname());
+        userInfoRespDto.setRole(roleRepository.findById(user.getRoleId()).get().getName());
+        userInfoRespDto.setDept(deptRepository.findById(user.getDeptId()).get().getFullName());
         userInfoRespDto.setEmail(user.getEmail());
         userInfoRespDto.setPhone(user.getPhone());
         userInfoRespDto.setBirthday(user.getBirthday());
-        userInfoRespDto.setCreatetime(user.getCreatetime());
+        userInfoRespDto.setCreateTime(user.getCreateTime());
         return ResultUtil.success(userInfoRespDto);
     }
 
@@ -78,11 +78,11 @@ public class UserServiceImpl implements IUserService {
                     user.getAccount(),
                     user.getName(),
                     SexEnum.fromCode(user.getSex()),
-                    roleRepository.findById(user.getRoleid()).get().getName(),
-                    deptRepository.findById(user.getDeptid()).get().getFullname(),
+                    roleRepository.findById(user.getRoleId()).get().getName(),
+                    deptRepository.findById(user.getDeptId()).get().getFullName(),
                     user.getEmail(),
                     user.getPhone(),
-                    user.getCreatetime(),
+                    user.getCreateTime(),
                     UserStatusEnum.fromCode(user.getStatus())
             );
             userRespDtoList.add(userRespDto);
@@ -116,9 +116,9 @@ public class UserServiceImpl implements IUserService {
         user.setName(userReqDto.getName());
         user.setStatus(UserStatusEnum.toCode(userReqDto.getStatus()));
         user.setSex(SexEnum.toCode(userReqDto.getSex()));
-        user.setCreatetime(new Date());
-        user.setRoleid(roleRepository.findIdByName(userReqDto.getRole()));
-        user.setDeptid(deptRepository.findIdByName(userReqDto.getDept()));
+        user.setCreateTime(new Date());
+        user.setRoleId(roleRepository.findIdByName(userReqDto.getRole()));
+        user.setDeptId(deptRepository.findIdByName(userReqDto.getDept()));
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
     }
@@ -133,8 +133,8 @@ public class UserServiceImpl implements IUserService {
         user.setName(userReqDto.getName());
         user.setStatus(UserStatusEnum.toCode(userReqDto.getStatus()));
         user.setSex(SexEnum.toCode(userReqDto.getSex()));
-        user.setRoleid(roleRepository.findIdByName(userReqDto.getRole()));
-        user.setDeptid(deptRepository.findIdByName(userReqDto.getDept()));
+        user.setRoleId(roleRepository.findIdByName(userReqDto.getRole()));
+        user.setDeptId(deptRepository.findIdByName(userReqDto.getDept()));
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
     }

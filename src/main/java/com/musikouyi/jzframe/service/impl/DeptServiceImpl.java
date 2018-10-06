@@ -52,8 +52,8 @@ public class DeptServiceImpl implements IDeptService {
         for (Dept dept : deptList) {
             DeptDto deptDto = new DeptDto(
                     dept.getId(),
-                    dept.getFullname(),
-                    dept.getPid() == Global.SUPER_DEPT_PARENT ? null : deptRepository.findById(dept.getPid()).get().getFullname()
+                    dept.getFullName(),
+                    dept.getParentId() == Global.SUPER_DEPT_PARENT ? null : deptRepository.findById(dept.getParentId()).get().getFullName()
             );
             deptDtoList.add(deptDto);
         }
@@ -75,8 +75,8 @@ public class DeptServiceImpl implements IDeptService {
     @Override
     public Result create(DeptDto deptDto) {
         Dept dept = new Dept();
-        dept.setFullname(deptDto.getFullname());
-        dept.setPid(deptRepository.findIdByName(deptDto.getParent_dept()));
+        dept.setFullName(deptDto.getFullName());
+        dept.setParentId(deptRepository.findIdByName(deptDto.getParent_dept()));
         deptRepository.saveAndFlush(dept);
         return ResultUtil.success();
     }
@@ -84,8 +84,8 @@ public class DeptServiceImpl implements IDeptService {
     @Override
     public Result modify(DeptDto deptDto) {
         Dept dept = deptRepository.findById(deptDto.getId()).get();
-        dept.setFullname(deptDto.getFullname());
-        dept.setPid(deptRepository.findIdByName(deptDto.getParent_dept()));
+        dept.setFullName(deptDto.getFullName());
+        dept.setParentId(deptRepository.findIdByName(deptDto.getParent_dept()));
         deptRepository.saveAndFlush(dept);
         return ResultUtil.success();
     }

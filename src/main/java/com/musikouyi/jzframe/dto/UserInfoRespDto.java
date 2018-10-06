@@ -26,6 +26,6 @@ public class UserInfoRespDto {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")    //Date类型转String
     private Date birthday;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createtime;
+    private Date createTime;
 
 }
