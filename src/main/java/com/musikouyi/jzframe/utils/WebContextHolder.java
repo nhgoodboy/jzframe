@@ -6,6 +6,8 @@ public class WebContextHolder {
 
     private static String warPath;
 
+    private static ThreadLocal<ISessionContext> sessionContextStore = new ThreadLocal<>();
+
     /**
      * 结尾不带/或\的地址
      */
@@ -23,8 +25,6 @@ public class WebContextHolder {
     public static void setWarPath(String warPath) {
         WebContextHolder.warPath = jettyToTomcatPathConvert(warPath);
     }
-
-    private static ThreadLocal<ISessionContext> sessionContextStore = new ThreadLocal<>();
 
     public static ISessionContext getSessionContextStore() {
         return sessionContextStore.get();

@@ -1,1 +1,4 @@
 1、sessionId和绝对路径
+
+2、跨域请求导致sessionId不一致
+(已解决，allowCredentials(true))

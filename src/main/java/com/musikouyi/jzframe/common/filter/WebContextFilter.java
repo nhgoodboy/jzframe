@@ -20,7 +20,7 @@ import java.io.IOException;
 public class WebContextFilter implements Filter {
 
     public void init(FilterConfig filterConfig) {
-        log.info("init");
+        log.info("WebContextFilter.init");
         WebContextHolder.setContextPath(filterConfig.getServletContext().getContextPath());
 //        WebContextHolder.setWarPath(filterConfig.getServletContext().getRealPath("/"));
         try {

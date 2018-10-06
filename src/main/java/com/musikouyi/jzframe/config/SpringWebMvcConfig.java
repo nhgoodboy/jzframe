@@ -20,9 +20,11 @@ public class SpringWebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
+                .allowedHeaders("*")
                 .allowedOrigins("http://localhost:9528")
                 .allowedMethods("*")
-                .allowCredentials(false).maxAge(3600);
+                .allowCredentials(true)   // 解决跨域请求sessionId不一致的问题
+                .maxAge(3600);
     }
 
     /**

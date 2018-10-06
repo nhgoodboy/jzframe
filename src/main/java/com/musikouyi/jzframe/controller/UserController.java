@@ -56,7 +56,6 @@ public class UserController {
 
     @PostMapping(ControllerMapping.EDIT_USER_INFO)
     public Result editUserInfo(@RequestBody UserInfoReqDto userInfoReqDto) {
-        System.out.println(userInfoReqDto.toString());
         return SpringContextHolder.getBean(IUserService.class).editUserInfo(userInfoReqDto);
     }
 

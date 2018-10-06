@@ -89,8 +89,7 @@ public class FileInfServiceImpl implements IFileInfService {
                 fileInfDto.setFileInfId(-(((int) (System.currentTimeMillis() & 0xffffffL) << 7) + seed)); //保证在一个会话里时间ID不一样，为负数的是临时ID
                 seed = (seed + 1) & 0xaf;
             }
-            System.out.println("sessionid: " + WebContextHolder.getSessionContextStore().getSessionId());
-            tempFileCache.put("EC94B8B4B936C1D3B1CAC54412A5977A" + fileInfDto.getFileInfId(), fileInfDto);
+            tempFileCache.put(WebContextHolder.getSessionContextStore().getSessionId() + fileInfDto.getFileInfId(), fileInfDto);
             return ResultUtil.success(fileInfDto);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
@@ -248,8 +247,7 @@ public class FileInfServiceImpl implements IFileInfService {
         List<FileInfDto> result = new ArrayList<>();
         for (String fileInfIdStr : fileInfIds.split(Global.DEFAULT_TEXT_SPLIT_CHAR)) {
             if (fileInfIdStr.startsWith("-")) {
-                System.out.println("new sessionid: " + WebContextHolder.getSessionContextStore().getSessionId());
-                FileInfDto fileInfDto = tempFileCache.get("EC94B8B4B936C1D3B1CAC54412A5977A" + fileInfIdStr);
+                FileInfDto fileInfDto = tempFileCache.get(WebContextHolder.getSessionContextStore().getSessionId() + fileInfIdStr);
                 if (fileInfDto != null) {
                     result.add(fileInfDto);
                 }
