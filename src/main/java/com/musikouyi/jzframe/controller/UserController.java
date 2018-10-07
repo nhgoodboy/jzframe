@@ -62,7 +62,6 @@ public class UserController {
 
     @PutMapping(ControllerMapping.CHANGE_AVATAR + "/{userHeadId}")   //REST风格
     public Result changeAvatar(@PathVariable("userHeadId") Integer userHeadId, @RequestHeader(JwtConstants.AUTH_HEADER) String token) throws FileNotFoundException {
-        System.out.println("userHeadId: " + userHeadId);
         return SpringContextHolder.getBean(IUserService.class).changeAvatar(userHeadId,
                 Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token.substring(7))));
     }

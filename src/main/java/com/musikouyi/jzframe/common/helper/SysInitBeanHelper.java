@@ -15,12 +15,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class SysInitBeanHelper implements ApplicationRunner {
 
+    private final SmallPictImageQueueHelper smallPictImageQueueHelper;
+
     @Autowired
-    private SmallPictImageQueueHelper smallPictImageQueueHelper;
+    public SysInitBeanHelper(SmallPictImageQueueHelper smallPictImageQueueHelper) {
+        this.smallPictImageQueueHelper = smallPictImageQueueHelper;
+    }
 
     @Override
     public void run(ApplicationArguments args) {
         smallPictImageQueueHelper.init(); //初始化小图处理线程
-        log.info("系统初始化成功");
+        log.info("系统资源初始化成功");
     }
 }

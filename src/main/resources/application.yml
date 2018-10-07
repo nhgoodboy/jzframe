@@ -18,9 +18,15 @@ spring:
 #    generate-ddl: false  (无效)
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect   #设置InnoDB引擎（不设置默认位MyISAM）
   resources:
-    static-locations: classpath:/static   #用于描述静态资源的存放位置
+  #用于描述静态资源的存放位置
+    static-locations: classpath:/static
   mvc:
-    static-path-pattern: /**  #用于阐述HTTP请求地址,在SpringBoot中，默认配置的/**映射到/static。
-
+   #用于阐述HTTP请求地址,在SpringBoot中，默认配置的/**映射到/static。
+    static-path-pattern: /**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bean
 
 

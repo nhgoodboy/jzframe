@@ -36,7 +36,7 @@ public abstract class BaseQueueHelper<D, E extends ValueWrapper<D>, H extends Wo
 
     private RingBuffer<E> ringBuffer;
 
-    private List<D> initQueue = new ArrayList<D>();
+    private List<D> initQueue = new ArrayList<>();
 
     /**
      * 需要多少线程来消耗队列.
@@ -58,7 +58,7 @@ public abstract class BaseQueueHelper<D, E extends ValueWrapper<D>, H extends Wo
     private Class<H> eventHandlerClass;
 
     //记录所有的队列，系统退出时统一清理资源
-    private static List<BaseQueueHelper> queueHelperList = new ArrayList<BaseQueueHelper>();
+    private static List<BaseQueueHelper> queueHelperList = new ArrayList<>();
 
 
     public BaseQueueHelper() {
@@ -100,25 +100,17 @@ public abstract class BaseQueueHelper<D, E extends ValueWrapper<D>, H extends Wo
         ringBuffer = disruptor.start();
 
         for (D data : initQueue) {
-            ringBuffer.publishEvent(new EventTranslatorOneArg<E, D>() {
-                @Override
-                public void translateTo(E event, long sequence, D data) {
-                    event.setValue(data);
-                }
-            }, data);
+            ringBuffer.publishEvent((event, sequence, data1) -> event.setValue(data1), data);
         }
 
         //加入资源清理钩子
         synchronized (queueHelperList) {
             if (queueHelperList.isEmpty()) {
-                Runtime.getRuntime().addShutdownHook(new Thread() {
-                    @Override
-                    public void run() {
-                        for (BaseQueueHelper baseQueueHelper : queueHelperList) {
-                            baseQueueHelper.shutdown();
-                        }
+                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                    for (BaseQueueHelper baseQueueHelper : queueHelperList) {
+                        baseQueueHelper.shutdown();
                     }
-                });
+                }));
             }
             queueHelperList.add(this);
         }
@@ -145,12 +137,7 @@ public abstract class BaseQueueHelper<D, E extends ValueWrapper<D>, H extends Wo
             initQueue.add(data);
             return;
         }
-        ringBuffer.publishEvent(new EventTranslatorOneArg<E, D>() {
-            @Override
-            public void translateTo(E event, long sequence, D data) {
-                event.setValue(data);
-            }
-        }, data);
+        ringBuffer.publishEvent((event, sequence, data1) -> event.setValue(data1), data);
     }
 
     public void shutdown() {

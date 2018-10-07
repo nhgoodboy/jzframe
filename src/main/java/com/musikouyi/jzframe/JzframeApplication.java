@@ -6,9 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Slf4j
 @SpringBootApplication
-//@ServletComponentScan
 public class JzframeApplication {
-
 
     public static void main(String[] args) {
         SpringApplication.run(JzframeApplication.class, args);

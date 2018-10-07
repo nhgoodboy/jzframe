@@ -27,11 +27,12 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-web')
-    runtime('mysql:mysql-connector-java')
-    compileOnly('org.projectlombok:lombok')
+    runtime('mysql:mysql-connector-java')   //数据库驱动
+    compileOnly('org.projectlombok:lombok')   //简化getter&setter写法
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    compile('com.alibaba:druid:1.1.10')
+    compile('com.alibaba:druid:1.1.10')   //数据库连接池
     compile('org.springframework.boot:spring-boot-devtools')   //热部署
+    compile('org.springframework.boot:spring-boot-starter-actuator')   //监控端点
 
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
     compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
@@ -42,10 +43,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring
     compile group: 'org.apache.shiro', name: 'shiro-spring', version: '1.4.0'
     // https://mvnrepository.com/artifact/com.lmax/disruptor
-    compile group: 'com.lmax', name: 'disruptor', version: '3.4.2'
-    //内存队列见http://lmax-exchange.github.com/disruptor多线程创建和消费队列
+    compile group: 'com.lmax', name: 'disruptor', version: '3.4.2'  //内存队列见http://lmax-exchange.github.com/disruptor多线程创建和消费队列
     // https://mvnrepository.com/artifact/net.coobird/thumbnailator
-    compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+    compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'   //图片处理库
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
 
