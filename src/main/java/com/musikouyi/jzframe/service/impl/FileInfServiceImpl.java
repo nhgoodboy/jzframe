@@ -175,6 +175,7 @@ public class FileInfServiceImpl implements IFileInfService {
         Date now = new Date();
         for (FileInfDto fileInfBarDto : addFileInfBarDto) {
             File tempFile = new File(ResourceUtils.getURL(Global.CLASSPATH_STATIC_DIR).getPath() + File.separator + fileInfBarDto.getFilePath());
+            Integer tempFileSize = new Long(tempFile.length() / 1024).intValue();  //将文件大小转换为kb单位
             Calendar calender = Calendar.getInstance();
 
             String moveDirPath = new StringBuilder(Global.UPLOAD_DIR)
@@ -198,7 +199,7 @@ public class FileInfServiceImpl implements IFileInfService {
             boolean isPict = fileInf.getFileTypeNm().equalsIgnoreCase("png") || fileInf.getFileTypeNm().equalsIgnoreCase("jpg") || fileInf.getFileTypeNm().equalsIgnoreCase("gif");
             fileInf.setIfPict(BoolCodeEnum.fromValue(isPict).getMsg());
             fileInf.setFileTime(now);
-            fileInf.setFileSizeKb(new Long(tempFile.length() / 1024).intValue());
+            fileInf.setFileSizeKb(tempFileSize);
             fileInf.setFilePath(moveDirPath + File.separator + FilenameUtils.getName(fileInfBarDto.getFilePath()));
             fileInf.setBusinessObjectId(businessObjectId);
             fileInfRepository.save(fileInf);
