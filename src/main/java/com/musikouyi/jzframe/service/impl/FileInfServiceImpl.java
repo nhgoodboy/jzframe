@@ -113,7 +113,7 @@ public class FileInfServiceImpl implements IFileInfService {
 
     /**
      * 同步多个资源文件集合.
-     * 如果ID不在已有里的，就添加；如果有在的，就不管；如果不在的，就删除。
+     * 如果ID不在已有里的，就添加；如果有在的，就不管；原有的-提交的，就删除。
      *
      * @param businessClassNm  文件类名称，删除时应将对应的记录下的文件也清理
      * @param businessObjectId 业务对象ID，新增时保存用
@@ -247,7 +247,7 @@ public class FileInfServiceImpl implements IFileInfService {
     private List<FileInfDto> loadFileInfDtoList(String fileInfIds) {
         List<FileInfDto> result = new ArrayList<>();
         for (String fileInfIdStr : fileInfIds.split(Global.DEFAULT_TEXT_SPLIT_CHAR)) {
-            if (fileInfIdStr.startsWith("-")) {
+            if (fileInfIdStr.startsWith("-")) {   //如果是负数，则是新增，从tempFileCache中取
                 FileInfDto fileInfDto = tempFileCache.get(WebContextHolder.getSessionContextStore().getSessionId() + fileInfIdStr);
                 if (fileInfDto != null) {
                     result.add(fileInfDto);
@@ -296,7 +296,7 @@ public class FileInfServiceImpl implements IFileInfService {
                     || field.getName().endsWith(Global.FILE_IDS_FIELD_SUFFIX)
                     ) {
                 try {
-                    Object newValue = BeanUtils.getPropertyDescriptor(entityClass, field.getName()).getReadMethod().invoke(newEntity);
+                    Object newValue = BeanUtils.getPropertyDescriptor(entityClass, field.getName()).getReadMethod().invoke(newEntity);   //获得pictId的值
                     Object oldValue = (savedEntity == null ? null : BeanUtils.getPropertyDescriptor(entityClass, field.getName()).getReadMethod().invoke(savedEntity));
                     SyncFileInfResult syncFileInfResult = syncFileInfList(
                             entityClass.getSimpleName(),

@@ -1,12 +1,11 @@
 package com.musikouyi.jzframe.utils;
 
 import com.musikouyi.jzframe.common.constant.Global;
+import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.filters.Border;
 import net.coobird.thumbnailator.geometry.Positions;
 import org.apache.commons.io.FilenameUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -29,6 +28,7 @@ import java.io.IOException;
  *
  * @author JIM
  */
+@Slf4j
 public class SmallPictUtil {
 
     private static final float DEFAULT_JPG_QUALITY = 0.85f;
@@ -37,8 +37,6 @@ public class SmallPictUtil {
 
     private SmallPictUtil() {
     }
-
-    private static Logger logger = LoggerFactory.getLogger(SmallPictUtil.class);
 
     /**
      * 平滑缩放，不要处理大图像.
@@ -77,7 +75,7 @@ public class SmallPictUtil {
             return -1;
         }
         if (!destFile.getParentFile().exists() && !destFile.getParentFile().mkdirs()) {
-            logger.error("permission denied, create directory failed");
+            log.error("permission denied, create directory failed");
             throw new RuntimeException("permission denied, create directory failed");
         }
 

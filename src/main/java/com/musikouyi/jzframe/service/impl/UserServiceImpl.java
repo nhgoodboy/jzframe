@@ -169,7 +169,6 @@ public class UserServiceImpl implements IUserService {
         User oldUser = new User();
         BeanUtils.copyProperties(user, oldUser);
         user.setUserHeadPictId(userHeadId);
-//        userRepository.save(user);
         SpringContextHolder.getBean(IFileInfService.class).syncBusinessObject(user.getId(), user, oldUser, User.class);
         userRepository.saveAndFlush(user);
         String pictPath = SpringContextHolder.getBean(IFileInfService.class).getSmallPictUrl(userRepository.findById(userId).get().getUserHeadPictId(), Global.DEFAULT_SMALL_PICT_SIZE, Global.DEFAULT_SMALL_PICT_SIZE);

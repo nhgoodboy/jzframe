@@ -23,8 +23,7 @@ public class ResultUtil {
     }
 
     public static Result error(ResultEnum resultEnum) {
-        Result result = new Result(resultEnum);
-        return result;
+        return new Result(resultEnum);
     }
 
 }
