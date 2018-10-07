@@ -15,6 +15,7 @@ import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -165,11 +166,13 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public Result changeAvatar(Integer userHeadId, Integer userId) throws FileNotFoundException {
         User user = userRepository.findById(userId).get();
+        User oldUser = new User();
+        BeanUtils.copyProperties(user, oldUser);
         user.setUserHeadPictId(userHeadId);
+//        userRepository.save(user);
+        SpringContextHolder.getBean(IFileInfService.class).syncBusinessObject(user.getId(), user, oldUser, User.class);
         userRepository.saveAndFlush(user);
-        Map map = SpringContextHolder.getBean(IFileInfService.class).syncBusinessObject(user.getId(), user, null, User.class);
-        userRepository.saveAndFlush(user);
-        String pictPath = SpringContextHolder.getBean(IFileInfService.class).getSmallPictUrl(userRepository.findById(userId).get().getUserHeadPictId(), 150, 150);
+        String pictPath = SpringContextHolder.getBean(IFileInfService.class).getSmallPictUrl(userRepository.findById(userId).get().getUserHeadPictId(), Global.DEFAULT_SMALL_PICT_SIZE, Global.DEFAULT_SMALL_PICT_SIZE);
         return ResultUtil.success(pictPath);
     }
 }

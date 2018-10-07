@@ -42,24 +42,24 @@ import java.util.*;
 @Service
 public class FileInfServiceImpl implements IFileInfService {
 
-    @Autowired
-    private FileInfRepository fileInfRepository;
+    private final FileInfRepository fileInfRepository;
 
-    @Autowired
-    private SmallPictSetupRepository smallPictSetupRepository;
+    private final SmallPictSetupRepository smallPictSetupRepository;
 
-    @Autowired
-    private SmallPictRepository smallPictRepository;
+    private final SmallPictRepository smallPictRepository;
 
-    @Autowired
-    private SmallPictImageQueueHelper smallPictImageQueueHelper;
-
-    public void setSmallPictImageQueueHelper(SmallPictImageQueueHelper smallPictImageQueueHelper) {
-        this.smallPictImageQueueHelper = smallPictImageQueueHelper;
-    }
+    private final SmallPictImageQueueHelper smallPictImageQueueHelper;
 
     private static int seed = 0;
     private static final int TEMP_FILE_CACHE_SIZE = 1000;
+
+    @Autowired
+    public FileInfServiceImpl(FileInfRepository fileInfRepository, SmallPictSetupRepository smallPictSetupRepository, SmallPictRepository smallPictRepository, SmallPictImageQueueHelper smallPictImageQueueHelper) {
+        this.fileInfRepository = fileInfRepository;
+        this.smallPictSetupRepository = smallPictSetupRepository;
+        this.smallPictRepository = smallPictRepository;
+        this.smallPictImageQueueHelper = smallPictImageQueueHelper;
+    }
 
     /**
      * 将文件保存到临时目录.
