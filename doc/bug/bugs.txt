@@ -2,3 +2,6 @@
 
 2、跨域请求导致sessionId不一致
 (已解决，allowCredentials(true))
+
+3、图片系统只生成了默认大小小图，没有生成其他规格的小图
+(已解决，原因是SmallPictEventHandler不是spring bean,不能使用Autowired,改用SpringContextHolder即可)

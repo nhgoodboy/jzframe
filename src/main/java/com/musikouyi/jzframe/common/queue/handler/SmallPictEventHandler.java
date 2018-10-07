@@ -6,6 +6,7 @@ import com.musikouyi.jzframe.common.queue.vo.SmallPictEventData;
 import com.musikouyi.jzframe.domain.entity.SmallPict;
 import com.musikouyi.jzframe.repository.SmallPictRepository;
 import com.musikouyi.jzframe.utils.SmallPictUtil;
+import com.musikouyi.jzframe.utils.SpringContextHolder;
 import com.musikouyi.jzframe.utils.WebContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,9 +26,6 @@ import java.util.Date;
  */
 public class SmallPictEventHandler implements WorkHandler<SmallPictEvent> {
 
-    @Autowired
-    private SmallPictRepository smallPictRepository;
-
     @Override
     public void onEvent(SmallPictEvent event) {
         try {
@@ -41,7 +39,7 @@ public class SmallPictEventHandler implements WorkHandler<SmallPictEvent> {
                 smallPict.setSmallPictHeight(smallPictEventData.getHeight());
                 smallPict.setFileSizeKb(size);
                 smallPict.setFileTime(new Date());
-                smallPictRepository.save(smallPict);
+                SpringContextHolder.getBean(SmallPictRepository.class).saveAndFlush(smallPict);
             }
         } catch (Throwable tr) {
             tr.printStackTrace();

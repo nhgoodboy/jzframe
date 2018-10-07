@@ -78,15 +78,12 @@ public abstract class BaseQueueHelper<D, E extends ValueWrapper<D>, H extends Wo
 
     @SuppressWarnings("unchecked")
     public void init() {
-        disruptor = new Disruptor<E>(new EventFactory<E>() {
-            @Override
-            public E newInstance() {
-                try {
-                    return (E) eventClass.newInstance();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
+        disruptor = new Disruptor<E>(() -> {
+            try {
+                return (E) eventClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
             }
         }, getQueueSize(), DaemonThreadFactory.INSTANCE, ProducerType.SINGLE, getStrategy());
 
