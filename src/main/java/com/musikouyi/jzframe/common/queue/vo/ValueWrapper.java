@@ -1,26 +1,15 @@
 package com.musikouyi.jzframe.common.queue.vo;
 
+import lombok.Data;
+
 /**
  * Create with IDEA
  * Author: YJZ
  * DateTime: 2018/10/1 21:06
  **/
+@Data
 public class ValueWrapper<T> {
 
     private T value;
 
-    public ValueWrapper() {
-    }
-
-    public ValueWrapper(T value) {
-        this.value = value;
-    }
-
-    public T getValue() {
-        return value;
-    }
-
-    public void setValue(T value) {
-        this.value = value;
-    }
 }

@@ -78,9 +78,9 @@ public abstract class BaseQueueHelper<D, E extends ValueWrapper<D>, H extends Wo
 
     @SuppressWarnings("unchecked")
     public void init() {
-        disruptor = new Disruptor<E>(() -> {
+        disruptor = new Disruptor<>(() -> {
             try {
-                return (E) eventClass.newInstance();
+                return eventClass.newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;

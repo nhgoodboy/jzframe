@@ -114,6 +114,7 @@ public class FileInfServiceImpl implements IFileInfService {
     /**
      * 同步多个资源文件集合.
      * 如果ID不在已有里的，就添加；如果有在的，就不管；原有的-提交的，就删除。
+     * 如果是负数则表示新增图片，要从临时区放到upload区，如果是正数则无需操作，如果不在原集合的正数ID则表示已删除（补充）
      *
      * @param businessClassNm  文件类名称，删除时应将对应的记录下的文件也清理
      * @param businessObjectId 业务对象ID，新增时保存用
@@ -124,16 +125,16 @@ public class FileInfServiceImpl implements IFileInfService {
      */
     private SyncFileInfResult syncFileInfList(String businessClassNm, Integer businessObjectId, String savedFileInfIds, String newFileInfIds) throws FileNotFoundException {
 
-        List<FileInfDto> fileInfBarDtoList = loadFileInfDtoList(newFileInfIds);
+        List<FileInfDto> fileInfBarDtoList = loadFileInfDtoList(newFileInfIds);   //解析获得id的列表
 
-        List<FileInf> savedFileInfList = new ArrayList<>();
+        List<FileInf> savedFileInfList = new ArrayList<>();   //id相同的、已保存的FileInf列表
         if (StringUtils.isNotBlank(savedFileInfIds)) {
             for (String oldFileInfId : savedFileInfIds.split(Global.DEFAULT_TEXT_SPLIT_CHAR)) {
                 savedFileInfList.add(fileInfRepository.getOne(new Integer(oldFileInfId)));
             }
         }
 
-        List<Integer> savedFileInfIdList = new ArrayList<>();
+        List<Integer> savedFileInfIdList = new ArrayList<>();   //获得savedFileInfList的id集合
         for (FileInf savedFileInf : savedFileInfList) {
             savedFileInfIdList.add(savedFileInf.getFileInfId());
         }
@@ -149,7 +150,7 @@ public class FileInfServiceImpl implements IFileInfService {
             }
         }
 
-        Collection<Integer> deleteList = CollectionUtils.subtract(savedFileInfIdList, updateFileInfIdList);
+        Collection<Integer> deleteList = CollectionUtils.subtract(savedFileInfIdList, updateFileInfIdList);   //获得需要删除的id
         for (Integer deleteId : deleteList) {
             FileInf fileInf = fileInfRepository.getOne(deleteId);
             FileUtils.deleteQuietly(new File(ResourceUtils.getURL(Global.CLASSPATH_STATIC_DIR).getPath() + File.separator + fileInf.getFilePath()));
@@ -303,13 +304,13 @@ public class FileInfServiceImpl implements IFileInfService {
                             businessObjectId,
                             oldValue == null ? "" : oldValue.toString(),
                             newValue == null ? "" : newValue.toString());
-                    if (field.getName().endsWith(Global.PICT_ID_FIELD_SUFFIX)) {
+                    if (field.getName().endsWith(Global.PICT_ID_FIELD_SUFFIX)) { //判断是一张图片还是多张，一张时写入的是整型
                         if (StringUtils.isEmpty(syncFileInfResult.getFileInfIds())) {
                             BeanUtils.getPropertyDescriptor(entityClass, field.getName()).getWriteMethod().invoke(newEntity, (Object) null);
                         } else {
                             BeanUtils.getPropertyDescriptor(entityClass, field.getName()).getWriteMethod().invoke(newEntity, new Integer(syncFileInfResult.getFileInfIds()));
                         }
-                    } else {
+                    } else {  //多张图片，写入的是字符串
                         BeanUtils.getPropertyDescriptor(entityClass, field.getName()).getWriteMethod().invoke(newEntity, syncFileInfResult.getFileInfIds());
                     }
                     replaceMap.putAll(syncFileInfResult.getReplaceMap());
@@ -342,8 +343,8 @@ public class FileInfServiceImpl implements IFileInfService {
                 for (SmallPictSetup smallPictSetup : smallPictSetupList) {
                     if (StringUtils.isNoneBlank(smallPictSetup.getSmallPictSpec())) {
                         for (String specSetupStr : smallPictSetup.getSmallPictSpec().split(Global.DEFAULT_TEXT_SPLIT_CHAR)) { //解析配置字符串，例如120x80o,150x100,175x200i
-                            boolean ifInnerCut = true;
-                            int outSpecIndex = specSetupStr.indexOf('o');
+                            boolean ifInnerCut = true;  //内裁剪
+                            int outSpecIndex = specSetupStr.indexOf('o');  //外裁剪
                             if (outSpecIndex > -1) {
                                 ifInnerCut = false;
                             }

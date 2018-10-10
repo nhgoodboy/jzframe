@@ -57,7 +57,7 @@ INSERT INTO `sys_role` VALUES (4, 4, '测试员女', 1, 'test_woman', NULL);
 -- ----------------------------
 -- Records of sys_small_pict_setup
 -- ----------------------------
-INSERT INTO `sys_small_pict_setup` VALUES (1, 'user', 'userHeadPictId', '150x150,200x200,248x274,100x100,210x210,220x220,330x330');
+INSERT INTO `sys_small_pict_setup` VALUES (1, 'user', 'userHeadPictId', '150x150,200x200,100x100,330x330');
 
 -- ----------------------------
 -- Table structure for sys_user
