@@ -8,21 +8,15 @@ import com.musikouyi.jzframe.repository.SmallPictRepository;
 import com.musikouyi.jzframe.utils.SmallPictUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import com.musikouyi.jzframe.utils.WebContextHolder;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.util.Date;
 
 /**
- * Create with IDEA
- * Author: YJZ
- * DateTime: 2018/10/1 21:17
- **/
-
-/**
  * 小图队列消息图片处理器.
- *
- * @author JIM
+ * Create with IDEA
+ * DateTime: 2018/10/1 21:17
+ * @author YJZ
  */
 public class SmallPictEventHandler implements WorkHandler<SmallPictEvent> {
 

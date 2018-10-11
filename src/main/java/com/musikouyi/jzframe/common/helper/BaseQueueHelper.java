@@ -90,7 +90,7 @@ public abstract class BaseQueueHelper<D, E extends ValueWrapper<D>, H extends Wo
         H[] eventHandlers = (H[]) Array.newInstance(eventHandlerClass, getThreadNum());
         for (int i = 0; i < getThreadNum(); i++) {
             try {
-                eventHandlers[i] = (H) eventHandlerClass.newInstance();
+                eventHandlers[i] = eventHandlerClass.newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
