@@ -42,11 +42,13 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getByAccount(String account) {
         return userRepository.findUserByAccount(account);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Result userInfo(Integer userId) {
         User user = userRepository.findById(userId).get();
         List<String> roleNameList = new ArrayList<>();
@@ -68,6 +70,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Result findAll(ListReqDto listReqDto) {
         Page<User> userPage = userRepository.findByStatusIsNot(UserStatusEnum.DELETED.getCode(), PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
         List<User> userList = userPage.getContent();

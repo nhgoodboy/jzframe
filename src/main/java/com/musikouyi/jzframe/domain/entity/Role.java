@@ -1,6 +1,8 @@
 package com.musikouyi.jzframe.domain.entity;
 
+import com.musikouyi.jzframe.common.constant.Global;
 import lombok.Data;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +18,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "sys_role")
+//@Document(indexName = Global.ES_DEFAULT_INDEX, type = "role")
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -23,7 +23,7 @@ public class SpringContextHolder implements ApplicationContextAware {
 
     public static ApplicationContext getApplicationContext() {
         assertApplicationContext();
-        return applicationContext;
+        return applicationContext;  
     }
 
     @SuppressWarnings("unchecked")

@@ -43,48 +43,14 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void setAuthority(Integer roleId, String ids) {
-
-    }
-
-    @Override
-    public void delRoleById(Integer roleId) {
-
-    }
-
-    @Override
-    public List<Map<String, Object>> selectRoles(String condition) {
-        return null;
-    }
-
-    @Override
-    public int deleteRolesById(Integer roleId) {
-        return 0;
-    }
-
-    @Override
-    public List<ZTreeNode> roleTreeList() {
-        return null;
-    }
-
-    @Override
-    public List<ZTreeNode> roleTreeListByRoleId(String[] roleId) {
-        return null;
-    }
-
-    @Override
-    public Role findById(Integer roleId) {
-        Optional<Role> roleOptional = roleRepository.findById(roleId);
-        return roleOptional.get();
-    }
-
-    @Override
+    @Transactional(readOnly = true)
     public Result getRoleNameList() {
         List<String> roleNameList = roleRepository.findName();
         return ResultUtil.success(roleNameList);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Result findAll(ListReqDto listReqDto) {
         Page<Role> rolePage = roleRepository.findAll(PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
         List<Role> roleList = rolePage.getContent();

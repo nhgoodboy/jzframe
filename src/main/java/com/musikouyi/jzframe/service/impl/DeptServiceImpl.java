@@ -28,22 +28,29 @@ import java.util.Optional;
 @Service
 public class DeptServiceImpl implements IDeptService {
 
+    private final DeptRepository deptRepository;
+
     @Autowired
-    private DeptRepository deptRepository;
+    public DeptServiceImpl(DeptRepository deptRepository) {
+        this.deptRepository = deptRepository;
+    }
 
     @Override
+    @Transactional(readOnly = true)
     public Dept findById(Integer deptId) {
         Optional<Dept> dept = deptRepository.findById(deptId);
         return dept.get();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Result getDeptNameList() {
         List<String> deptNameList = deptRepository.findName();
         return ResultUtil.success(deptNameList);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Result findAll(ListReqDto listReqDto) {
         Page<Dept> deptPage = deptRepository.findAll(PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
         List<Dept> deptList = deptPage.getContent();

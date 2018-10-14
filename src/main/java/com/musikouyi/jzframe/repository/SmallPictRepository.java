@@ -10,7 +10,8 @@ import java.util.List;
  * Author: YJZ
  * DateTime: 2018/10/1 21:34
  **/
-public interface SmallPictRepository extends JpaRepository<SmallPict, Integer> {
+public interface
+SmallPictRepository extends JpaRepository<SmallPict, Integer> {
 
     List<SmallPict> findByFileInfId(Integer fileInfId);
 }
