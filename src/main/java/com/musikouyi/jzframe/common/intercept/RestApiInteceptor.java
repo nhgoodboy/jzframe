@@ -1,5 +1,6 @@
 package com.musikouyi.jzframe.common.intercept;
 
+import com.musikouyi.jzframe.common.constant.Global;
 import com.musikouyi.jzframe.common.constant.JwtConstants;
 import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.exception.GlobalException;
@@ -35,12 +36,12 @@ public class RestApiInteceptor extends HandlerInterceptorAdapter {
 
     private boolean check(HttpServletRequest request, HttpServletResponse response) {
         final String requestMethod = request.getMethod();
-        if ("OPTIONS".equals(requestMethod)) {
+        if (Global.OPTIONS_REQUEST.equals(requestMethod)) {
             return true;
         }
         final String requestHeader = request.getHeader(JwtConstants.AUTH_HEADER);
         String authToken;
-        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
+        if (requestHeader != null && requestHeader.startsWith(JwtConstants.TOKEN_PREFIX)) {
             authToken = requestHeader.substring(7);
 
             //验证token是否过期,包含了验证jwt是否正确
@@ -57,6 +58,7 @@ public class RestApiInteceptor extends HandlerInterceptorAdapter {
             //header没有带Bearer字段
             throw new GlobalException(ResultEnum.TOKEN_WITHOUT);
         }
+        request.getSession().setAttribute(JwtConstants.TOKEN_SESSION, authToken);   //在session中保存token
         return true;
     }
 

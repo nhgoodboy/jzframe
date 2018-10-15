@@ -23,9 +23,9 @@ import java.io.FileNotFoundException;
 public class UserController {
 
     @GetMapping(ControllerMapping.USER_INFO)
-    public Result userInfo(@RequestHeader("Authorization") String token) {
+    public Result userInfo(@RequestHeader(JwtConstants.AUTH_HEADER) String token) {
         return SpringContextHolder.getBean(IUserService.class).userInfo(
-                Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token.substring(7))));
+                JwtTokenUtil.getUserIdFromToken(token.substring(JwtConstants.TOKEN_PREFIX_LENGTH)));
     }
 
     @GetMapping(ControllerMapping.LIST)
@@ -61,6 +61,6 @@ public class UserController {
     @PutMapping(ControllerMapping.CHANGE_AVATAR + "/{userHeadId}")   //REST风格
     public Result changeAvatar(@PathVariable("userHeadId") Integer userHeadId, @RequestHeader(JwtConstants.AUTH_HEADER) String token) throws FileNotFoundException {
         return SpringContextHolder.getBean(IUserService.class).changeAvatar(userHeadId,
-                Integer.valueOf(JwtTokenUtil.getUserIdFromToken(token.substring(7))));
+                JwtTokenUtil.getUserIdFromToken(token.substring(JwtConstants.TOKEN_PREFIX_LENGTH)));
     }
 }

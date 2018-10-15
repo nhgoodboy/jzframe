@@ -158,7 +158,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public Result editUserInfo(UserInfoReqDto userInfoReqDto) {
-        User user = userRepository.findById(Integer.valueOf(JwtTokenUtil.getUserIdFromToken(userInfoReqDto.getToken()))).get();
+        User user = userRepository.findById(JwtTokenUtil.getUserIdFromToken(userInfoReqDto.getToken())).get();
         user.setName(userInfoReqDto.getName());
         user.setSex(SexEnum.toCode(userInfoReqDto.getSex()));
         user.setEmail(userInfoReqDto.getEmail());

@@ -28,10 +28,10 @@ import java.util.Map;
 public class JwtTokenUtil {
 
     /**
-     * 获取用户id从token中
+     * 从token中获取用户id
      */
-    public static String getUserIdFromToken(String token) {
-        return getClaimFromToken(token).getSubject();
+    public static Integer getUserIdFromToken(String token) {
+        return Integer.valueOf(getClaimFromToken(token).getSubject());
     }
 
     /**

@@ -16,4 +16,9 @@ public interface JwtConstants {
 
     String AUTH_PATH = ControllerMapping.DO_LOGIN;   //需要验证的路径
 
+    String TOKEN_PREFIX = "Bearer ";
+
+    int TOKEN_PREFIX_LENGTH = TOKEN_PREFIX.length();
+
+    String TOKEN_SESSION = "token";
 }
