@@ -33,7 +33,7 @@ dependencies {
     compile('com.alibaba:druid:1.1.10')   //数据库连接池
     compile('org.springframework.boot:spring-boot-devtools')   //热部署
     compile('org.springframework.boot:spring-boot-starter-actuator')   //监控端点
-
+    compile('com.alibaba:fastjson:1.2.47')
     implementation('org.springframework.boot:spring-boot-starter-data-elasticsearch')
 
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt

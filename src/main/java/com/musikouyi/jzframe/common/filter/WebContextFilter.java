@@ -19,6 +19,7 @@ import java.io.IOException;
 @WebFilter(filterName = "webContextFilter", urlPatterns = "/")
 public class WebContextFilter implements Filter {
 
+    @Override
     public void init(FilterConfig filterConfig) {
         log.info("WebContextFilter.init");
         WebContextHolder.setContextPath(filterConfig.getServletContext().getContextPath());
@@ -30,12 +31,14 @@ public class WebContextFilter implements Filter {
         }
     }
 
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-//        log.info("WebContextFilter.doFilter");
+        log.info("WebContextFilter.doFilter");
         WebContextHolder.setSessionContextStore(new WebSessionContext((HttpServletRequest) request, (HttpServletResponse) response));
         chain.doFilter(request, response);
     }
 
+    @Override
     public void destroy() {
         log.info("WebContextFilter.destroy");
     }

@@ -1,5 +1,7 @@
 package com.musikouyi.jzframe.config;
 
+import com.musikouyi.jzframe.common.constant.ControllerMapping;
+import com.musikouyi.jzframe.common.intercept.RestApiInteceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -28,6 +30,6 @@ public class SpringWebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new RestApiInteceptor()).addPathPatterns(ControllerMapping.ADMIN_BASE + "/**");
+        registry.addInterceptor(new RestApiInteceptor()).addPathPatterns(ControllerMapping.ADMIN_BASE + "/**");
     }
 }
