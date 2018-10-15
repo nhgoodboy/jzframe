@@ -1,14 +1,8 @@
 package com.musikouyi.jzframe.service;
 
 import com.musikouyi.jzframe.domain.entity.Result;
-import com.musikouyi.jzframe.domain.entity.Role;
-import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.RoleDto;
-import org.springframework.data.repository.query.Param;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 角色相关业务
