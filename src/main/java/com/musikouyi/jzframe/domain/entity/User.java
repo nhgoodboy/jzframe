@@ -1,8 +1,6 @@
 package com.musikouyi.jzframe.domain.entity;
 
-import com.musikouyi.jzframe.common.constant.Global;
 import lombok.Data;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.io.Serializable;

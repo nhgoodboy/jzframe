@@ -1,7 +1,5 @@
 package com.musikouyi.jzframe.common.constant;
 
-import java.io.File;
-
 /**
  * Create with IDEA
  * Author: YJZ
