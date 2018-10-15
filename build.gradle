@@ -50,5 +50,6 @@ dependencies {
     compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'   //图片处理库
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
-
+    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch
+    compile group: 'org.springframework.data', name: 'spring-data-elasticsearch', version: '3.1.0.RELEASE'
 }
