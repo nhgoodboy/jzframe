@@ -85,7 +85,7 @@ INSERT INTO `sys_small_pict_setup` VALUES (1, 'user', 'userHeadPictId', '150x150
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admon', '2018-10-07 11:44:54', '2018-10-01 11:45:00', 1, '806352388@qq.com', '中哥', '123456', '18813244587', 1, NULL, 1, 1, NULL, NULL);
+INSERT INTO `sys_user` VALUES (1, 'admon', '2018-10-07 11:44:54', '2018-10-01 11:45:00', 1, '806352388@qq.com', '我是谁，我在哪', '123456', '18813244587', 1, NULL, 1, 1, NULL, NULL);
 INSERT INTO `sys_user` VALUES (2, 'edit', '2018-10-07 11:45:54', '2018-10-01 11:46:00', 1, '706352388@qq.com', '编辑', '123456', '18813244589', 2, NULL, 1, 1, NULL, NULL);
 INSERT INTO `sys_user` VALUES (3, 'test3', '2018-10-11 11:47:48', '2018-10-18 11:47:52', 3, '80232564@ww.cc', 'test3', '123456', '17325869854', 3, NULL, 1, 1, NULL, NULL);
 INSERT INTO `sys_user` VALUES (4, 'test4', '2018-10-25 11:48:56', '2018-10-01 11:48:59', 4, '265236@aa.cn', 'test4', '123456', '13698569852', 4, NULL, 2, 1, NULL, NULL);
