@@ -1,6 +1,7 @@
 package com.musikouyi.jzframe.service.impl;
 
 import com.musikouyi.jzframe.common.constant.Global;
+import com.musikouyi.jzframe.dao.mapper.DeptMapper;
 import com.musikouyi.jzframe.domain.entity.Dept;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.enums.ResultEnum;
@@ -28,11 +29,14 @@ import java.util.Optional;
 @Service
 public class DeptServiceImpl implements IDeptService {
 
+    private final DeptMapper deptMapper;
+
     private final DeptRepository deptRepository;
 
     @Autowired
-    public DeptServiceImpl(DeptRepository deptRepository) {
+    public DeptServiceImpl(DeptRepository deptRepository, DeptMapper deptMapper) {
         this.deptRepository = deptRepository;
+        this.deptMapper = deptMapper;
     }
 
     @Override
@@ -95,5 +99,23 @@ public class DeptServiceImpl implements IDeptService {
         dept.setParentId(deptRepository.findIdByName(deptDto.getParent_dept()));
         deptRepository.saveAndFlush(dept);
         return ResultUtil.success();
+    }
+
+    @Override
+    public Result getDepts(ListReqDto listReqDto) {
+        List<Dept> deptList = deptMapper.getDepts(listReqDto.getPage() - 1, listReqDto.getLimit());
+        ListRespDto<DeptDto> listRespDto = new ListRespDto<>();
+        List<DeptDto> deptDtoList = new ArrayList<>();
+        for (Dept dept : deptList) {
+            DeptDto deptDto = new DeptDto(
+                    dept.getId(),
+                    dept.getFullName(),
+                    dept.getParentId() == Global.SUPER_DEPT_PARENT ? null : deptMapper.findById(dept.getParentId()).getFullName()
+            );
+            deptDtoList.add(deptDto);
+        }
+        listRespDto.setItems(deptDtoList);
+        listRespDto.setTotal(deptMapper.getTotalNum());
+        return ResultUtil.success(listRespDto);
     }
 }

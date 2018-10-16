@@ -36,4 +36,9 @@ public class DeptController {
     public Result modify(@RequestBody DeptDto deptDto) {
         return SpringContextHolder.getBean(IDeptService.class).modify(deptDto);
     }
+
+    @GetMapping(ControllerMapping.GET_DEPTS)
+    public Result getDepts(ListReqDto listReqDto) {
+        return SpringContextHolder.getBean(IDeptService.class).getDepts(listReqDto);
+    }
 }

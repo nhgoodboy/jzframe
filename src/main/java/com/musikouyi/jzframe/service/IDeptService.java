@@ -38,4 +38,9 @@ public interface IDeptService {
      * 修改部门
      */
     Result modify(DeptDto roleReqDto);
+
+    /**
+     * 获取部门（mybatis测试）
+     */
+    Result getDepts(ListReqDto listReqDto);
 }
