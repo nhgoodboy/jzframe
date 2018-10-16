@@ -23,7 +23,7 @@ public class UserRespDto {
     private String dept;
     private String email;
     private String phone;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")    //Date类型转String
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")    //Date类型转String,设置为中国时区
     private Date createTime;
     private String status;
 

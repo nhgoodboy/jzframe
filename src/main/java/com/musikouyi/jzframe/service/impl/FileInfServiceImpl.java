@@ -53,6 +53,13 @@ public class FileInfServiceImpl implements IFileInfService {
     private static int seed = 0;
     private static final int TEMP_FILE_CACHE_SIZE = 1000;
 
+    @Data
+    @AllArgsConstructor
+    private static final class SyncFileInfResult {
+        private Map<String, String> replaceMap;
+        private String fileInfIds;
+    }
+
     @Autowired
     public FileInfServiceImpl(FileInfRepository fileInfRepository, SmallPictSetupRepository smallPictSetupRepository, SmallPictRepository smallPictRepository, SmallPictImageQueueHelper smallPictImageQueueHelper) {
         this.fileInfRepository = fileInfRepository;
@@ -61,13 +68,6 @@ public class FileInfServiceImpl implements IFileInfService {
         this.smallPictImageQueueHelper = smallPictImageQueueHelper;
     }
 
-    /**
-     * 将文件保存到临时目录.
-     *
-     * @param fileName
-     * @param fileStream
-     * @return
-     */
     @Override
     @Transactional
     public Result saveTempFile(String fileName, InputStream fileStream) {
@@ -275,14 +275,6 @@ public class FileInfServiceImpl implements IFileInfService {
         );
     }
 
-    /**
-     * 根据对象来同步更新所有的文件字段，包括图片ID集合的字段，图片ID字段。返回所有要更新的URL地址
-     *
-     * @param newEntity
-     * @param savedEntity
-     * @param entityClass
-     * @return replaceMap
-     */
     @Override
     @Transactional
     public Map<String, String> syncBusinessObject(Integer businessObjectId, Object newEntity, Object savedEntity, Class<?> entityClass) throws FileNotFoundException {
@@ -326,13 +318,6 @@ public class FileInfServiceImpl implements IFileInfService {
             }
         }
         return replaceMap;
-    }
-
-    @Data
-    @AllArgsConstructor
-    private static final class SyncFileInfResult {
-        private Map<String, String> replaceMap;
-        private String fileInfIds;
     }
 
     private void syncFileSmallPicts(String className, String fieldName, String fileInfIds, boolean isMulti) {
@@ -398,15 +383,6 @@ public class FileInfServiceImpl implements IFileInfService {
         }
     }
 
-    /**
-     * 如果图片ID为空或没有该记录，则返回默认的指定大小的图片.
-     * 默认图片放到/war/smallpict/default/common下，以 长x宽 的格式存放，例如100x100.jpg
-     *
-     * @param fileInfId
-     * @param width
-     * @param height
-     * @return
-     */
     @Override
     public String getSmallPictUrl(Integer fileInfId, int width, int height) {
         return getSmallPictUrl(fileInfId, width, height, Global.SMALL_PICT_COMMON_DIR + '/' + width + Global.SMALL_PICT_SIZE_SPLIT_CHAR + height + ".png");
