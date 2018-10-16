@@ -10,7 +10,6 @@ import com.musikouyi.jzframe.utils.ResultUtil;
 import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,7 @@ public class RestApiInteceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if (handler instanceof org.springframework.web.servlet.resource.ResourceHttpRequestHandler) {
+        if (handler instanceof org.springframework.web.servlet.resource.ResourceHttpRequestHandler) {  //跳过静态资源请求验证
             return true;
         }
         logger.info("rest api鉴权拦截");
@@ -46,7 +45,7 @@ public class RestApiInteceptor extends HandlerInterceptorAdapter {
      */
     private boolean check(HttpServletRequest request, HttpServletResponse response) {
         final String requestMethod = request.getMethod();
-        if (Global.OPTIONS_REQUEST.equals(requestMethod)) {
+        if (Global.OPTIONS_REQUEST.equals(requestMethod)) {  //跳过option请求验证
             return true;
         }
         final String requestHeader = request.getHeader(JwtConstants.AUTH_HEADER);
@@ -58,20 +57,20 @@ public class RestApiInteceptor extends HandlerInterceptorAdapter {
             try {
                 boolean flag = JwtTokenUtil.isTokenExpired(authToken);
                 if (flag) {
+//                    throw new GlobalException(ResultEnum.TOKEN_EXPIRED);   //此方法存在跨域问题，待探究
                     renderJson(response, ResultUtil.error(ResultEnum.TOKEN_EXPIRED));
-//                    throw new GlobalException(ResultEnum.TOKEN_EXPIRED);
                     return false;
                 }
             } catch (JwtException e) {
                 //有异常就是token解析失败
-                renderJson(response, ResultUtil.error(ResultEnum.TOKEN_ERROR));
 //                throw new GlobalException(ResultEnum.TOKEN_ERROR);
+                renderJson(response, ResultUtil.error(ResultEnum.TOKEN_ERROR));
                 return false;
             }
         } else {
             //header没有带Bearer字段
-            renderJson(response, ResultUtil.error(ResultEnum.TOKEN_WITHOUT));
 //            throw new GlobalException(ResultEnum.TOKEN_WITHOUT);
+            renderJson(response, ResultUtil.error(ResultEnum.TOKEN_WITHOUT));
             return false;
         }
         request.getSession().setAttribute(JwtConstants.TOKEN_SESSION, authToken);   //在session中保存token
@@ -85,7 +84,8 @@ public class RestApiInteceptor extends HandlerInterceptorAdapter {
         try {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.addHeader("Access-Control-Allow-Origin", "http://localhost:9528");
+            response.addHeader("Access-Control-Allow-Origin", "http://localhost:9528");  //解决跨域问题
+            response.addHeader("Access-Control-Allow-Credentials", "true");  //解决跨域问题
             PrintWriter writer = response.getWriter();
             System.out.println(JSON.toJSONString(jsonObject));
             writer.write(JSON.toJSONString(jsonObject));
