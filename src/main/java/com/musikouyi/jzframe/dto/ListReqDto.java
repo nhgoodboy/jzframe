@@ -7,4 +7,5 @@ public class ListReqDto {
 
     private int page;
     private int limit;
+    private String queryContent;
 }

@@ -9,5 +9,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findUserByAccount(String account);
 
-    Page<User> findByStatusIsNot(Integer status, Pageable pageable);
+    Page<User> findByStatusIsNotAndAccountLike(Integer status, String account, Pageable pageable);
 }
