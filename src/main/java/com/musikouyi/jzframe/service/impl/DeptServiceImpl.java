@@ -8,6 +8,7 @@ import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.dto.DeptDto;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.ListRespDto;
+import com.musikouyi.jzframe.exception.GlobalException;
 import com.musikouyi.jzframe.repository.DeptRepository;
 import com.musikouyi.jzframe.service.IDeptService;
 import com.musikouyi.jzframe.utils.ResultUtil;
@@ -41,13 +42,6 @@ public class DeptServiceImpl implements IDeptService {
 
     @Override
     @Transactional(readOnly = true)
-    public Dept findById(Integer deptId) {
-        Optional<Dept> dept = deptRepository.findById(deptId);
-        return dept.get();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Result getDeptNameList() {
         List<String> deptNameList = deptRepository.findName();
         return ResultUtil.success(deptNameList);
@@ -64,7 +58,8 @@ public class DeptServiceImpl implements IDeptService {
             DeptDto deptDto = new DeptDto(
                     dept.getId(),
                     dept.getFullName(),
-                    dept.getParentId() == Global.SUPER_DEPT_PARENT ? null : deptRepository.findById(dept.getParentId()).get().getFullName()
+                    dept.getParentId() == Global.SUPER_DEPT_PARENT ? null : deptRepository.findById(dept.getParentId())
+                            .orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFullName()
             );
             deptDtoList.add(deptDto);
         }
@@ -94,7 +89,7 @@ public class DeptServiceImpl implements IDeptService {
 
     @Override
     public Result modify(DeptDto deptDto) {
-        Dept dept = deptRepository.findById(deptDto.getId()).get();
+        Dept dept = deptRepository.findById(deptDto.getId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         dept.setFullName(deptDto.getFullName());
         dept.setParentId(deptRepository.findIdByName(deptDto.getParent_dept()));
         deptRepository.saveAndFlush(dept);

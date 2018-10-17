@@ -7,6 +7,7 @@ import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.domain.enums.SexEnum;
 import com.musikouyi.jzframe.domain.enums.UserStatusEnum;
 import com.musikouyi.jzframe.dto.*;
+import com.musikouyi.jzframe.exception.GlobalException;
 import com.musikouyi.jzframe.repository.DeptRepository;
 import com.musikouyi.jzframe.repository.RoleRepository;
 import com.musikouyi.jzframe.repository.UserRepository;
@@ -26,7 +27,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -53,9 +53,9 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public Result userInfo(Integer userId) {
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         List<String> roleNameList = new ArrayList<>();
-        roleNameList.add(roleRepository.findById(user.getRoleId()).get().getTips());
+        roleNameList.add(roleRepository.findById(user.getRoleId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getTips());
         UserInfoRespDto userInfoRespDto = new UserInfoRespDto();
         userInfoRespDto.setAvatar(SpringContextHolder.getBean(IFileInfService.class)
                 .getSmallPictUrl(user.getUserHeadPictId(), Global.DEFAULT_SMALL_PICT_SIZE, Global.DEFAULT_SMALL_PICT_SIZE));
@@ -63,8 +63,8 @@ public class UserServiceImpl implements IUserService {
         userInfoRespDto.setName(user.getName());
         userInfoRespDto.setSex(SexEnum.fromCode(user.getSex()));
         userInfoRespDto.setRoles(roleNameList);
-        userInfoRespDto.setRole(roleRepository.findById(user.getRoleId()).get().getName());
-        userInfoRespDto.setDept(deptRepository.findById(user.getDeptId()).get().getFullName());
+        userInfoRespDto.setRole(roleRepository.findById(user.getRoleId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getName());
+        userInfoRespDto.setDept(deptRepository.findById(user.getDeptId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFullName());
         userInfoRespDto.setEmail(user.getEmail());
         userInfoRespDto.setPhone(user.getPhone());
         userInfoRespDto.setBirthday(user.getBirthday());
@@ -85,8 +85,8 @@ public class UserServiceImpl implements IUserService {
                     user.getAccount(),
                     user.getName(),
                     SexEnum.fromCode(user.getSex()),
-                    roleRepository.findById(user.getRoleId()).get().getName(),
-                    deptRepository.findById(user.getDeptId()).get().getFullName(),
+                    roleRepository.findById(user.getRoleId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getName(),
+                    deptRepository.findById(user.getDeptId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFullName(),
                     user.getEmail(),
                     user.getPhone(),
                     user.getCreateTime(),
@@ -105,8 +105,7 @@ public class UserServiceImpl implements IUserService {
         if (Global.SUPER_USER_ID == id) {
             return ResultUtil.error(ResultEnum.FORBIDDEN);
         }
-        Optional<User> userOptional = userRepository.findById(id);
-        User user = userOptional.get();
+        User user = userRepository.findById(id).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         user.setStatus(UserStatusEnum.DELETED.getCode());
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
@@ -133,8 +132,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public Result modify(UserReqDto userReqDto) {
-        Optional<User> userOptional = userRepository.findById(userReqDto.getId());
-        User user = userOptional.get();
+        User user = userRepository.findById(userReqDto.getId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         user.setPhone(userReqDto.getPhone());
         user.setEmail(userReqDto.getEmail());
         user.setName(userReqDto.getName());
@@ -149,7 +147,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public Result changePwd(Integer id, String newPassword) {
-        User user = userRepository.findById(id).get();
+        User user = userRepository.findById(id).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         user.setPassword(newPassword);
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
@@ -158,7 +156,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public Result editUserInfo(UserInfoReqDto userInfoReqDto) {
-        User user = userRepository.findById(JwtTokenUtil.getUserIdFromToken(userInfoReqDto.getToken())).get();
+        User user = userRepository.findById(JwtTokenUtil.getUserIdFromToken(userInfoReqDto.getToken())).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         user.setName(userInfoReqDto.getName());
         user.setSex(SexEnum.toCode(userInfoReqDto.getSex()));
         user.setEmail(userInfoReqDto.getEmail());
@@ -171,13 +169,14 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public Result changeAvatar(Integer userHeadId, Integer userId) throws FileNotFoundException {
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         User oldUser = new User();
         BeanUtils.copyProperties(user, oldUser);
         user.setUserHeadPictId(userHeadId);
         SpringContextHolder.getBean(IFileInfService.class).syncBusinessObject(user.getId(), user, oldUser, User.class);
         userRepository.saveAndFlush(user);
-        String pictPath = SpringContextHolder.getBean(IFileInfService.class).getSmallPictUrl(userRepository.findById(userId).get().getUserHeadPictId(), Global.DEFAULT_SMALL_PICT_SIZE, Global.DEFAULT_SMALL_PICT_SIZE);
+        String pictPath = SpringContextHolder.getBean(IFileInfService.class).getSmallPictUrl(userRepository.findById(userId)
+                .orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getUserHeadPictId(), Global.DEFAULT_SMALL_PICT_SIZE, Global.DEFAULT_SMALL_PICT_SIZE);
         return ResultUtil.success(pictPath);
     }
 }

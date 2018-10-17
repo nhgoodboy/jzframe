@@ -12,8 +12,6 @@ import com.musikouyi.jzframe.dto.ListReqDto;
  **/
 public interface IDeptService {
 
-    Dept findById(Integer deptId);
-
     /**
      * 获取部门列表
      */

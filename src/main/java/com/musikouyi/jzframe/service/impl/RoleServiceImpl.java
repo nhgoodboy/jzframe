@@ -7,6 +7,7 @@ import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.ListRespDto;
 import com.musikouyi.jzframe.dto.RoleDto;
+import com.musikouyi.jzframe.exception.GlobalException;
 import com.musikouyi.jzframe.repository.DeptRepository;
 import com.musikouyi.jzframe.repository.RoleRepository;
 import com.musikouyi.jzframe.service.IRoleService;
@@ -57,8 +58,9 @@ public class RoleServiceImpl implements IRoleService {
             RoleDto roleRespDto = new RoleDto(
                     role.getId(),
                     role.getName(),
-                    role.getParentId() == Global.SUPER_ROLE_PARENT ? null : roleRepository.findById(role.getParentId()).get().getName(),
-                    deptRepository.findById(role.getDeptId()).get().getFullName()
+                    role.getParentId() == Global.SUPER_ROLE_PARENT ? null : roleRepository.findById(role.getParentId())
+                            .orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getName(),
+                    deptRepository.findById(role.getDeptId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFullName()
             );
             roleDtoList.add(roleRespDto);
         }
@@ -91,7 +93,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     @Transactional
     public Result modify(RoleDto roleDto) {
-        Role role = roleRepository.findById(roleDto.getId()).get();
+        Role role = roleRepository.findById(roleDto.getId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         role.setName(roleDto.getName());
         role.setParentId(roleRepository.findIdByName(roleDto.getParent_role()));
         role.setDeptId(deptRepository.findIdByName(roleDto.getDept()));

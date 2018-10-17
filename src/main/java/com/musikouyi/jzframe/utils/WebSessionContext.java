@@ -106,7 +106,7 @@ public class WebSessionContext implements ISessionContext {
 
     @Override
     public Map<String, String> getRequestMap() {
-        Map<String, String> requestMap = new HashMap<String, String>();
+        Map<String, String> requestMap = new HashMap<>();
         for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
             requestMap.put(entry.getKey(), entry.getValue()[0]);
         }

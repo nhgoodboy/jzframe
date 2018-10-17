@@ -3,11 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.musikouyi.jzframe.dao.mapper.DeptMapper">
-    <select id="getDepts" resultType="com.musikouyi.jzframe.domain.entity.Dept" parameterType="java.lang.Integer">
+    <select id="getDepts" resultType="dept" parameterType="java.lang.Integer">
         select id, FULL_NAME as fullname, PARENT_ID as parentId from sys_dept limit #{currPage, jdbcType=INTEGER} , #{pageSize, jdbcType=INTEGER}
     </select>
 
-    <select id="findById" resultType="com.musikouyi.jzframe.domain.entity.Dept" parameterType="java.lang.Integer">
+    <select id="findById" resultType="dept" parameterType="java.lang.Integer">
         select id, FULL_NAME as fullname, PARENT_ID as parentId from sys_dept where id = #{id, jdbcType=INTEGER}
     </select>
 
@@ -15,7 +15,7 @@
         select count(1) from sys_dept
     </select>
 
-    <insert id="addUserInfo" parameterType="com.musikouyi.jzframe.domain.entity.Dept">
+    <insert id="addUserInfo" parameterType="dept">
         insert into dept(id, fullName, parentId) value
         (#{id, jdbcType=INTEGER}, #{fullName, jdbcType=VARCHAR})
     </insert>

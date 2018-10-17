@@ -10,7 +10,9 @@ import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.SmallPict;
 import com.musikouyi.jzframe.domain.entity.SmallPictSetup;
 import com.musikouyi.jzframe.domain.enums.BoolCodeEnum;
+import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.dto.FileInfDto;
+import com.musikouyi.jzframe.exception.GlobalException;
 import com.musikouyi.jzframe.repository.FileInfRepository;
 import com.musikouyi.jzframe.repository.SmallPictRepository;
 import com.musikouyi.jzframe.repository.SmallPictSetupRepository;
@@ -323,7 +325,7 @@ public class FileInfServiceImpl implements IFileInfService {
     private void syncFileSmallPicts(String className, String fieldName, String fileInfIds, boolean isMulti) {
         if (StringUtils.isNotBlank(fileInfIds)) {
             for (String fileIdStr : fileInfIds.split(Global.DEFAULT_TEXT_SPLIT_CHAR)) {
-                String filePath = fileInfRepository.findById(new Integer(fileIdStr)).get().getFilePath();
+                String filePath = fileInfRepository.findById(new Integer(fileIdStr)).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath();
                 List<SmallPictSetup> smallPictSetupList = smallPictSetupRepository.findByBusinessClassNmAndBusinessFieldNm(className, fieldName);
                 for (SmallPictSetup smallPictSetup : smallPictSetupList) {
                     if (StringUtils.isNoneBlank(smallPictSetup.getSmallPictSpec())) {
@@ -333,7 +335,7 @@ public class FileInfServiceImpl implements IFileInfService {
                             if (outSpecIndex > -1) {
                                 ifInnerCut = false;
                             }
-                            String[] sizeArray = specSetupStr.replaceAll("i|o", "").split(Global.SMALL_PICT_SIZE_SPLIT_CHAR);
+                            String[] sizeArray = specSetupStr.replaceAll("[io]", "").split(Global.SMALL_PICT_SIZE_SPLIT_CHAR);
                             smallPictImageQueueHelper.publishEvent(new SmallPictEventData(smallPictSetup.getSmallPictSetupId(), new Integer(fileIdStr), filePath, Integer.parseInt(sizeArray[0]), Integer.parseInt(sizeArray[1]), ifInnerCut));
                         }
                     }
@@ -358,7 +360,7 @@ public class FileInfServiceImpl implements IFileInfService {
                 return fileInfDto.getFilePath();
             }
         } else {
-            return fileInfRepository.findById(fileInfId).get().getFilePath();
+            return fileInfRepository.findById(fileInfId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath();
         }
     }
 
@@ -379,7 +381,7 @@ public class FileInfServiceImpl implements IFileInfService {
                     .append(".png")
                     .toString();
         } else {
-            return WebContextHolder.getContextPath() + '/' + fileInfRepository.findById(fileInfId).get().getFilePath().replace('\\', '/');
+            return WebContextHolder.getContextPath() + '/' + fileInfRepository.findById(fileInfId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath().replace('\\', '/');
         }
     }
 
@@ -400,7 +402,7 @@ public class FileInfServiceImpl implements IFileInfService {
     public String getSmallPictUrl(Integer fileInfId, int width, int height, String defaultPictPath) {
         FileInf fileInf = null;
         if (fileInfId != null) {
-            fileInf = fileInfRepository.findById(fileInfId).get();
+            fileInf = fileInfRepository.findById(fileInfId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         }
         if (fileInf == null) {
             return new StringBuilder(WebContextHolder.getContextPath()).append('/')
@@ -409,7 +411,7 @@ public class FileInfServiceImpl implements IFileInfService {
                     .append(defaultPictPath)
                     .toString();
         }
-        String filePath = fileInfRepository.findById(fileInfId).get().getFilePath();
+        String filePath = fileInfRepository.findById(fileInfId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath();
         int extSeperatorIndex = filePath.lastIndexOf(".");
         return new StringBuilder(WebContextHolder.getContextPath())
                 .append('/').append(
