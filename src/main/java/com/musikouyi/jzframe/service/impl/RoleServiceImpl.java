@@ -10,6 +10,7 @@ import com.musikouyi.jzframe.dto.RoleDto;
 import com.musikouyi.jzframe.exception.GlobalException;
 import com.musikouyi.jzframe.repository.DeptRepository;
 import com.musikouyi.jzframe.repository.RoleRepository;
+import com.musikouyi.jzframe.search.RoleSearchRepository;
 import com.musikouyi.jzframe.service.IRoleService;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,13 @@ public class RoleServiceImpl implements IRoleService {
 
     private final DeptRepository deptRepository;
 
+    private final RoleSearchRepository roleSearchRepository;
+
     @Autowired
-    public RoleServiceImpl(RoleRepository roleRepository, DeptRepository deptRepository) {
+    public RoleServiceImpl(RoleRepository roleRepository, DeptRepository deptRepository, RoleSearchRepository roleSearchRepository) {
         this.roleRepository = roleRepository;
         this.deptRepository = deptRepository;
+        this.roleSearchRepository = roleSearchRepository;
     }
 
     @Override
@@ -50,7 +54,8 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     @Transactional(readOnly = true)
     public Result findAll(ListReqDto listReqDto) {
-        Page<Role> rolePage = roleRepository.findAll(PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
+        Page<Role> rolePage = roleSearchRepository.findAll(PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
+//        Page<Role> rolePage = roleRepository.findAll(PageRequest.of(listReqDto.getPage() - 1, listReqDto.getLimit()));
         List<Role> roleList = rolePage.getContent();
         ListRespDto<RoleDto> listRespDto = new ListRespDto<>();
         List<RoleDto> roleDtoList = new ArrayList<>();
