@@ -35,7 +35,7 @@ public interface Global {
     int DEFAULT_SMALL_PICT_SIZE = 150; //默认小图大小
 
     //ElasticSearch
-    String ES_DEFAULT_INDEX = "default_index";
+    String ES_DEFAULT_INDEX = "role";
     String ES_DEFAULT_ANALYSER = "elasticsearch-analyser.json";
 
     //请求
