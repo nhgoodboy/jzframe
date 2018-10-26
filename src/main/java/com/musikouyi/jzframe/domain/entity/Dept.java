@@ -27,27 +27,27 @@ public class Dept implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false, length = 10)
     private Integer id;
+
     /**
      * 父部门id
      */
     @Column(name = "PARENT_ID", nullable = false)
     private Integer parentId;
-    /**
-     * 简称
-     */
-    @Column(name = "SIMPLE_NAME")
-    private String simpleName;
+
     /**
      * 全称
      */
     @Column(name = "FULL_NAME", nullable = false)
     private String fullName;
+
     /**
      * 提示
      */
     @Column(name = "TIPS")
     private String tips;
+
     /**
      * 版本（乐观锁保留字段）
      */

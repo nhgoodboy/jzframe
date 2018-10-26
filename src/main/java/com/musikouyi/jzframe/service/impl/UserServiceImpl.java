@@ -54,15 +54,12 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public Result userInfo(Integer userId) {
         User user = userRepository.findById(userId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
-        List<String> roleNameList = new ArrayList<>();
-        roleNameList.add(roleRepository.findById(user.getRoleId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getTips());
         UserInfoRespDto userInfoRespDto = new UserInfoRespDto();
         userInfoRespDto.setAvatar(SpringContextHolder.getBean(IFileInfService.class)
                 .getSmallPictUrl(user.getUserHeadPictId(), Global.DEFAULT_SMALL_PICT_SIZE, Global.DEFAULT_SMALL_PICT_SIZE));
         userInfoRespDto.setAccount(user.getAccount());
         userInfoRespDto.setName(user.getName());
         userInfoRespDto.setSex(SexEnum.fromCode(user.getSex()));
-        userInfoRespDto.setRoles(roleNameList);
         userInfoRespDto.setRole(roleRepository.findById(user.getRoleId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getName());
         userInfoRespDto.setDept(deptRepository.findById(user.getDeptId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFullName());
         userInfoRespDto.setEmail(user.getEmail());

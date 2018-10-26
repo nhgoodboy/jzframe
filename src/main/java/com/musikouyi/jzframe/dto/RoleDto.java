@@ -11,6 +11,5 @@ public class RoleDto {
 
     private Integer id;
     private String name;
-    private String parent_role;
     private String dept;
 }

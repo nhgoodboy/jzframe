@@ -29,28 +29,28 @@ public class Role implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @org.springframework.data.annotation.Id
+//    @org.springframework.data.annotation.Id
+    @Column(name = "ID", nullable = false, length = 10)
     private Integer id;
-    /**
-     * 父角色id
-     */
-    @Column(name = "PARENT_ID")
-    private Integer parentId;
+
     /**
      * 角色名称
      */
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
+
     /**
      * 部门名称
      */
-    @Column(name = "DEPT_ID")
+    @Column(name = "DEPT_ID", nullable = false)
     private Integer deptId;
+
     /**
      * 提示
      */
     @Column(name = "TIPS")
     private String tips;
+
     /**
      * 保留字段(暂时没用）
      */

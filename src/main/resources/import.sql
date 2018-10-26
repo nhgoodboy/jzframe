@@ -37,10 +37,10 @@ INSERT INTO `sys_dept` VALUES (4, '运营部', 1, NULL, '运营部', NULL);
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (1, 1, '超级管理员', 0, 'admin', NULL);
-INSERT INTO `sys_role` VALUES (2, 2, '编辑', 1, 'edit', NULL);
-INSERT INTO `sys_role` VALUES (3, 3, '测试员男', 1, 'test_man', NULL);
-INSERT INTO `sys_role` VALUES (4, 4, '测试员女', 1, 'test_woman', NULL);
+INSERT INTO `sys_role` VALUES (1, 1, '超级管理员', 'admin', NULL);
+INSERT INTO `sys_role` VALUES (2, 2, '编辑', 'edit', NULL);
+INSERT INTO `sys_role` VALUES (3, 3, '测试员男', 'test_man', NULL);
+INSERT INTO `sys_role` VALUES (4, 4, '测试员女', 'test_woman', NULL);
 
 -- ----------------------------
 -- Table structure for sys_small_pict_setup

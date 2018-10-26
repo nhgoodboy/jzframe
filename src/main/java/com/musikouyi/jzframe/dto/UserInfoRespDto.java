@@ -18,7 +18,6 @@ public class UserInfoRespDto {
     private String account;
     private String name;
     private String sex;
-    private List<String> roles;
     private String role;
     private String dept;
     private String email;
