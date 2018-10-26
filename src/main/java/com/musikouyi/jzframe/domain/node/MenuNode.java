@@ -2,6 +2,7 @@ package com.musikouyi.jzframe.domain.node;
 
 
 import com.musikouyi.jzframe.common.constant.IsMenu;
+import lombok.Data;
 
 import java.util.*;
 
@@ -10,17 +11,18 @@ import java.util.*;
  * @Description 菜单的节点
  * @date 2016年12月6日 上午11:34:17
  */
+@Data
 public class MenuNode implements Comparable {
 
     /**
      * 节点id
      */
-    private Long id;
+    private Integer id;
 
     /**
      * 父节点
      */
-    private Long parentId;
+    private Integer parentId;
 
     /**
      * 节点名称
@@ -33,9 +35,9 @@ public class MenuNode implements Comparable {
     private Integer levels;
 
     /**
-     * 按钮级别
+     * 是否菜单
      */
-    private Integer ismenu;
+    private Integer isMenu;
 
     /**
      * 按钮的排序
@@ -48,11 +50,6 @@ public class MenuNode implements Comparable {
     private String url;
 
     /**
-     * 节点图标
-     */
-    private String icon;
-
-    /**
      * 子节点的集合
      */
     private List<MenuNode> children;
@@ -60,107 +57,16 @@ public class MenuNode implements Comparable {
     /**
      * 查询子节点时候的临时集合
      */
-    private List<MenuNode> linkedList = new ArrayList<MenuNode>();
+    private List<MenuNode> linkedList = new ArrayList<>();
 
     public MenuNode() {
-        super();
+
     }
 
-    public MenuNode(Long id, Long parentId) {
+    public MenuNode(Integer id, Integer parentId) {
         super();
         this.id = id;
         this.parentId = parentId;
-    }
-
-    public Integer getLevels() {
-        return levels;
-    }
-
-    public void setLevels(Integer levels) {
-        this.levels = levels;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public static MenuNode createRoot() {
-        return new MenuNode(0L, -1L);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public List<MenuNode> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<MenuNode> children) {
-        this.children = children;
-    }
-
-    public Integer getNum() {
-        return num;
-    }
-
-    public void setNum(Integer num) {
-        this.num = num;
-    }
-
-    public Integer getIsmenu() {
-        return ismenu;
-    }
-
-    public void setIsmenu(Integer ismenu) {
-        this.ismenu = ismenu;
-    }
-
-    @Override
-    public String toString() {
-        return "MenuNode{" +
-                "id=" + id +
-                ", parentId=" + parentId +
-                ", name='" + name + '\'' +
-                ", levels=" + levels +
-                ", num=" + num +
-                ", url='" + url + '\'' +
-                ", icon='" + icon + '\'' +
-                ", children=" + children +
-                ", linkedList=" + linkedList +
-                '}';
     }
 
     /**
@@ -196,7 +102,7 @@ public class MenuNode implements Comparable {
             return nodes;
         }
         //剔除非菜单
-        nodes.removeIf(node -> node.getIsmenu() != IsMenu.YES.getCode());
+        nodes.removeIf(node -> node.getIsMenu() != IsMenu.YES.getCode());
         //对菜单排序，返回列表按菜单等级，序号的排序方式排列
         Collections.sort(nodes);
         return mergeList(nodes, nodes.get(nodes.size() - 1).getLevels(), null);
@@ -209,11 +115,11 @@ public class MenuNode implements Comparable {
      * @param listMap
      * @return
      */
-    private static List<MenuNode> mergeList(List<MenuNode> menuList, int rank, Map<Long, List<MenuNode>> listMap) {
+    private static List<MenuNode> mergeList(List<MenuNode> menuList, int rank, Map<Integer, List<MenuNode>> listMap) {
         //保存当次调用总共合并了多少元素
         int n;
         //保存当次调用总共合并出来的list
-        Map<Long, List<MenuNode>> currentMap = new HashMap<>();
+        Map<Integer, List<MenuNode>> currentMap = new HashMap<>();
         //由于按等级从小到大排序，需要从后往前排序
         //判断该节点是否属于当前循环的等级,不等于则跳出循环
         for (n = menuList.size() - 1; n >= 0 && menuList.get(n).getLevels() == rank; n--) {

@@ -8,6 +8,9 @@ import com.musikouyi.jzframe.service.IRoleService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping(ControllerMapping.ROLE)
 public class RoleController {

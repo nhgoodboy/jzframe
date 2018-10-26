@@ -8,6 +8,6 @@ package com.musikouyi.jzframe.service;
  * @author stylefeng123
  * @since 2018-02-22
  */
-public interface IRelationService {
+public interface IRoleMenuRelationService {
 
 }
