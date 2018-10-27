@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Mapper
 public interface MenuMapper {
@@ -69,4 +70,11 @@ public interface MenuMapper {
      * @date 2017年2月19日 下午10:35:40
      */
     List<MenuNode> getMenusByRoleIds(List<Integer> roleIds);
+
+    /**
+     * 根据角色获取菜单code
+     * @param roleId
+     * @return
+     */
+    Set<String> getCodesByRoleId(Integer roleId);
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 菜单服务
@@ -21,7 +22,7 @@ public interface IMenuService {
      * @author stylefeng
      * @Date 2017/5/5 22:20
      */
-    void delMenu(Long menuId);
+    void delMenu(Integer menuId);
 
     /**
      * 删除菜单包含所有子菜单
@@ -29,7 +30,7 @@ public interface IMenuService {
      * @author stylefeng
      * @Date 2017/6/13 22:02
      */
-    void delMenuContainSubMenus(Long menuId);
+    void delMenuContainSubMenus(Integer menuId);
 
     /**
      * 根据条件查询菜单
@@ -45,7 +46,7 @@ public interface IMenuService {
      * @return
      * @date 2017年2月12日 下午9:14:34
      */
-    List<Long> getMenuIdsByRoleId(@Param("roleId") Integer roleId);
+    List<Integer> getMenuIdsByRoleId(@Param("roleId") Integer roleId);
 
     /**
      * 获取菜单列表树
@@ -61,7 +62,7 @@ public interface IMenuService {
      * @return
      * @date 2017年2月19日 下午1:33:51
      */
-    List<ZTreeNode> menuTreeListByMenuIds(List<Long> menuIds);
+    List<ZTreeNode> menuTreeListByMenuIds(List<Integer> menuIds);
 
     /**
      * 删除menu关联的relation
@@ -70,7 +71,7 @@ public interface IMenuService {
      * @return
      * @date 2017年2月19日 下午4:10:59
      */
-    int deleteRelationByMenu(Long menuId);
+    int deleteRelationByMenu(Integer menuId);
 
     /**
      * 获取资源url通过角色id
@@ -89,4 +90,9 @@ public interface IMenuService {
      * @date 2017年2月19日 下午10:35:40
      */
     List<MenuNode> getMenusByRoleIds(List<Integer> roleIds);
+
+    /**
+     * 根据角色获取菜单code
+     */
+    Set<String> getCodesByRoleId(Integer roleId);
 }

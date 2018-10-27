@@ -2,6 +2,7 @@ package com.musikouyi.jzframe.service.impl;
 
 import com.musikouyi.jzframe.common.constant.Global;
 import com.musikouyi.jzframe.domain.entity.Result;
+import com.musikouyi.jzframe.domain.entity.Role;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.domain.enums.SexEnum;
@@ -12,6 +13,7 @@ import com.musikouyi.jzframe.repository.DeptRepository;
 import com.musikouyi.jzframe.repository.RoleRepository;
 import com.musikouyi.jzframe.repository.UserRepository;
 import com.musikouyi.jzframe.service.IFileInfService;
+import com.musikouyi.jzframe.service.IMenuService;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
@@ -60,12 +62,14 @@ public class UserServiceImpl implements IUserService {
         userInfoRespDto.setAccount(user.getAccount());
         userInfoRespDto.setName(user.getName());
         userInfoRespDto.setSex(SexEnum.fromCode(user.getSex()));
-        userInfoRespDto.setRole(roleRepository.findById(user.getRoleId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getName());
+        Role role = roleRepository.findById(user.getRoleId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
+        userInfoRespDto.setRole(role.getName());
         userInfoRespDto.setDept(deptRepository.findById(user.getDeptId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFullName());
         userInfoRespDto.setEmail(user.getEmail());
         userInfoRespDto.setPhone(user.getPhone());
         userInfoRespDto.setBirthday(user.getBirthday());
         userInfoRespDto.setCreateTime(user.getCreateTime());
+        userInfoRespDto.setMenus(SpringContextHolder.getBean(IMenuService.class).getCodesByRoleId(role.getId()));
         return ResultUtil.success(userInfoRespDto);
     }
 

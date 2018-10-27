@@ -37,8 +37,13 @@
     </select>
 
     <select id="getMenuIdsByRoleId" resultType="Integer">
-        select menuid from
-        sys_relation where roleid = #{roleId}
+        select menu_id from
+        sys_role_menu_relation where role_id = #{roleId}
+    </select>
+
+    <select id="getCodesByRoleId" resultType="String">
+        select code from
+        sys_menu where id in (select menu_id from sys_role_menu_relation where role_id = #{roleId})
     </select>
 
     <select id="menuTreeList" resultType="com.musikouyi.jzframe.domain.node.ZTreeNode">

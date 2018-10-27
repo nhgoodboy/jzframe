@@ -1,21 +1,33 @@
 package com.musikouyi.jzframe.service.impl;
 
+import com.musikouyi.jzframe.dao.mapper.MenuMapper;
 import com.musikouyi.jzframe.domain.node.MenuNode;
 import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import com.musikouyi.jzframe.service.IMenuService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+@Service
 public class MenuServiceImpl implements IMenuService {
 
+    private final MenuMapper menuMapper;
+
+    @Autowired
+    public MenuServiceImpl(MenuMapper menuMapper) {
+        this.menuMapper = menuMapper;
+    }
+
     @Override
-    public void delMenu(Long menuId) {
+    public void delMenu(Integer menuId) {
 
     }
 
     @Override
-    public void delMenuContainSubMenus(Long menuId) {
+    public void delMenuContainSubMenus(Integer menuId) {
 
     }
 
@@ -25,8 +37,8 @@ public class MenuServiceImpl implements IMenuService {
     }
 
     @Override
-    public List<Long> getMenuIdsByRoleId(Integer roleId) {
-        return null;
+    public List<Integer> getMenuIdsByRoleId(Integer roleId) {
+        return menuMapper.getMenuIdsByRoleId(roleId);
     }
 
     @Override
@@ -35,12 +47,12 @@ public class MenuServiceImpl implements IMenuService {
     }
 
     @Override
-    public List<ZTreeNode> menuTreeListByMenuIds(List<Long> menuIds) {
+    public List<ZTreeNode> menuTreeListByMenuIds(List<Integer> menuIds) {
         return null;
     }
 
     @Override
-    public int deleteRelationByMenu(Long menuId) {
+    public int deleteRelationByMenu(Integer menuId) {
         return 0;
     }
 
@@ -51,6 +63,13 @@ public class MenuServiceImpl implements IMenuService {
 
     @Override
     public List<MenuNode> getMenusByRoleIds(List<Integer> roleIds) {
+        List<MenuNode> menuNodeList = menuMapper.getMenusByRoleIds(roleIds);
+        System.out.println(menuNodeList.toString());
         return null;
+    }
+
+    @Override
+    public Set<String> getCodesByRoleId(Integer roleId) {
+        return menuMapper.getCodesByRoleId(roleId);
     }
 }

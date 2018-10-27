@@ -3,7 +3,7 @@
 <mapper namespace="com.stylefeng.guns.modular.system.dao.RelationMapper">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.musikouyi.jzframe.dao.mapper.RoleMenuRelationMapper">
+	<resultMap id="BaseResultMap" type="roleMenuRelation">
 		<id column="id" property="id" />
 		<result column="menu_id" property="menuId" />
 		<result column="role_id" property="roleId" />

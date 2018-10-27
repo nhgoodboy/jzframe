@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Create with IDEA
@@ -26,5 +27,5 @@ public class UserInfoRespDto {
     private Date birthday;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
-
+    private Set<String> menus;
 }
