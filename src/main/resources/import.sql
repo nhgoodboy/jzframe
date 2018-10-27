@@ -15,10 +15,10 @@
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-INSERT INTO `sys_dept` VALUES (1, '总公司', 0, NULL, '总公司', NULL);
-INSERT INTO `sys_dept` VALUES (2, '开发部', 1, NULL, '开发部', NULL);
-INSERT INTO `sys_dept` VALUES (3, '战略部', 1, NULL, '战略部', NULL);
-INSERT INTO `sys_dept` VALUES (4, '运营部', 1, NULL, '运营部', NULL);
+INSERT INTO `sys_dept` VALUES (1, '总公司', 0, '总公司', NULL);
+INSERT INTO `sys_dept` VALUES (2, '开发部', 1, '开发部', NULL);
+INSERT INTO `sys_dept` VALUES (3, '战略部', 1, '战略部', NULL);
+INSERT INTO `sys_dept` VALUES (4, '运营部', 1, '运营部', NULL);
 
 -- ----------------------------
 -- Table structure for sys_role
