@@ -90,38 +90,36 @@ INSERT INTO `sys_user` VALUES (2, 'edit', '2018-10-07 11:45:54', '2018-10-01 11:
 INSERT INTO `sys_user` VALUES (3, 'test3', '2018-10-11 11:47:48', '2018-10-18 11:47:52', 3, '80232564@ww.cc', 'test3', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '17325869854', 3, NULL, 1, 1, NULL, NULL);
 INSERT INTO `sys_user` VALUES (4, 'test4', '2018-10-25 11:48:56', '2018-10-01 11:48:59', 4, '265236@aa.cn', 'test4', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '13698569852', 4, NULL, 2, 1, NULL, NULL);
 
-# CREATE TABLE `sys_menu`  (
-#   `id` int(11) NOT NULL AUTO_INCREMENT,
-#   `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-#   `is_menu` int(11) NOT NULL,
-#   `is_open` int(11) NOT NULL,
-#   `levels` int(11) NOT NULL,
-#   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-#   `num` int(11) NOT NULL,
-#   `p_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-#   `p_codes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-#   `status` int(11) NOT NULL,
-#   `tips` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-#   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-#   PRIMARY KEY (`id`) USING BTREE
-# ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+-- # CREATE TABLE `sys_menu`  (
+-- #   `id` int(11) NOT NULL AUTO_INCREMENT,
+-- #   `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+-- #   `levels` int(11) NOT NULL,
+-- #   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+-- #   `num` int(11) NOT NULL,
+-- #   `p_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+-- #   `status` int(11) NOT NULL,
+-- #   `tips` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+-- #   PRIMARY KEY (`id`) USING BTREE
+-- # ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (1, 'system', 1, 1, 1, '系统管理', 1, '0', '[0],', 1, '1', '/system');
-INSERT INTO `sys_menu` VALUES (2, 'user', 1, 1, 2, '用户管理', 1, 'system', '[0],[system],', 1, '1', '/system/user');
-INSERT INTO `sys_menu` VALUES (3, 'user_add', 0, 1, 3, '添加用户', 1, 'user', '[0],[system],[user],', 1, '1', '/system/user/add');
-INSERT INTO `sys_menu` VALUES (4, 'user_edit', 0, 1, 3, '修改用户', 2, 'user', '[0],[system],[user],', 1, '1', '/system/user/edit');
-INSERT INTO `sys_menu` VALUES (5, 'user_delete', 0, 1, 3, '删除用户', 3, 'user', '[0],[system],[user],', 1, '1', '/system/user/delete');
-INSERT INTO `sys_menu` VALUES (6, 'role', 1, 1, 2, '角色管理', 2, 'system', '[0],[system],', 1, '1', '/system/role');
-INSERT INTO `sys_menu` VALUES (7, 'role_add', 0, 1, 3, '添加角色', 1, 'role', '[0],[system],[role],', 1, '1', '/system/role/add');
-INSERT INTO `sys_menu` VALUES (8, 'role_edit', 0, 1, 3, '修改角色', 2, 'role', '[0],[system],[role],', 1, '1', '/system/role/edit');
-INSERT INTO `sys_menu` VALUES (9, 'role_delete', 0, 1, 3, '删除角色', 3, 'role', '[0],[system],[role],', 1, '1', '/system/role/delete');
-INSERT INTO `sys_menu` VALUES (10, 'dept', 1, 1, 2, '部门管理', 3, 'system', '[0],[system],', 1, '1', '/system/dept');
-INSERT INTO `sys_menu` VALUES (11, 'dept_add', 0, 1, 3, '添加部门', 1, 'dept', '[0],[system],[dept],', 1, '1', '/system/dept/add');
-INSERT INTO `sys_menu` VALUES (12, 'dept_edit', 0, 1, 3, '修改部门', 2, 'dept', '[0],[system],[dept],', 1, '1', '/system/dept/edit');
-INSERT INTO `sys_menu` VALUES (13, 'dept_delete', 0, 1, 3, '删除部门', 3, 'dept', '[0],[system],[dept],', 1, '1', '/system/dept/delete');
+INSERT INTO `sys_menu` VALUES (1, 'system', 1, '系统管理', 1, '0', '1', '1');
+INSERT INTO `sys_menu` VALUES (2, 'user', 2, '用户管理', 1, 'system', '1', '1');
+INSERT INTO `sys_menu` VALUES (3, 'user_add', 3, '添加用户', 1, 'user', '1', '1');
+INSERT INTO `sys_menu` VALUES (4, 'user_edit', 3, '修改用户', 2, 'user', '1', '1');
+INSERT INTO `sys_menu` VALUES (5, 'user_delete', 3, '删除用户', 3, 'user', '1', '1');
+INSERT INTO `sys_menu` VALUES (6, 'user_change_pwd', 3, '修改密码', 4, 'user', '1', '1');
+INSERT INTO `sys_menu` VALUES (7, 'role', 2, '角色管理', 2, 'system', '1', '1');
+INSERT INTO `sys_menu` VALUES (8, 'role_add', 3, '添加角色', 1, 'role', '1', '1');
+INSERT INTO `sys_menu` VALUES (9, 'role_edit', 3, '修改角色', 2, 'role', '1', '1');
+INSERT INTO `sys_menu` VALUES (10, 'role_delete', 3, '删除角色', 3, 'role', '1', '1');
+INSERT INTO `sys_menu` VALUES (11, 'role_permission_config', 3, '权限配置', 4, 'role', '1', '1');
+INSERT INTO `sys_menu` VALUES (12, 'dept', 2, '部门管理', 3, 'system', '1', '1');
+INSERT INTO `sys_menu` VALUES (13, 'dept_add', 3, '添加部门', 1, 'dept', '1', '1');
+INSERT INTO `sys_menu` VALUES (14, 'dept_edit', 3, '修改部门', 2, 'dept', '1', '1');
+INSERT INTO `sys_menu` VALUES (15, 'dept_delete', 3, '删除部门', 3, 'dept', '1', '1');
 
 -- ----------------------------
 -- Table structure for sys_role_menu_relation
@@ -150,3 +148,5 @@ INSERT INTO `sys_role_menu_relation` VALUES (10, 10, 1);
 INSERT INTO `sys_role_menu_relation` VALUES (11, 11, 1);
 INSERT INTO `sys_role_menu_relation` VALUES (12, 12, 1);
 INSERT INTO `sys_role_menu_relation` VALUES (13, 13, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (14, 14, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (15, 15, 1);

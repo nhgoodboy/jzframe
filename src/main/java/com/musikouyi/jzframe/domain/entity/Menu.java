@@ -30,20 +30,10 @@ public class Menu implements Serializable {
     @Column(name = "P_CODE", nullable = false)
     private String pCode;
     /**
-     * 当前菜单的所有父菜单编号
-     */
-    @Column(name = "P_CODES", nullable = false)
-    private String pCodes;
-    /**
      * 菜单名称
      */
     @Column(name = "NAME", nullable = false)
     private String name;
-    /**
-     * url地址
-     */
-    @Column(name = "URL", nullable = false)
-    private String url;
     /**
      * 菜单排序号
      */
@@ -55,11 +45,6 @@ public class Menu implements Serializable {
     @Column(name = "LEVELS", nullable = false)
     private Integer levels;
     /**
-     * 是否是菜单（1：是  0：不是）
-     */
-    @Column(name = "IS_MENU", nullable = false)
-    private Integer isMenu;
-    /**
      * 备注
      */
     @Column(name = "TIPS")
@@ -67,11 +52,6 @@ public class Menu implements Serializable {
     /**
      * 菜单状态 :  1:启用   0:不启用
      */
-    @Column(name = "STATUS", nullable = false)
+    @Column(name = "STATUS")
     private Integer status;
-    /**
-     * 是否打开:    1:打开   0:不打开
-     */
-    @Column(name = "IS_OPEN", nullable = false)
-    private Integer isOpen;
 }
