@@ -18,5 +18,13 @@
 		select menu_id as menuId from sys_role_menu_relation
 		where role_id = #{roleId}
 	</select>
+	
+	<delete id="deleteMenuIdsByRoleId">
+		delete from sys_role_menu_relation where role_id = #{roleId}
+	</delete>
+	
+	<insert id="createRelation">
+		insert into sys_role_menu_relation(role_id, menu_id) value(#{roleId}, #{menuId})
+	</insert>
 
 </mapper>

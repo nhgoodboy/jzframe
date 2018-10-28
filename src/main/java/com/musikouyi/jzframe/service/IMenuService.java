@@ -6,6 +6,7 @@ import com.musikouyi.jzframe.domain.node.MenuNode;
 import com.musikouyi.jzframe.domain.node.TreeNode;
 import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
@@ -105,4 +106,12 @@ public interface IMenuService {
      * @return
      */
     Result getMenusTree(Integer roleId);
+
+    /**
+     * 根据roleId修改可访问的菜单
+     * @param roleId
+     * @param menuIds
+     * @return
+     */
+    Result changePermission(Integer roleId, List<Integer> menuIds);
 }

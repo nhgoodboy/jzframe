@@ -125,4 +125,14 @@ public class MenuServiceImpl implements IMenuService {
             }
         }
     }
+
+    @Override
+    @Transactional
+    public Result changePermission(Integer roleId, List<Integer> menuIds) {
+        roleMenuRelationMapper.deleteMenuIdsByRoleId(roleId);
+        for (Integer menuId : menuIds) {
+            roleMenuRelationMapper.createRelation(roleId, menuId);
+        }
+        return ResultUtil.success();
+    }
 }

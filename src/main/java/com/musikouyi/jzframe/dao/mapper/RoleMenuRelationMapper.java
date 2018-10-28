@@ -11,4 +11,8 @@ public interface RoleMenuRelationMapper {
     Integer getIdByRoleIdAndMenuId(@Param("roleId") Integer roleId, @Param("menuId") Integer menuId);
 
     List<Integer> getMenuIdsByRoleId(@Param("roleId") Integer roleId);
+
+    void deleteMenuIdsByRoleId(@Param("roleId") Integer roleId);
+
+    void createRelation(@Param("roleId") Integer roleId, @Param("menuId") Integer menuId);
 }

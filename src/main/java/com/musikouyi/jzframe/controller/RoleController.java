@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping(ControllerMapping.ROLE)
@@ -44,5 +45,10 @@ public class RoleController {
     @GetMapping("/menusTree/{roleId}")
     public Result getMenusTree(@PathVariable("roleId") Integer roleId) {
         return SpringContextHolder.getBean(IMenuService.class).getMenusTree(roleId);
+    }
+
+    @PutMapping("/menusTree/{roleId}")
+    public Result changePermission(@PathVariable("roleId") Integer roleId, @RequestBody List<Integer> menuIds) {
+        return SpringContextHolder.getBean(IMenuService.class).changePermission(roleId, menuIds);
     }
 }
