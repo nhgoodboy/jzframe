@@ -46,6 +46,12 @@
         sys_menu where id in (select menu_id from sys_role_menu_relation where role_id = #{roleId})
     </select>
 
+    <select id="getMenus" resultType="menu">
+        select id as id, levels as levels, name as name, num as num, code as code, p_code as pCode
+        from sys_menu
+        order by levels, num asc
+    </select>
+
     <select id="menuTreeList" resultType="com.musikouyi.jzframe.domain.node.ZTreeNode">
         SELECT
         m1.id AS id,

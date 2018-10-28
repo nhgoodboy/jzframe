@@ -1,6 +1,9 @@
 package com.musikouyi.jzframe.service;
 
+import com.musikouyi.jzframe.domain.entity.Menu;
+import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.node.MenuNode;
+import com.musikouyi.jzframe.domain.node.TreeNode;
 import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import org.apache.ibatis.annotations.Param;
 
@@ -89,10 +92,17 @@ public interface IMenuService {
      * @return
      * @date 2017年2月19日 下午10:35:40
      */
-    List<MenuNode> getMenusByRoleIds(List<Integer> roleIds);
+    List<MenuNode> getMenusByRoleId(List<Integer> roleIds);
 
     /**
      * 根据角色获取菜单code
      */
     Set<String> getCodesByRoleId(Integer roleId);
+
+    /**
+     * 根据角色获取菜单树
+     * @param roleId
+     * @return
+     */
+    Result getMenusTree(Integer roleId);
 }

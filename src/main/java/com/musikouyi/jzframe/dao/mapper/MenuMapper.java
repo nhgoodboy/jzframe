@@ -1,5 +1,6 @@
 package com.musikouyi.jzframe.dao.mapper;
 
+import com.musikouyi.jzframe.domain.entity.Menu;
 import com.musikouyi.jzframe.domain.node.MenuNode;
 import com.musikouyi.jzframe.domain.node.ZTreeNode;
 import org.apache.ibatis.annotations.Mapper;
@@ -77,4 +78,11 @@ public interface MenuMapper {
      * @return
      */
     Set<String> getCodesByRoleId(Integer roleId);
+
+    /**
+     * 获取菜单列表
+     * @return
+     */
+    List<Menu> getMenus();
+
 }

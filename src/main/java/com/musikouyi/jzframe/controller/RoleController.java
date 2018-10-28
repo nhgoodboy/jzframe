@@ -4,6 +4,7 @@ import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.RoleDto;
+import com.musikouyi.jzframe.service.IMenuService;
 import com.musikouyi.jzframe.service.IRoleService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +39,10 @@ public class RoleController {
     @PostMapping(ControllerMapping.MODIFY)
     public Result modify(@RequestBody RoleDto roleDto) {
         return SpringContextHolder.getBean(IRoleService.class).modify(roleDto);
+    }
+
+    @GetMapping("/menusTree/{roleId}")
+    public Result getMenusTree(@PathVariable("roleId") Integer roleId) {
+        return SpringContextHolder.getBean(IMenuService.class).getMenusTree(roleId);
     }
 }

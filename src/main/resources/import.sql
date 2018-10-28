@@ -114,11 +114,39 @@ INSERT INTO `sys_menu` VALUES (2, 'user', 1, 1, 2, '用户管理', 1, 'system', 
 INSERT INTO `sys_menu` VALUES (3, 'user_add', 0, 1, 3, '添加用户', 1, 'user', '[0],[system],[user],', 1, '1', '/system/user/add');
 INSERT INTO `sys_menu` VALUES (4, 'user_edit', 0, 1, 3, '修改用户', 2, 'user', '[0],[system],[user],', 1, '1', '/system/user/edit');
 INSERT INTO `sys_menu` VALUES (5, 'user_delete', 0, 1, 3, '删除用户', 3, 'user', '[0],[system],[user],', 1, '1', '/system/user/delete');
-INSERT INTO `sys_menu` VALUES (6, 'role', 1, 1, 2, '角色管理', 1, 'system', '[0],[system],', 1, '1', '/system/role');
+INSERT INTO `sys_menu` VALUES (6, 'role', 1, 1, 2, '角色管理', 2, 'system', '[0],[system],', 1, '1', '/system/role');
 INSERT INTO `sys_menu` VALUES (7, 'role_add', 0, 1, 3, '添加角色', 1, 'role', '[0],[system],[role],', 1, '1', '/system/role/add');
 INSERT INTO `sys_menu` VALUES (8, 'role_edit', 0, 1, 3, '修改角色', 2, 'role', '[0],[system],[role],', 1, '1', '/system/role/edit');
 INSERT INTO `sys_menu` VALUES (9, 'role_delete', 0, 1, 3, '删除角色', 3, 'role', '[0],[system],[role],', 1, '1', '/system/role/delete');
-INSERT INTO `sys_menu` VALUES (10, 'dept', 1, 1, 2, '部门管理', 1, 'system', '[0],[system],', 1, '1', '/system/dept');
+INSERT INTO `sys_menu` VALUES (10, 'dept', 1, 1, 2, '部门管理', 3, 'system', '[0],[system],', 1, '1', '/system/dept');
 INSERT INTO `sys_menu` VALUES (11, 'dept_add', 0, 1, 3, '添加部门', 1, 'dept', '[0],[system],[dept],', 1, '1', '/system/dept/add');
 INSERT INTO `sys_menu` VALUES (12, 'dept_edit', 0, 1, 3, '修改部门', 2, 'dept', '[0],[system],[dept],', 1, '1', '/system/dept/edit');
 INSERT INTO `sys_menu` VALUES (13, 'dept_delete', 0, 1, 3, '删除部门', 3, 'dept', '[0],[system],[dept],', 1, '1', '/system/dept/delete');
+
+-- ----------------------------
+-- Table structure for sys_role_menu_relation
+-- ----------------------------
+-- DROP TABLE IF EXISTS `sys_role_menu_relation`;
+-- CREATE TABLE `sys_role_menu_relation`  (
+--   `id` int(11) NOT NULL AUTO_INCREMENT,
+--   `menu_id` bigint(20) NOT NULL,
+--   `role_id` int(11) NOT NULL,
+--   PRIMARY KEY (`id`) USING BTREE
+-- ) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_role_menu_relation
+-- ----------------------------
+INSERT INTO `sys_role_menu_relation` VALUES (1, 1, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (2, 2, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (3, 3, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (4, 4, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (5, 5, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (6, 6, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (7, 7, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (8, 8, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (9, 9, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (10, 10, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (11, 11, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (12, 12, 1);
+INSERT INTO `sys_role_menu_relation` VALUES (13, 13, 1);

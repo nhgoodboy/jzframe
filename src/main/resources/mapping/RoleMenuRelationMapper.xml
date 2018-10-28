@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.stylefeng.guns.modular.system.dao.RelationMapper">
+<mapper namespace="com.musikouyi.jzframe.dao.mapper.RoleMenuRelationMapper">
 
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="roleMenuRelation">
@@ -8,5 +8,15 @@
 		<result column="menu_id" property="menuId" />
 		<result column="role_id" property="roleId" />
 	</resultMap>
+
+	<select id="getIdByRoleIdAndMenuId" resultType="Integer">
+		select id from sys_role_menu_relation
+		where role_id = #{roleId} and menu_id = #{menuId}
+	</select>
+
+	<select id="getMenuIdsByRoleId" resultType="Integer">
+		select menu_id as menuId from sys_role_menu_relation
+		where role_id = #{roleId}
+	</select>
 
 </mapper>
