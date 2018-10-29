@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.musikouyi.jzframe.common.constant.Global;
 import com.musikouyi.jzframe.common.constant.JwtConstants;
 import com.musikouyi.jzframe.domain.enums.ResultEnum;
-import com.musikouyi.jzframe.exception.GlobalException;
+import com.musikouyi.jzframe.common.exception.GlobalException;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import io.jsonwebtoken.JwtException;

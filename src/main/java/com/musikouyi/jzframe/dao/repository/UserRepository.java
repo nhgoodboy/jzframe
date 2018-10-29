@@ -1,4 +1,4 @@
-package com.musikouyi.jzframe.repository;
+package com.musikouyi.jzframe.dao.repository;
 
 import com.musikouyi.jzframe.domain.entity.User;
 import org.springframework.data.domain.Page;

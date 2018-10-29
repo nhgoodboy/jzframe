@@ -1,4 +1,4 @@
-package com.musikouyi.jzframe.exception;
+package com.musikouyi.jzframe.common.exception;
 
 
 import com.musikouyi.jzframe.domain.enums.ResultEnum;

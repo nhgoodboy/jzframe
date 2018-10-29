@@ -4,8 +4,7 @@ import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.domain.enums.ResultEnum;
-import com.musikouyi.jzframe.exception.GlobalException;
-import com.musikouyi.jzframe.service.IMenuService;
+import com.musikouyi.jzframe.common.exception.GlobalException;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController

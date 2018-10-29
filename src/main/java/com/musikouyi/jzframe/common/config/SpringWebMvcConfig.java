@@ -1,4 +1,4 @@
-package com.musikouyi.jzframe.config;
+package com.musikouyi.jzframe.common.config;
 
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.common.intercept.RestApiInteceptor;

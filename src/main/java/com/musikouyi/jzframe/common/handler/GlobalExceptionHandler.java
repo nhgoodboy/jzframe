@@ -1,8 +1,8 @@
-package com.musikouyi.jzframe.handler;
+package com.musikouyi.jzframe.common.handler;
 
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.enums.ResultEnum;
-import com.musikouyi.jzframe.exception.GlobalException;
+import com.musikouyi.jzframe.common.exception.GlobalException;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

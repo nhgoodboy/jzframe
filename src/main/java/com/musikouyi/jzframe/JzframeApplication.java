@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Slf4j
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "com.musikouyi.jzframe.repository")  //解决Jpa扫描到Elasticsearch的Repositories的问题
-//@EnableElasticsearchRepositories(basePackages = "com.musikouyi.jzframe.search")
+@EnableJpaRepositories(basePackages = "com.musikouyi.jzframe.dao.repository")  //解决Jpa扫描到Elasticsearch的Repositories的问题
+//@EnableElasticsearchRepositories(basePackages = "com.musikouyi.jzframe.dao.search")
 public class JzframeApplication {
 
     public static void main(String[] args) {

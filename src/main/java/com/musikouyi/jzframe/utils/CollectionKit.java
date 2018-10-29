@@ -1,7 +1,7 @@
 package com.musikouyi.jzframe.utils;
 
 
-import com.musikouyi.jzframe.exception.ToolBoxException;
+import com.musikouyi.jzframe.common.exception.ToolBoxException;
 
 import java.lang.reflect.Array;
 import java.util.*;
