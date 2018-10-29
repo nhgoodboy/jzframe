@@ -105,7 +105,7 @@ INSERT INTO `sys_user` VALUES (4, 'test4', '2018-10-25 11:48:56', '2018-10-01 11
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (1, 'system', 1, '系统管理', 1, '0', '1', '1');
+INSERT INTO `sys_menu` VALUES (1, 'system', 1, '系统管理', 1, '#', '1', '1');
 INSERT INTO `sys_menu` VALUES (2, 'user', 2, '用户管理', 1, 'system', '1', '1');
 INSERT INTO `sys_menu` VALUES (3, 'user_add', 3, '添加用户', 1, 'user', '1', '1');
 INSERT INTO `sys_menu` VALUES (4, 'user_edit', 3, '修改用户', 2, 'user', '1', '1');

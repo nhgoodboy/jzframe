@@ -16,3 +16,4 @@ public interface RoleMenuRelationMapper {
 
     void createRelation(@Param("roleId") Integer roleId, @Param("menuId") Integer menuId);
 }
+
