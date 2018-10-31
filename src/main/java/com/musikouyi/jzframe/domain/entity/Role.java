@@ -36,7 +36,7 @@ public class Role implements Serializable {
     /**
      * 角色名称
      */
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 
     /**

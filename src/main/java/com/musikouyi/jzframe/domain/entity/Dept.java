@@ -39,7 +39,7 @@ public class Dept implements Serializable {
     /**
      * 全称
      */
-    @Column(name = "FULL_NAME", nullable = false)
+    @Column(name = "FULL_NAME", nullable = false, unique = true)
     private String fullName;
 
     /**

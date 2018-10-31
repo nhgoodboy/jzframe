@@ -22,7 +22,7 @@ public class Menu implements Serializable {
     /**
      * 菜单编号
      */
-    @Column(name = "CODE", nullable = false)
+    @Column(name = "CODE", nullable = false, unique = true)
     private String code;
     /**
      * 菜单父编号

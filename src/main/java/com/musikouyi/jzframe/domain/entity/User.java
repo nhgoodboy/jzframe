@@ -32,12 +32,12 @@ public class User implements Serializable {
     /**
      * 头像id
      */
-    @Column(name = "USER_HEAD_PICT_ID", length = 10)
+    @Column(name = "USER_HEAD_PICT_ID", length = 10, unique = true)
     private Integer userHeadPictId;
     /**
      * 账号
      */
-    @Column(name = "ACCOUNT", nullable = false)
+    @Column(name = "ACCOUNT", nullable = false, unique = true)
     private String account;
     /**
      * 名字

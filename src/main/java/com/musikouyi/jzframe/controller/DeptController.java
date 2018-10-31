@@ -6,6 +6,7 @@ import com.musikouyi.jzframe.dto.DeptDto;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.service.IDeptService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
