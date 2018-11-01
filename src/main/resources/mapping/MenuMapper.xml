@@ -62,5 +62,11 @@
         inner join sys_menu m on rel.menuid = m.id
         where rel.roleid = #{roleId}
     </select>
+    
+    <select id="getPermissionByUserName" resultType="string">
+        select m.code from sys_menu m where m.id in
+        (select r.menu_id from sys_role_menu_relation r where r.role_id =
+        (select u.role_id from sys_user u where u.account = #{username}))
+    </select>
 
 </mapper>

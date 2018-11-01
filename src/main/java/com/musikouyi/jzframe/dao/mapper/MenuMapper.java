@@ -31,4 +31,6 @@ public interface MenuMapper {
      */
     List<Menu> getMenus();
 
+
+    Set<String> getPermissionByUserName(@Param("username") String username);
 }

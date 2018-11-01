@@ -9,6 +9,7 @@ import com.musikouyi.jzframe.dto.UserReqDto;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
@@ -22,17 +23,21 @@ import java.io.FileNotFoundException;
 @RequestMapping(ControllerMapping.USER)
 public class UserController {
 
+
+//    @RequiresPermissions(value = "user")
     @GetMapping(ControllerMapping.USER_INFO)
     public Result userInfo(@RequestHeader(JwtConstants.AUTH_HEADER) String token) {
         return SpringContextHolder.getBean(IUserService.class).userInfo(
                 JwtTokenUtil.getUserIdFromToken(token.substring(JwtConstants.TOKEN_PREFIX_LENGTH)));
     }
 
+//    @RequiresPermissions(value = "user")
     @GetMapping(ControllerMapping.LIST)
     public Result list(ListReqDto listReqDto) {
         return SpringContextHolder.getBean(IUserService.class).findAll(listReqDto);
     }
 
+//    @RequiresPermissions(value = "user_delete")
     @PostMapping(ControllerMapping.DELETE)
     public Result delete(Integer id) {
         return SpringContextHolder.getBean(IUserService.class).delete(id);
