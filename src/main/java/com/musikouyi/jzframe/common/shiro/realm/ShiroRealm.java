@@ -1,6 +1,7 @@
 package com.musikouyi.jzframe.common.shiro.realm;
 
 import com.musikouyi.jzframe.dao.mapper.MenuMapper;
+import com.musikouyi.jzframe.dao.mapper.UserMapper;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
@@ -12,7 +13,9 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 
+import javax.swing.*;
 import java.util.Set;
 
 public class ShiroRealm extends AuthorizingRealm {
@@ -24,6 +27,7 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+
         String userName = (String) principals.getPrimaryPrincipal();
 //        String role = getRoleByUserName(userName);
         Set<String> permissions = getPermissionByUserName(userName);
@@ -45,7 +49,11 @@ public class ShiroRealm extends AuthorizingRealm {
         if (password == null) {
             return null;
         }
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userName, password, "shiroRealm");
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+                userName,
+                password,
+//                ByteSource.Util.bytes(SpringContextHolder.getBean(UserMapper.class).findSaltByAccount(userName)),
+                getName());
         return authenticationInfo;
     }
 

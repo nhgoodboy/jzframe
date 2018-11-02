@@ -31,7 +31,7 @@ public class UserController {
                 JwtTokenUtil.getUserIdFromToken(token.substring(JwtConstants.TOKEN_PREFIX_LENGTH)));
     }
 
-//    @RequiresPermissions(value = "user")
+    @RequiresPermissions(value = "user")
     @GetMapping(ControllerMapping.LIST)
     public Result list(ListReqDto listReqDto) {
         return SpringContextHolder.getBean(IUserService.class).findAll(listReqDto);
