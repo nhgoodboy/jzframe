@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "SYS_ROLE_MENU_RELATION")
-@Alias(value = "roleMenuRelation")
-public class RoleMenuRelation implements Serializable {
+@Table(name = "SYS_ROLE_PERMISSION_RELATION")
+@Alias(value = "rolePermissionRelation")
+public class RolePermissionRelation implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,10 +20,10 @@ public class RoleMenuRelation implements Serializable {
     private Integer id;
 
     /**
-     * 菜单id
+     * 权限id
      */
-    @Column(name = "MENU_ID", nullable = false)
-    private Long menuId;
+    @Column(name = "PERMISSION_ID", nullable = false)
+    private Integer permissionId;
 
     /**
      * 角色id

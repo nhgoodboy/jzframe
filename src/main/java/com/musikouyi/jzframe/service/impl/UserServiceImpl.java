@@ -13,7 +13,7 @@ import com.musikouyi.jzframe.dao.repository.DeptRepository;
 import com.musikouyi.jzframe.dao.repository.RoleRepository;
 import com.musikouyi.jzframe.dao.repository.UserRepository;
 import com.musikouyi.jzframe.service.IFileInfService;
-import com.musikouyi.jzframe.service.IMenuService;
+import com.musikouyi.jzframe.service.IPermissionService;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
@@ -70,7 +70,7 @@ public class UserServiceImpl implements IUserService {
         userInfoRespDto.setPhone(user.getPhone());
         userInfoRespDto.setBirthday(user.getBirthday());
         userInfoRespDto.setCreateTime(user.getCreateTime());
-        userInfoRespDto.setMenus(SpringContextHolder.getBean(IMenuService.class).getCodesByRoleId(role.getId()));
+        userInfoRespDto.setPermissions(SpringContextHolder.getBean(IPermissionService.class).getCodesByRoleId(role.getId()));
         return ResultUtil.success(userInfoRespDto);
     }
 

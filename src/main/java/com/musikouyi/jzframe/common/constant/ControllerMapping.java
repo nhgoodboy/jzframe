@@ -31,8 +31,8 @@ public interface ControllerMapping {
     //dept
     String DEPT = ADMIN_BASE + "/dept";
     String DEPT_NAME_LIST = "/deptNameList";
-    //menu
-    String MENU = ADMIN_BASE + "/menu";
+    //permission
+    String PERMISSION = ADMIN_BASE + "/permission";
     //文件管理
     String ADMIN_FILE_INF_BASE = ADMIN_BASE + "/fileInf"; //文件管理
     String UPLOAD = "/upload"; //文件上传

@@ -5,14 +5,12 @@ import com.musikouyi.jzframe.common.constant.Global;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.RoleDto;
-import com.musikouyi.jzframe.service.IMenuService;
+import com.musikouyi.jzframe.service.IPermissionService;
 import com.musikouyi.jzframe.service.IRoleService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -50,14 +48,14 @@ public class RoleController {
     }
 
     @RequiresPermissions(value = Global.PERMISSION_ROLE_PERMISSION_CONFIG)
-    @GetMapping("/menusTree/{roleId}")
-    public Result getMenusTree(@PathVariable("roleId") Integer roleId) {
-        return SpringContextHolder.getBean(IMenuService.class).getMenusTree(roleId);
+    @GetMapping("/permissionsTree/{roleId}")
+    public Result getPermissionsTree(@PathVariable("roleId") Integer roleId) {
+        return SpringContextHolder.getBean(IPermissionService.class).getPermissionsTree(roleId);
     }
 
     @RequiresPermissions(value = Global.PERMISSION_ROLE_PERMISSION_CONFIG)
-    @PutMapping("/menusTree/{roleId}")
-    public Result changePermission(@PathVariable("roleId") Integer roleId, @RequestBody List<Integer> menuIds) {
-        return SpringContextHolder.getBean(IMenuService.class).changePermission(roleId, menuIds);
+    @PutMapping("/permissionsTree/{roleId}")
+    public Result changePermission(@PathVariable("roleId") Integer roleId, @RequestBody List<Integer> permissionIds) {
+        return SpringContextHolder.getBean(IPermissionService.class).changePermission(roleId, permissionIds);
     }
 }

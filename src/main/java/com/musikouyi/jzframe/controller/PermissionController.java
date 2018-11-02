@@ -3,7 +3,7 @@ package com.musikouyi.jzframe.controller;
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.common.constant.JwtConstants;
 import com.musikouyi.jzframe.domain.entity.Result;
-import com.musikouyi.jzframe.service.IMenuService;
+import com.musikouyi.jzframe.service.IPermissionService;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +20,13 @@ import java.util.List;
  **/
 
 @RestController
-@RequestMapping(ControllerMapping.MENU)
-public class MenuController {
+@RequestMapping(ControllerMapping.PERMISSION)
+public class PermissionController {
 
     @GetMapping("/list")
-    public Result getMenusList(@RequestHeader(JwtConstants.AUTH_HEADER) String token) {
-        List menuIds = SpringContextHolder.getBean(IMenuService.class).getMenuIdsByRoleId(1);
-        System.out.println(menuIds.toString());
-        return ResultUtil.success(menuIds);
+    public Result getPermissionsList(@RequestHeader(JwtConstants.AUTH_HEADER) String token) {
+        List permissionIds = SpringContextHolder.getBean(IPermissionService.class).getPermissionIdsByRoleId(1);
+        System.out.println(permissionIds.toString());
+        return ResultUtil.success(permissionIds);
     }
 }

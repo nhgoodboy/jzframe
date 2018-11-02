@@ -11,8 +11,8 @@ import java.util.List;
  * DateTime: 2018/10/28 14:11
  **/
 @Data
-public class MenuTreeRespDto {
+public class PermissionTreeRespDto {
 
-    private List<TreeNode> menusList;
-    private List<Integer> checkedMenuIds;
+    private List<TreeNode> permissionsList;
+    private List<Integer> checkedPermissionIds;
 }

@@ -1,6 +1,6 @@
 package com.musikouyi.jzframe.common.shiro.realm;
 
-import com.musikouyi.jzframe.dao.mapper.MenuMapper;
+import com.musikouyi.jzframe.dao.mapper.PermissionMapper;
 import com.musikouyi.jzframe.dao.mapper.UserMapper;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.service.IUserService;
@@ -69,6 +69,6 @@ public class ShiroRealm extends AuthorizingRealm {
     }
 
     private Set<String> getPermissionByUserName(String userName) {
-        return SpringContextHolder.getBean(MenuMapper.class).getPermissionByUserName(userName);
+        return SpringContextHolder.getBean(PermissionMapper.class).getPermissionByUserName(userName);
     }
 }

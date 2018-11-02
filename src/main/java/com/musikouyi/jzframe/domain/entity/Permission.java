@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "sys_menu")
-@Alias(value = "menu")
-public class Menu implements Serializable {
+@Table(name = "sys_permission")
+@Alias(value = "permission")
+public class Permission implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,27 +20,27 @@ public class Menu implements Serializable {
     private Integer id;
 
     /**
-     * 菜单编号
+     * 权限编号
      */
     @Column(name = "CODE", nullable = false, unique = true)
     private String code;
     /**
-     * 菜单父编号
+     * 权限父编号
      */
     @Column(name = "P_CODE", nullable = false)
     private String pCode;
     /**
-     * 菜单名称
+     * 权限名称
      */
     @Column(name = "NAME", nullable = false)
     private String name;
     /**
-     * 菜单排序号
+     * 权限排序号
      */
     @Column(name = "NUM", nullable = false)
     private Integer num;
     /**
-     * 菜单层级
+     * 权限层级
      */
     @Column(name = "LEVELS", nullable = false)
     private Integer levels;
@@ -50,7 +50,7 @@ public class Menu implements Serializable {
     @Column(name = "TIPS")
     private String tips;
     /**
-     * 菜单状态 :  1:启用   0:不启用
+     * 权限状态 :  1:启用   0:不启用
      */
     @Column(name = "STATUS")
     private Integer status;

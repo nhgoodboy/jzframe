@@ -27,5 +27,5 @@ public class UserInfoRespDto {
     private Date birthday;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
-    private Set<String> menus;
+    private Set<String> permissions;
 }

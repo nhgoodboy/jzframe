@@ -90,7 +90,7 @@ INSERT INTO `sys_user` VALUES (2, 'edit', '2018-10-07 11:45:54', '2018-10-01 11:
 INSERT INTO `sys_user` VALUES (3, 'test3', '2018-10-11 11:47:48', '2018-10-18 11:47:52', 3, '80232564@ww.cc', 'test3', 'd54d790ad38962527afc085de700b045898a3ce8a630b7a201053f9443b1a274', '17325869854', 3, 'j3cs9', 1, 1, NULL, NULL);
 INSERT INTO `sys_user` VALUES (4, 'test4', '2018-10-25 11:48:56', '2018-10-01 11:48:59', 4, '265236@aa.cn', 'test4', 'b3c966b4404bd26e93a52e2f7eb7d9a801f918981ca99c75be0164b4e2db7d20', '13698569852', 4, 's56tf', 2, 1, NULL, NULL);
 
--- # CREATE TABLE `sys_menu`  (
+-- # CREATE TABLE `sys_permission`  (
 -- #   `id` int(11) NOT NULL AUTO_INCREMENT,
 -- #   `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 -- #   `levels` int(11) NOT NULL,
@@ -103,50 +103,50 @@ INSERT INTO `sys_user` VALUES (4, 'test4', '2018-10-25 11:48:56', '2018-10-01 11
 -- # ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of sys_menu
+-- Records of sys_permission
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (1, 'system', 1, '系统管理', 1, '#', '1', '1');
-INSERT INTO `sys_menu` VALUES (2, 'user', 2, '用户管理', 1, 'system', '1', '1');
-INSERT INTO `sys_menu` VALUES (3, 'user_add', 3, '添加用户', 1, 'user', '1', '1');
-INSERT INTO `sys_menu` VALUES (4, 'user_edit', 3, '修改用户', 2, 'user', '1', '1');
-INSERT INTO `sys_menu` VALUES (5, 'user_delete', 3, '删除用户', 3, 'user', '1', '1');
-INSERT INTO `sys_menu` VALUES (6, 'user_change_pwd', 3, '修改密码', 4, 'user', '1', '1');
-INSERT INTO `sys_menu` VALUES (7, 'role', 2, '角色管理', 2, 'system', '1', '1');
-INSERT INTO `sys_menu` VALUES (8, 'role_add', 3, '添加角色', 1, 'role', '1', '1');
-INSERT INTO `sys_menu` VALUES (9, 'role_edit', 3, '修改角色', 2, 'role', '1', '1');
-INSERT INTO `sys_menu` VALUES (10, 'role_delete', 3, '删除角色', 3, 'role', '1', '1');
-INSERT INTO `sys_menu` VALUES (11, 'role_permission_config', 3, '权限配置', 4, 'role', '1', '1');
-INSERT INTO `sys_menu` VALUES (12, 'dept', 2, '部门管理', 3, 'system', '1', '1');
-INSERT INTO `sys_menu` VALUES (13, 'dept_add', 3, '添加部门', 1, 'dept', '1', '1');
-INSERT INTO `sys_menu` VALUES (14, 'dept_edit', 3, '修改部门', 2, 'dept', '1', '1');
-INSERT INTO `sys_menu` VALUES (15, 'dept_delete', 3, '删除部门', 3, 'dept', '1', '1');
+INSERT INTO `sys_permission` VALUES (1, 'system', 1, '系统管理', 1, '#', '1', '1');
+INSERT INTO `sys_permission` VALUES (2, 'user', 2, '用户管理', 1, 'system', '1', '1');
+INSERT INTO `sys_permission` VALUES (3, 'user_add', 3, '添加用户', 1, 'user', '1', '1');
+INSERT INTO `sys_permission` VALUES (4, 'user_edit', 3, '修改用户', 2, 'user', '1', '1');
+INSERT INTO `sys_permission` VALUES (5, 'user_delete', 3, '删除用户', 3, 'user', '1', '1');
+INSERT INTO `sys_permission` VALUES (6, 'user_change_pwd', 3, '修改密码', 4, 'user', '1', '1');
+INSERT INTO `sys_permission` VALUES (7, 'role', 2, '角色管理', 2, 'system', '1', '1');
+INSERT INTO `sys_permission` VALUES (8, 'role_add', 3, '添加角色', 1, 'role', '1', '1');
+INSERT INTO `sys_permission` VALUES (9, 'role_edit', 3, '修改角色', 2, 'role', '1', '1');
+INSERT INTO `sys_permission` VALUES (10, 'role_delete', 3, '删除角色', 3, 'role', '1', '1');
+INSERT INTO `sys_permission` VALUES (11, 'role_permission_config', 3, '权限配置', 4, 'role', '1', '1');
+INSERT INTO `sys_permission` VALUES (12, 'dept', 2, '部门管理', 3, 'system', '1', '1');
+INSERT INTO `sys_permission` VALUES (13, 'dept_add', 3, '添加部门', 1, 'dept', '1', '1');
+INSERT INTO `sys_permission` VALUES (14, 'dept_edit', 3, '修改部门', 2, 'dept', '1', '1');
+INSERT INTO `sys_permission` VALUES (15, 'dept_delete', 3, '删除部门', 3, 'dept', '1', '1');
 
 -- ----------------------------
--- Table structure for sys_role_menu_relation
+-- Table structure for sys_role_permission_relation
 -- ----------------------------
--- DROP TABLE IF EXISTS `sys_role_menu_relation`;
--- CREATE TABLE `sys_role_menu_relation`  (
+-- DROP TABLE IF EXISTS `sys_role_permission_relation`;
+-- CREATE TABLE `sys_role_permission_relation`  (
 --   `id` int(11) NOT NULL AUTO_INCREMENT,
---   `menu_id` bigint(20) NOT NULL,
+--   `permission_id` bigint(20) NOT NULL,
 --   `role_id` int(11) NOT NULL,
 --   PRIMARY KEY (`id`) USING BTREE
 -- ) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of sys_role_menu_relation
+-- Records of sys_role_permission_relation
 -- ----------------------------
-INSERT INTO `sys_role_menu_relation` VALUES (1, 1, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (2, 2, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (3, 3, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (4, 4, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (5, 5, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (6, 6, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (7, 7, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (8, 8, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (9, 9, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (10, 10, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (11, 11, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (12, 12, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (13, 13, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (14, 14, 1);
-INSERT INTO `sys_role_menu_relation` VALUES (15, 15, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (1, 1, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (2, 2, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (3, 3, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (4, 4, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (5, 5, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (6, 6, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (7, 7, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (8, 8, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (9, 9, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (10, 10, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (11, 11, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (12, 12, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (13, 13, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (14, 14, 1);
+INSERT INTO `sys_role_permission_relation` VALUES (15, 15, 1);
