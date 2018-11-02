@@ -1,8 +1,10 @@
 package com.musikouyi.jzframe.common.shiro.realm;
 
+import com.musikouyi.jzframe.common.exception.GlobalException;
 import com.musikouyi.jzframe.dao.mapper.PermissionMapper;
 import com.musikouyi.jzframe.dao.mapper.UserMapper;
 import com.musikouyi.jzframe.domain.entity.User;
+import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.apache.shiro.authc.AuthenticationException;

@@ -20,7 +20,10 @@ public enum ResultEnum {
 
     FORBIDDEN(800, "非法操作"),
 
-    DATABASE_QUERRY_ERROR(900, "数据库查询错误");
+    DATABASE_QUERRY_ERROR(900, "数据库查询错误"),
+
+    UNAUTHZ(1001, "用户没有访问权限"),
+    SHIRO_ERR(1002, "鉴权或授权过程出错");
 
     private Integer code;
     private String msg;
