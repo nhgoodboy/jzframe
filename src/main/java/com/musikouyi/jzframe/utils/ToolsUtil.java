@@ -1,9 +1,7 @@
 package com.musikouyi.jzframe.utils;
 
 import com.musikouyi.jzframe.common.constant.Global;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.util.ByteSource;
 
 import java.util.Random;
 

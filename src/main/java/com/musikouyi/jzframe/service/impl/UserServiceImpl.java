@@ -1,6 +1,10 @@
 package com.musikouyi.jzframe.service.impl;
 
 import com.musikouyi.jzframe.common.constant.Global;
+import com.musikouyi.jzframe.common.exception.GlobalException;
+import com.musikouyi.jzframe.dao.repository.DeptRepository;
+import com.musikouyi.jzframe.dao.repository.RoleRepository;
+import com.musikouyi.jzframe.dao.repository.UserRepository;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.Role;
 import com.musikouyi.jzframe.domain.entity.User;
@@ -8,10 +12,6 @@ import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.domain.enums.SexEnum;
 import com.musikouyi.jzframe.domain.enums.UserStatusEnum;
 import com.musikouyi.jzframe.dto.*;
-import com.musikouyi.jzframe.common.exception.GlobalException;
-import com.musikouyi.jzframe.dao.repository.DeptRepository;
-import com.musikouyi.jzframe.dao.repository.RoleRepository;
-import com.musikouyi.jzframe.dao.repository.UserRepository;
 import com.musikouyi.jzframe.service.IFileInfService;
 import com.musikouyi.jzframe.service.IPermissionService;
 import com.musikouyi.jzframe.service.IUserService;

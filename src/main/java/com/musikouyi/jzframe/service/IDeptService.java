@@ -1,6 +1,5 @@
 package com.musikouyi.jzframe.service;
 
-import com.musikouyi.jzframe.domain.entity.Dept;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.dto.DeptDto;
 import com.musikouyi.jzframe.dto.ListReqDto;

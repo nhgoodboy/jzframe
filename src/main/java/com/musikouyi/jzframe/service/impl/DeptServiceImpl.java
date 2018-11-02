@@ -1,15 +1,15 @@
 package com.musikouyi.jzframe.service.impl;
 
 import com.musikouyi.jzframe.common.constant.Global;
+import com.musikouyi.jzframe.common.exception.GlobalException;
 import com.musikouyi.jzframe.dao.mapper.DeptMapper;
+import com.musikouyi.jzframe.dao.repository.DeptRepository;
 import com.musikouyi.jzframe.domain.entity.Dept;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.dto.DeptDto;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.ListRespDto;
-import com.musikouyi.jzframe.common.exception.GlobalException;
-import com.musikouyi.jzframe.dao.repository.DeptRepository;
 import com.musikouyi.jzframe.service.IDeptService;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
