@@ -18,6 +18,7 @@ import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
+import com.musikouyi.jzframe.utils.ToolsUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -115,15 +116,18 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public Result create(UserReqDto userReqDto) {
+        String salt = ToolsUtil.getRandomString(Global.SALT_LENGTH);
+
         User user = new User();
         user.setAccount(userReqDto.getAccount());
         user.setPhone(userReqDto.getPhone());
         user.setEmail(userReqDto.getEmail());
-        user.setPassword(userReqDto.getPassword());
+        user.setPassword(ToolsUtil.encrypt(userReqDto.getPassword(), salt));
         user.setName(userReqDto.getName());
         user.setStatus(UserStatusEnum.toCode(userReqDto.getStatus()));
         user.setSex(SexEnum.toCode(userReqDto.getSex()));
         user.setCreateTime(new Date());
+        user.setSalt(salt);
         user.setRoleId(roleRepository.findIdByName(userReqDto.getRole()));
         user.setDeptId(deptRepository.findIdByName(userReqDto.getDept()));
         userRepository.saveAndFlush(user);
@@ -149,7 +153,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public Result changePwd(Integer id, String newPassword) {
         User user = userRepository.findById(id).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
-        user.setPassword(newPassword);
+        user.setPassword(ToolsUtil.encrypt(newPassword, user.getSalt()));
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
     }

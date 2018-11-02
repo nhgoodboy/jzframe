@@ -1,5 +1,6 @@
 package com.musikouyi.jzframe.common.config;
 
+import com.musikouyi.jzframe.common.constant.Global;
 import com.musikouyi.jzframe.common.shiro.realm.ShiroRealm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -24,7 +25,9 @@ public class ShiroConfig {
      */
     @Bean
     public Realm realm() {
-        return new ShiroRealm();
+        ShiroRealm shiroRealm = new ShiroRealm();
+        shiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        return shiroRealm;
     }
 //
     @Bean
@@ -44,8 +47,8 @@ public class ShiroConfig {
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher(){
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        hashedCredentialsMatcher.setHashAlgorithmName("md5");//散列算法:这里使用MD5算法;
-        hashedCredentialsMatcher.setHashIterations(2);//散列的次数，比如散列两次，相当于 md5(md5(""));
+        hashedCredentialsMatcher.setHashAlgorithmName(Global.HASH_ALGORITHM_NAME);//散列算法:这里使用MD5算法;
+        hashedCredentialsMatcher.setHashIterations(Global.HASH_ITERATIONS);//散列的次数，比如散列两次，相当于 md5(md5(""));
         return hashedCredentialsMatcher;
     }
 

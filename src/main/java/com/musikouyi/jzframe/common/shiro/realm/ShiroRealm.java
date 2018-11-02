@@ -15,7 +15,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
-import javax.swing.*;
 import java.util.Set;
 
 public class ShiroRealm extends AuthorizingRealm {
@@ -52,7 +51,7 @@ public class ShiroRealm extends AuthorizingRealm {
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 userName,
                 password,
-//                ByteSource.Util.bytes(SpringContextHolder.getBean(UserMapper.class).findSaltByAccount(userName)),
+                ByteSource.Util.bytes(SpringContextHolder.getBean(UserMapper.class).findSaltByAccount(userName)),
                 getName());
         return authenticationInfo;
     }

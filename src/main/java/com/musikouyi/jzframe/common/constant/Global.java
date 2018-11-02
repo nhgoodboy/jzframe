@@ -40,4 +40,9 @@ public interface Global {
 
     //请求
     String OPTIONS_REQUEST = "OPTIONS";
+
+    //shiro
+    String HASH_ALGORITHM_NAME = "SHA-256";
+    int SALT_LENGTH = 5; //密码盐的位数
+    int HASH_ITERATIONS = 8;  //加密hash次数
 }

@@ -1,6 +1,7 @@
 package com.musikouyi.jzframe.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ public class TestController {
         String fuck = request.getParameter("fuck");
         System.out.println("head: " + head);
         System.out.println("fuck: " + fuck);
+
 
 //        String[] a = request.getParameterValues("transdata");
 
