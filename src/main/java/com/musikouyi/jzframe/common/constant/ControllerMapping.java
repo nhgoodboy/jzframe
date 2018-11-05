@@ -22,19 +22,18 @@ public interface ControllerMapping {
     String GET_DEPTS = "/getDepts";
     //user
     String USER = ADMIN_BASE + "/user";
-    String USER_INFO = "/userInfo";
     String CHANGE_PWD = "/changePwd";
+    //userInfo
+    String USER_INFO = ADMIN_BASE + "/userInfo";
     String EDIT_USER_INFO = "/editUserInfo";
+    String CHANGE_AVATAR = "/changeAvatar"; //更换头像
     //role
     String ROLE = ADMIN_BASE + "/role";
     String ROLE_NAME_LIST = "/roleNameList";
     //dept
     String DEPT = ADMIN_BASE + "/dept";
     String DEPT_NAME_LIST = "/deptNameList";
-    //permission
-    String PERMISSION = ADMIN_BASE + "/permission";
     //文件管理
     String ADMIN_FILE_INF_BASE = ADMIN_BASE + "/fileInf"; //文件管理
     String UPLOAD = "/upload"; //文件上传
-    String CHANGE_AVATAR = "/changeAvatar"; //更换头像
 }

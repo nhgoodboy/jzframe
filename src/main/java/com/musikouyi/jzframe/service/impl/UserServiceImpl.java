@@ -53,26 +53,7 @@ public class UserServiceImpl implements IUserService {
         return userRepository.findUserByAccount(account);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Result userInfo(Integer userId) {
-        User user = userRepository.findById(userId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
-        UserInfoRespDto userInfoRespDto = new UserInfoRespDto();
-        userInfoRespDto.setAvatar(SpringContextHolder.getBean(IFileInfService.class)
-                .getSmallPictUrl(user.getUserHeadPictId(), Global.DEFAULT_SMALL_PICT_SIZE, Global.DEFAULT_SMALL_PICT_SIZE));
-        userInfoRespDto.setAccount(user.getAccount());
-        userInfoRespDto.setName(user.getName());
-        userInfoRespDto.setSex(SexEnum.fromCode(user.getSex()));
-        Role role = roleRepository.findById(user.getRoleId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
-        userInfoRespDto.setRole(role.getName());
-        userInfoRespDto.setDept(deptRepository.findById(user.getDeptId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFullName());
-        userInfoRespDto.setEmail(user.getEmail());
-        userInfoRespDto.setPhone(user.getPhone());
-        userInfoRespDto.setBirthday(user.getBirthday());
-        userInfoRespDto.setCreateTime(user.getCreateTime());
-        userInfoRespDto.setPermissions(SpringContextHolder.getBean(IPermissionService.class).getCodesByRoleId(role.getId()));
-        return ResultUtil.success(userInfoRespDto);
-    }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -156,32 +137,5 @@ public class UserServiceImpl implements IUserService {
         user.setPassword(ToolsUtil.encrypt(newPassword, user.getSalt()));
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
-    }
-
-    @Override
-    @Transactional
-    public Result editUserInfo(UserInfoReqDto userInfoReqDto) {
-        User user = userRepository.findById(JwtTokenUtil.getUserIdFromToken(userInfoReqDto.getToken())).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
-        user.setName(userInfoReqDto.getName());
-        user.setSex(SexEnum.toCode(userInfoReqDto.getSex()));
-        user.setEmail(userInfoReqDto.getEmail());
-        user.setPhone(userInfoReqDto.getPhone());
-        user.setBirthday(userInfoReqDto.getBirthday());
-        userRepository.saveAndFlush(user);
-        return ResultUtil.success();
-    }
-
-    @Override
-    @Transactional
-    public Result changeAvatar(Integer userHeadId, Integer userId) throws FileNotFoundException {
-        User user = userRepository.findById(userId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
-        User oldUser = new User();
-        BeanUtils.copyProperties(user, oldUser);
-        user.setUserHeadPictId(userHeadId);
-        SpringContextHolder.getBean(IFileInfService.class).syncBusinessObject(user.getId(), user, oldUser, User.class);
-        userRepository.saveAndFlush(user);
-        String pictPath = SpringContextHolder.getBean(IFileInfService.class).getSmallPictUrl(userRepository.findById(userId)
-                .orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getUserHeadPictId(), Global.DEFAULT_SMALL_PICT_SIZE, Global.DEFAULT_SMALL_PICT_SIZE);
-        return ResultUtil.success(pictPath);
     }
 }

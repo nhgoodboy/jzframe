@@ -24,14 +24,6 @@ import java.io.FileNotFoundException;
 @RequestMapping(ControllerMapping.USER)
 public class UserController {
 
-
-//    @RequiresPermissions(Global.PERMISSION_U)
-    @GetMapping(ControllerMapping.USER_INFO)
-    public Result userInfo(@RequestHeader(JwtConstants.AUTH_HEADER) String token) {
-        return SpringContextHolder.getBean(IUserService.class).userInfo(
-                JwtTokenUtil.getUserIdFromToken(token.substring(JwtConstants.TOKEN_PREFIX_LENGTH)));
-    }
-
     @RequiresPermissions(value = Global.PERMISSION_USER)
     @GetMapping(ControllerMapping.LIST)
     public Result list(ListReqDto listReqDto) {
@@ -60,16 +52,5 @@ public class UserController {
     @PostMapping(ControllerMapping.CHANGE_PWD)
     public Result changePwd(Integer id, String newPassword) {
         return SpringContextHolder.getBean(IUserService.class).changePwd(id, newPassword);
-    }
-
-    @PostMapping(ControllerMapping.EDIT_USER_INFO)
-    public Result editUserInfo(@RequestBody UserInfoReqDto userInfoReqDto) {
-        return SpringContextHolder.getBean(IUserService.class).editUserInfo(userInfoReqDto);
-    }
-
-    @PutMapping(ControllerMapping.CHANGE_AVATAR + "/{userHeadId}")   //REST风格
-    public Result changeAvatar(@PathVariable("userHeadId") Integer userHeadId, @RequestHeader(JwtConstants.AUTH_HEADER) String token) throws FileNotFoundException {
-        return SpringContextHolder.getBean(IUserService.class).changeAvatar(userHeadId,
-                JwtTokenUtil.getUserIdFromToken(token.substring(JwtConstants.TOKEN_PREFIX_LENGTH)));
     }
 }

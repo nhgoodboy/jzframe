@@ -24,11 +24,6 @@ public interface IUserService {
     User getByAccount(String account);
 
     /**
-     * 通过userid获取用户信息
-     */
-    Result userInfo(Integer userId);
-
-    /**
      * 获取用户列表(排除status为deleted的)
      */
     Result findAll(ListReqDto listReqDto);
@@ -52,16 +47,4 @@ public interface IUserService {
      * 更改密码
      */
     Result changePwd(Integer id, String newPassword);
-
-    /**
-     * 修改用户信息
-     */
-    Result editUserInfo(UserInfoReqDto userInfoReqDto);
-
-    /**
-     * 修改用户头像
-     * @param userHeadId
-     * @return
-     */
-    Result changeAvatar(Integer userHeadId, Integer userId) throws FileNotFoundException;
 }
