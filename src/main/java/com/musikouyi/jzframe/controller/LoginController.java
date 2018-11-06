@@ -31,7 +31,7 @@ public class LoginController {
     public Result doLogin(@RequestParam("username") String username, @RequestParam("password") String password) {
 
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        token.setRememberMe(true);
+//        token.setRememberMe(true);
 
         try{
             subject.login(token);

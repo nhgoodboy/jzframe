@@ -13,7 +13,9 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +43,7 @@ public class ShiroConfig {
         defaultSecurityManager.setRealm(realm());
         defaultSecurityManager.setSessionManager(defaultWebSessionManager());
         defaultSecurityManager.setCacheManager(redisCacheManager());
+        defaultSecurityManager.setRememberMeManager(cookieRememberMeManager());
         return defaultSecurityManager;
     }
 
@@ -121,5 +124,19 @@ public class ShiroConfig {
     @Bean
     public RedisCacheManager redisCacheManager() {
         return new RedisCacheManager();
+    }
+
+    @Bean
+    public CookieRememberMeManager cookieRememberMeManager() {
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(cookie());
+        return  cookieRememberMeManager;
+    }
+
+    @Bean
+    public SimpleCookie cookie() {
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        simpleCookie.setMaxAge(200000);
+        return  simpleCookie;
     }
 }

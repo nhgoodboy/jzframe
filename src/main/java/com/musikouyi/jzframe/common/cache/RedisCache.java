@@ -10,6 +10,7 @@ import org.springframework.util.SerializationUtils;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
@@ -43,7 +44,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
         byte[] key = getKey(k);
         byte[] value = SerializationUtils.serialize(v);
         redisTemplate.opsForValue().set(key, value);
-//        redisTemplate.expire()
+//        redisTemplate.expire(key, 600, TimeUnit.MILLISECONDS);
         return v;
     }
 
