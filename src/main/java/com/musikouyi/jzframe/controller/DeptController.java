@@ -44,6 +44,7 @@ public class DeptController {
         return SpringContextHolder.getBean(IDeptService.class).modify(deptDto);
     }
 
+    @RequiresPermissions(Global.PERMISSION_DEPT)
     @GetMapping(ControllerMapping.GET_DEPTS)
     public Result getDepts(ListReqDto listReqDto) {
         return SpringContextHolder.getBean(IDeptService.class).getDepts(listReqDto);

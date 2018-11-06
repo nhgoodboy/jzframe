@@ -1,7 +1,9 @@
 package com.musikouyi.jzframe.common.config;
 
+import com.musikouyi.jzframe.common.cache.RedisCacheManager;
 import com.musikouyi.jzframe.common.constant.Global;
-import com.musikouyi.jzframe.common.shiro.realm.ShiroRealm;
+import com.musikouyi.jzframe.common.session.RedisSessionDAO;
+import com.musikouyi.jzframe.common.shiro.ShiroRealm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.DefaultSecurityManager;
@@ -11,6 +13,8 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,23 +33,27 @@ public class ShiroConfig {
         shiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return shiroRealm;
     }
-//
+
+    //
     @Bean
     public SecurityManager securityManager() {
         DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
         defaultSecurityManager.setRealm(realm());
+        defaultSecurityManager.setSessionManager(defaultWebSessionManager());
+        defaultSecurityManager.setCacheManager(redisCacheManager());
         return defaultSecurityManager;
     }
 
     /**
      * 凭证匹配器
      * （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了
-     *  所以我们需要修改下doGetAuthenticationInfo中的代码;
+     * 所以我们需要修改下doGetAuthenticationInfo中的代码;
      * ）
+     *
      * @return
      */
     @Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher(){
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         hashedCredentialsMatcher.setHashAlgorithmName(Global.HASH_ALGORITHM_NAME);//散列算法
         hashedCredentialsMatcher.setHashIterations(Global.HASH_ITERATIONS);//散列的次数，比如散列两次，相当于 md5(md5(""));
@@ -53,13 +61,14 @@ public class ShiroConfig {
     }
 
     /**
-     *  开启shiro aop注解支持.
-     *  使用代理方式;所以需要开启代码支持;
+     * 开启shiro aop注解支持.
+     * 使用代理方式;所以需要开启代码支持;
+     *
      * @param securityManager
      * @return
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
@@ -69,8 +78,9 @@ public class ShiroConfig {
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chain = new DefaultShiroFilterChainDefinition();
         // 由于demo1展示统一使用注解做访问控制，所以这里配置所有请求路径都可以匿名访问
-        chain.addPathDefinition("/login", "anon");
+//        chain.addPathDefinition("/login", "anon");
         chain.addPathDefinition("/admin/**", "authc");
+        chain.addPathDefinition("/**", "anon");
 
         // 这另一种配置方式。但是还是用上面那种吧，容易理解一点。
         // or allow basic authentication, but NOT require it.
@@ -94,5 +104,22 @@ public class ShiroConfig {
     public Subject subject() {
         SecurityUtils.setSecurityManager(securityManager());
         return SecurityUtils.getSubject();
+    }
+
+    @Bean
+    public RedisSessionDAO redisSessionDAO() {
+        return new RedisSessionDAO();
+    }
+
+    @Bean
+    public DefaultWebSessionManager defaultWebSessionManager() {
+        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+        defaultWebSessionManager.setSessionDAO(redisSessionDAO());
+        return defaultWebSessionManager;
+    }
+
+    @Bean
+    public RedisCacheManager redisCacheManager() {
+        return new RedisCacheManager();
     }
 }

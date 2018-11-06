@@ -1,10 +1,11 @@
-package com.musikouyi.jzframe.common.shiro.realm;
+package com.musikouyi.jzframe.common.shiro;
 
 import com.musikouyi.jzframe.dao.mapper.PermissionMapper;
 import com.musikouyi.jzframe.dao.mapper.UserMapper;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -17,6 +18,7 @@ import org.apache.shiro.util.ByteSource;
 
 import java.util.Set;
 
+@Slf4j
 public class ShiroRealm extends AuthorizingRealm {
 
     /**
@@ -69,6 +71,7 @@ public class ShiroRealm extends AuthorizingRealm {
     }
 
     private Set<String> getPermissionByUserName(String userName) {
+        log.info("从数据库中获取授权数据");
         return SpringContextHolder.getBean(PermissionMapper.class).getPermissionByUserName(userName);
     }
 }

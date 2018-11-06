@@ -1,6 +1,9 @@
 package com.musikouyi.jzframe.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,14 +16,18 @@ import java.io.IOException;
 @RequestMapping("/notify")
 public class TestController {
 
-    @PostMapping("/checkResult")
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @GetMapping("/checkResult")
     public String notify(HttpServletRequest request) throws IOException {
 
-        String head = request.getHeader("Content-Type");
-        String fuck = request.getParameter("fuck");
-        System.out.println("head: " + head);
-        System.out.println("fuck: " + fuck);
-
+//        String head = request.getHeader("Content-Type");
+//        String fuck = request.getParameter("fuck");
+//        System.out.println("head: " + head);
+//        System.out.println("fuck: " + fuck);
+        redisTemplate.opsForValue().set("test", "123456");
+        return redisTemplate.opsForValue().get("test").toString();
 
 //        String[] a = request.getParameterValues("transdata");
 
@@ -37,7 +44,7 @@ public class TestController {
 //        }
 //        log.info("postData: " + postData);
 
-        return "success";
+//        return "success";
     }
 
 }
