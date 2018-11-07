@@ -1,8 +1,12 @@
 package com.musikouyi.jzframe.service;
 
+import com.musikouyi.jzframe.domain.entity.Dept;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.dto.DeptDto;
 import com.musikouyi.jzframe.dto.ListReqDto;
+import com.musikouyi.jzframe.dto.ListRespDto;
+
+import java.util.List;
 
 /**
  * Create with IDEA
@@ -14,30 +18,30 @@ public interface IDeptService {
     /**
      * 获取部门列表
      */
-    Result getDeptNameList();
+    List<String> getDeptNameList();
 
     /**
      * 获取部门列表
      */
-    Result findAll(ListReqDto listReqDto);
+    ListRespDto<DeptDto> findAll(ListReqDto listReqDto);
 
     /**
      * 删除部门
      */
-    Result delete(Integer id);
+    void delete(Integer id);
 
     /**
      * 创建部门
      */
-    Result create(DeptDto roleReqDto);
+    Dept create(DeptDto deptDto);
 
     /**
      * 修改部门
      */
-    Result modify(DeptDto roleReqDto);
+    Dept modify(DeptDto deptDto);
 
     /**
      * 获取部门（mybatis测试）
      */
-    Result getDepts(ListReqDto listReqDto);
+    ListRespDto<DeptDto> getDepts(ListReqDto listReqDto);
 }

@@ -1,6 +1,7 @@
 package com.musikouyi.jzframe.domain.entity;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.util.Date;
 @Entity
 @Table(name = "sys_user")
 @Data
+@Alias(value = "user")
 //@Document(indexName = Global.ES_DEFAULT_INDEX, type = "user")  //elasticsearch
 public class User implements Serializable {
 

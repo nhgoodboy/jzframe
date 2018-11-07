@@ -19,6 +19,8 @@ public enum ResultEnum {
     TOKEN_WITHOUT(702, "请求头没有携带token"),
 
     FORBIDDEN(800, "非法操作"),
+    DEPT_USER_USED(801, "请先删除该部门下的用户"),
+    DEPT_ROLE_USED(802, "请先删除该部门下的角色"),
 
     DATABASE_QUERRY_ERROR(900, "数据库查询错误"),
 

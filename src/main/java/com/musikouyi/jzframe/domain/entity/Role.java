@@ -1,6 +1,7 @@
 package com.musikouyi.jzframe.domain.entity;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "sys_role")
+@Alias(value = "role")
 //@Document(indexName = Global.ES_DEFAULT_INDEX)
 //@Setting(settingPath = Global.ES_DEFAULT_ANALYSER)
 public class Role implements Serializable {

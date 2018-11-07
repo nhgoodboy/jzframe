@@ -6,4 +6,8 @@
     <select id="findSaltByAccount" resultType="string" parameterType="java.lang.String">
         select salt from sys_user where account = #{username}
     </select>
+
+    <select id="findByDeptId" resultType="user" parameterType="Integer">
+        select * from sys_user where dept_id = #{deptId} and status != 3
+    </select>
 </mapper>
