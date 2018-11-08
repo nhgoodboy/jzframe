@@ -2,18 +2,13 @@ package com.musikouyi.jzframe.controller;
 
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.common.constant.Global;
-import com.musikouyi.jzframe.common.constant.JwtConstants;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.dto.ListReqDto;
-import com.musikouyi.jzframe.dto.UserInfoReqDto;
 import com.musikouyi.jzframe.dto.UserReqDto;
 import com.musikouyi.jzframe.service.IUserService;
-import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.FileNotFoundException;
 
 /**
  * Create with IDEA

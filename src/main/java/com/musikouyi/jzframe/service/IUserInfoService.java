@@ -14,6 +14,7 @@ public interface IUserInfoService {
 
     /**
      * 修改用户头像
+     *
      * @param userHeadId
      * @return
      */

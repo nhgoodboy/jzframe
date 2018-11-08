@@ -29,6 +29,7 @@ public interface IPermissionService {
 
     /**
      * 根据角色获取权限树
+     *
      * @param roleId
      * @return
      */
@@ -36,6 +37,7 @@ public interface IPermissionService {
 
     /**
      * 根据roleId修改可访问的权限
+     *
      * @param roleId
      * @param permissionIds
      * @return

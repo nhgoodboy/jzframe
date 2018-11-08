@@ -28,7 +28,7 @@ public class ToolsUtil {
      * shiro密码加密工具类
      *
      * @param credentials 密码
-     * @param saltSource 密码盐
+     * @param saltSource  密码盐
      * @return
      */
     public static String encrypt(String credentials, String saltSource) {

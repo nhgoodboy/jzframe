@@ -1,22 +1,22 @@
 {
-	"index":{
-		"number_of_shards":1,
-		"number_of_replicas":0,
-		"max_result_window": 100000000,
-		"analysis":{
-			"tokenizer":{
-				"ngram_tokenizer":{
-					"type":"nGram",
-					"min_gram":1,
-					"max_gram":20
-				}
-			},
-			"analyzer":{
-				"ngram_analyzer":{
-					"type":"custom",
-					"tokenizer":"ngram_tokenizer"
-				}
-			}
-		}
-	}
+  "index": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "max_result_window": 100000000,
+    "analysis": {
+      "tokenizer": {
+        "ngram_tokenizer": {
+          "type": "nGram",
+          "min_gram": 1,
+          "max_gram": 20
+        }
+      },
+      "analyzer": {
+        "ngram_analyzer": {
+          "type": "custom",
+          "tokenizer": "ngram_tokenizer"
+        }
+      }
+    }
+  }
 }

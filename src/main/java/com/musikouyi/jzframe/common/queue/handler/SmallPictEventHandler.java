@@ -16,6 +16,7 @@ import java.util.Date;
  * 小图队列消息图片处理器.
  * Create with IDEA
  * DateTime: 2018/10/1 21:17
+ *
  * @author YJZ
  */
 public class SmallPictEventHandler implements WorkHandler<SmallPictEvent> {

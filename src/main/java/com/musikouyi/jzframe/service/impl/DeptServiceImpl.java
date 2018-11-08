@@ -14,6 +14,7 @@ import com.musikouyi.jzframe.dto.DeptDto;
 import com.musikouyi.jzframe.dto.ListReqDto;
 import com.musikouyi.jzframe.dto.ListRespDto;
 import com.musikouyi.jzframe.service.IDeptService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -30,6 +31,7 @@ import java.util.List;
  * Author: YJZ
  * DateTime: 2018/9/16 21:56
  **/
+@Slf4j
 @Service
 public class DeptServiceImpl implements IDeptService {
 
@@ -83,11 +85,11 @@ public class DeptServiceImpl implements IDeptService {
             throw new GlobalException(ResultEnum.FORBIDDEN);
         }
         List<User> users = userMapper.findByDeptId(id);
-        if(users != null && users.size() > 0){
+        if (users != null && users.size() > 0) {
             throw new GlobalException(ResultEnum.DEPT_USER_USED);
         }
         List<Role> roles = roleMapper.findByDeptId(id);
-        if(roles != null && roles.size() > 0){
+        if (roles != null && roles.size() > 0) {
             throw new GlobalException(ResultEnum.DEPT_ROLE_USED);
         }
         deptRepository.deleteById(id);

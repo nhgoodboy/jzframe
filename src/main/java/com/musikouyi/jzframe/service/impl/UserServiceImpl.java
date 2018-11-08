@@ -6,27 +6,23 @@ import com.musikouyi.jzframe.dao.repository.DeptRepository;
 import com.musikouyi.jzframe.dao.repository.RoleRepository;
 import com.musikouyi.jzframe.dao.repository.UserRepository;
 import com.musikouyi.jzframe.domain.entity.Result;
-import com.musikouyi.jzframe.domain.entity.Role;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.domain.enums.SexEnum;
 import com.musikouyi.jzframe.domain.enums.UserStatusEnum;
-import com.musikouyi.jzframe.dto.*;
-import com.musikouyi.jzframe.service.IFileInfService;
-import com.musikouyi.jzframe.service.IPermissionService;
+import com.musikouyi.jzframe.dto.ListReqDto;
+import com.musikouyi.jzframe.dto.ListRespDto;
+import com.musikouyi.jzframe.dto.UserReqDto;
+import com.musikouyi.jzframe.dto.UserRespDto;
 import com.musikouyi.jzframe.service.IUserService;
-import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
-import com.musikouyi.jzframe.utils.SpringContextHolder;
 import com.musikouyi.jzframe.utils.ToolsUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +50,6 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-
     @Override
     @Transactional(readOnly = true)
     public Result findAll(ListReqDto listReqDto) {
@@ -68,8 +63,8 @@ public class UserServiceImpl implements IUserService {
                     user.getAccount(),
                     user.getName(),
                     SexEnum.fromCode(user.getSex()),
-                    roleRepository.findById(user.getRoleId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getName(),
-                    deptRepository.findById(user.getDeptId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFullName(),
+                    roleRepository.findById(user.getRoleId()).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getName(),
+                    deptRepository.findById(user.getDeptId()).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFullName(),
                     user.getEmail(),
                     user.getPhone(),
                     user.getCreateTime(),
@@ -88,7 +83,7 @@ public class UserServiceImpl implements IUserService {
         if (Global.SUPER_USER_ID == id) {
             return ResultUtil.error(ResultEnum.FORBIDDEN);
         }
-        User user = userRepository.findById(id).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
+        User user = userRepository.findById(id).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         user.setStatus(UserStatusEnum.DELETED.getCode());
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
@@ -118,7 +113,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public Result modify(UserReqDto userReqDto) {
-        User user = userRepository.findById(userReqDto.getId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
+        User user = userRepository.findById(userReqDto.getId()).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         user.setPhone(userReqDto.getPhone());
         user.setEmail(userReqDto.getEmail());
         user.setName(userReqDto.getName());
@@ -133,7 +128,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public Result changePwd(Integer id, String newPassword) {
-        User user = userRepository.findById(id).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
+        User user = userRepository.findById(id).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         user.setPassword(ToolsUtil.encrypt(newPassword, user.getSalt()));
         userRepository.saveAndFlush(user);
         return ResultUtil.success();

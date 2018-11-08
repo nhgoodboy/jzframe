@@ -3,10 +3,7 @@ package com.musikouyi.jzframe.service;
 import com.musikouyi.jzframe.domain.entity.Result;
 import com.musikouyi.jzframe.domain.entity.User;
 import com.musikouyi.jzframe.dto.ListReqDto;
-import com.musikouyi.jzframe.dto.UserInfoReqDto;
 import com.musikouyi.jzframe.dto.UserReqDto;
-
-import java.io.FileNotFoundException;
 
 /**
  * <p>

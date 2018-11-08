@@ -10,7 +10,6 @@ import org.springframework.util.SerializationUtils;
 
 import java.util.Collection;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
@@ -21,8 +20,8 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
     private final String CACHE_PREFIX = "shiro-cache:";
 
-    private byte[] getKey(K k){
-        if(k instanceof String){
+    private byte[] getKey(K k) {
+        if (k instanceof String) {
             return (CACHE_PREFIX + k).getBytes();
         }
         return SerializationUtils.serialize(k);
@@ -32,8 +31,8 @@ public class RedisCache<K, V> implements Cache<K, V> {
     public V get(K k) throws CacheException {
         log.info("从redis中获取授权数据");
         byte[] value = (byte[]) redisTemplate.opsForValue().get(getKey(k));
-        if(value != null) {
-            return (V)SerializationUtils.deserialize(value);
+        if (value != null) {
+            return (V) SerializationUtils.deserialize(value);
         }
         return null;
     }
@@ -54,8 +53,8 @@ public class RedisCache<K, V> implements Cache<K, V> {
         byte[] key = getKey(k);
         byte[] value = (byte[]) redisTemplate.opsForValue().get(key);
         redisTemplate.delete(key);
-        if(value != null) {
-            return (V)SerializationUtils.deserialize(value);
+        if (value != null) {
+            return (V) SerializationUtils.deserialize(value);
         }
         return null;
     }

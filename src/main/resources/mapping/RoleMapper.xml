@@ -4,6 +4,8 @@
 
 <mapper namespace="com.musikouyi.jzframe.dao.mapper.RoleMapper">
     <select id="findByDeptId" resultType="role" parameterType="Integer">
-        select * from sys_role where dept_id = #{deptId}
+        select *
+        from sys_role
+        where dept_id = #{deptId}
     </select>
 </mapper>

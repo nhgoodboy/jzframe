@@ -2,21 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.musikouyi.jzframe.dao.mapper.PermissionMapper">
-	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="permission">
-		<id column="id" property="id" />
-		<result column="code" property="code" />
-		<result column="p_code" property="pCode" />
-		<result column="p_codes" property="pCodes" />
-		<result column="name" property="name" />
-		<result column="url" property="url" />
-		<result column="num" property="num" />
-		<result column="levels" property="levels" />
-		<result column="is_permission" property="isPermission" />
-		<result column="tips" property="tips" />
-		<result column="status" property="status" />
-		<result column="is_open" property="isOpen" />
-	</resultMap>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="permission">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="p_code" property="pCode"/>
+        <result column="p_codes" property="pCodes"/>
+        <result column="name" property="name"/>
+        <result column="url" property="url"/>
+        <result column="num" property="num"/>
+        <result column="levels" property="levels"/>
+        <result column="is_permission" property="isPermission"/>
+        <result column="tips" property="tips"/>
+        <result column="status" property="status"/>
+        <result column="is_open" property="isOpen"/>
+    </resultMap>
 
     <sql id="Base_Column_List">
         id, code, pCode, name, url, num, levels, pCodes,
@@ -25,7 +25,7 @@
 
     <select id="selectPermissions" resultType="map">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from sys_permission
         where status = 1
         <if test="condition != null and condition != ''">
@@ -37,36 +37,56 @@
     </select>
 
     <select id="getPermissionIdsByRoleId" resultType="Integer">
-        select permission_id from
-        sys_role_permission_relation where role_id = #{roleId}
+        select permission_id
+        from
+            sys_role_permission_relation
+        where role_id = #{roleId}
     </select>
 
     <select id="getCodesByRoleId" resultType="String">
-        select code from
-        sys_permission where id in (select permission_id from sys_role_permission_relation where role_id = #{roleId})
+        select code
+        from
+            sys_permission
+        where id in (select permission_id
+                     from sys_role_permission_relation
+                     where role_id = #{roleId})
     </select>
 
     <select id="getPermissions" resultType="permission">
-        select id as id, levels as levels, name as name, num as num, code as code, p_code as pCode
+        select
+            id     as id,
+            levels as levels,
+            name   as name,
+            num    as num,
+            code   as code,
+            p_code as pCode
         from sys_permission
         order by levels, num asc
     </select>
 
     <delete id="deleteRelationByPermission">
-        delete from sys_relation where permissionid = #{permissionId}
+        delete from sys_relation
+        where permissionid = #{permissionId}
     </delete>
 
     <select id="getResUrlsByRoleId" resultType="string">
-        select url from
-        sys_relation rel
-        inner join sys_permission m on rel.permissionid = m.id
+        select url
+        from
+            sys_relation rel
+            inner join sys_permission m on rel.permissionid = m.id
         where rel.roleid = #{roleId}
     </select>
-    
+
     <select id="getPermissionByUserName" resultType="string">
-        select m.code from sys_permission m where m.id in
-        (select r.permission_id from sys_role_permission_relation r where r.role_id =
-        (select u.role_id from sys_user u where u.account = #{username}))
+        select m.code
+        from sys_permission m
+        where m.id in
+              (select r.permission_id
+               from sys_role_permission_relation r
+               where r.role_id =
+                     (select u.role_id
+                      from sys_user u
+                      where u.account = #{username}))
     </select>
 
 </mapper>

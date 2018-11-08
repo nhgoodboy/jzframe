@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(ControllerMapping.DEPT)
 public class DeptController {
 
-//    @RequiresPermissions(value = {Global.Per})
+    //    @RequiresPermissions(value = {Global.Per})
     @GetMapping(ControllerMapping.DEPT_NAME_LIST)
     public Result getDeptNameList() {
         return ResultUtil.success(SpringContextHolder.getBean(IDeptService.class).getDeptNameList());

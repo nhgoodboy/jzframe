@@ -4,23 +4,35 @@
 
 <mapper namespace="com.musikouyi.jzframe.dao.mapper.DeptMapper">
     <select id="getDepts" resultType="dept" parameterType="java.lang.Integer">
-        select id, FULL_NAME as fullname, PARENT_ID as parentId from sys_dept limit #{currPage, jdbcType=INTEGER} , #{pageSize, jdbcType=INTEGER}
+        select
+            id,
+            FULL_NAME as fullname,
+            PARENT_ID as parentId
+        from sys_dept
+        limit #{currPage, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     </select>
 
     <select id="findById" resultType="dept" parameterType="java.lang.Integer">
-        select id, FULL_NAME as fullname, PARENT_ID as parentId from sys_dept where id = #{id, jdbcType=INTEGER}
+        select
+            id,
+            FULL_NAME as fullname,
+            PARENT_ID as parentId
+        from sys_dept
+        where id = #{id, jdbcType=INTEGER}
     </select>
 
     <select id="getTotalNum" resultType="java.lang.Integer">
-        select count(1) from sys_dept
+        select count(1)
+        from sys_dept
     </select>
 
     <insert id="addUserInfo" parameterType="dept">
-        insert into dept(id, fullName, parentId) value
-        (#{id, jdbcType=INTEGER}, #{fullName, jdbcType=VARCHAR})
+        insert into dept (id, fullName, parentId) value
+            (#{id, jdbcType=INTEGER}, #{fullName, jdbcType=VARCHAR})
     </insert>
 
     <delete id="delUserInfo" parameterType="java.lang.Integer">
-        delete from sys_dept where id = #{id, jdbcType=INTEGER}
+        delete from sys_dept
+        where id = #{id, jdbcType=INTEGER}
     </delete>
 </mapper>

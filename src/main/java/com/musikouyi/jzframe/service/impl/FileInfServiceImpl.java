@@ -325,7 +325,7 @@ public class FileInfServiceImpl implements IFileInfService {
     private void syncFileSmallPicts(String className, String fieldName, String fileInfIds, boolean isMulti) {
         if (StringUtils.isNotBlank(fileInfIds)) {
             for (String fileIdStr : fileInfIds.split(Global.DEFAULT_TEXT_SPLIT_CHAR)) {
-                String filePath = fileInfRepository.findById(new Integer(fileIdStr)).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath();
+                String filePath = fileInfRepository.findById(new Integer(fileIdStr)).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath();
                 List<SmallPictSetup> smallPictSetupList = smallPictSetupRepository.findByBusinessClassNmAndBusinessFieldNm(className, fieldName);
                 for (SmallPictSetup smallPictSetup : smallPictSetupList) {
                     if (StringUtils.isNoneBlank(smallPictSetup.getSmallPictSpec())) {
@@ -360,7 +360,7 @@ public class FileInfServiceImpl implements IFileInfService {
                 return fileInfDto.getFilePath();
             }
         } else {
-            return fileInfRepository.findById(fileInfId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath();
+            return fileInfRepository.findById(fileInfId).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath();
         }
     }
 
@@ -381,7 +381,7 @@ public class FileInfServiceImpl implements IFileInfService {
                     .append(".png")
                     .toString();
         } else {
-            return WebContextHolder.getContextPath() + '/' + fileInfRepository.findById(fileInfId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath().replace('\\', '/');
+            return WebContextHolder.getContextPath() + '/' + fileInfRepository.findById(fileInfId).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath().replace('\\', '/');
         }
     }
 
@@ -402,7 +402,7 @@ public class FileInfServiceImpl implements IFileInfService {
     public String getSmallPictUrl(Integer fileInfId, int width, int height, String defaultPictPath) {
         FileInf fileInf = null;
         if (fileInfId != null) {
-            fileInf = fileInfRepository.findById(fileInfId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
+            fileInf = fileInfRepository.findById(fileInfId).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         }
         if (fileInf == null) {
             return new StringBuilder(WebContextHolder.getContextPath()).append('/')
@@ -411,7 +411,7 @@ public class FileInfServiceImpl implements IFileInfService {
                     .append(defaultPictPath)
                     .toString();
         }
-        String filePath = fileInfRepository.findById(fileInfId).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath();
+        String filePath = fileInfRepository.findById(fileInfId).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFilePath();
         int extSeperatorIndex = filePath.lastIndexOf(".");
         return new StringBuilder(WebContextHolder.getContextPath())
                 .append('/').append(

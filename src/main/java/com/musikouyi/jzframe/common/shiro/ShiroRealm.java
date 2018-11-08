@@ -23,6 +23,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 获取授权信息
+     *
      * @param principals
      * @return
      */
@@ -39,6 +40,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 获取认证信息
+     *
      * @param token
      * @return
      * @throws AuthenticationException
@@ -60,7 +62,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
     private String getPasswordByUserName(String userName) {
         User user = SpringContextHolder.getBean(IUserService.class).getByAccount(userName);
-        if (user == null){
+        if (user == null) {
             return null;
         }
         return user.getPassword();

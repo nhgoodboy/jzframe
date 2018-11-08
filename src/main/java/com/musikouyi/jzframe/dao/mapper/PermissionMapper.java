@@ -20,6 +20,7 @@ public interface PermissionMapper {
 
     /**
      * 根据角色获取权限code
+     *
      * @param roleId
      * @return
      */
@@ -27,6 +28,7 @@ public interface PermissionMapper {
 
     /**
      * 获取权限列表
+     *
      * @return
      */
     List<Permission> getPermissions();

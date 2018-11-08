@@ -63,7 +63,7 @@ public class RoleServiceImpl implements IRoleService {
             RoleDto roleRespDto = new RoleDto(
                     role.getId(),
                     role.getName(),
-                    deptRepository.findById(role.getDeptId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFullName()
+                    deptRepository.findById(role.getDeptId()).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR)).getFullName()
             );
             roleDtoList.add(roleRespDto);
         }
@@ -95,7 +95,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     @Transactional
     public Result modify(RoleDto roleDto) {
-        Role role = roleRepository.findById(roleDto.getId()).orElseThrow(()->new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
+        Role role = roleRepository.findById(roleDto.getId()).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
         role.setName(roleDto.getName());
         role.setDeptId(deptRepository.findIdByName(roleDto.getDept()));
         roleRepository.saveAndFlush(role);

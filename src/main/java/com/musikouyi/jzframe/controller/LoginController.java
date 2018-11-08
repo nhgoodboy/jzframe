@@ -33,9 +33,9 @@ public class LoginController {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 //        token.setRememberMe(true);
 
-        try{
+        try {
             subject.login(token);
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new GlobalException(ResultEnum.USERNAME_PASSWORD_ERROR);
         }
 

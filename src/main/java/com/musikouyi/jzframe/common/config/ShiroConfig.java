@@ -129,13 +129,13 @@ public class ShiroConfig {
     public CookieRememberMeManager cookieRememberMeManager() {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(cookie());
-        return  cookieRememberMeManager;
+        return cookieRememberMeManager;
     }
 
     @Bean
     public SimpleCookie cookie() {
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         simpleCookie.setMaxAge(200000);
-        return  simpleCookie;
+        return simpleCookie;
     }
 }

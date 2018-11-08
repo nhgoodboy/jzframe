@@ -2,29 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.musikouyi.jzframe.dao.mapper.RolePermissionRelationMapper">
 
-	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="rolePermissionRelation">
-		<id column="id" property="id" />
-		<result column="permission_id" property="permissionId" />
-		<result column="role_id" property="roleId" />
-	</resultMap>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="rolePermissionRelation">
+        <id column="id" property="id"/>
+        <result column="permission_id" property="permissionId"/>
+        <result column="role_id" property="roleId"/>
+    </resultMap>
 
-	<select id="getIdByRoleIdAndPermissionId" resultType="Integer">
-		select id from sys_role_permission_relation
-		where role_id = #{roleId} and permission_id = #{permissionId}
-	</select>
+    <select id="getIdByRoleIdAndPermissionId" resultType="Integer">
+        select id
+        from sys_role_permission_relation
+        where role_id = #{roleId} and permission_id = #{permissionId}
+    </select>
 
-	<select id="getPermissionIdsByRoleId" resultType="Integer">
-		select permission_id as permissionId from sys_role_permission_relation
-		where role_id = #{roleId}
-	</select>
-	
-	<delete id="deletePermissionIdsByRoleId">
-		delete from sys_role_permission_relation where role_id = #{roleId}
-	</delete>
-	
-	<insert id="createRelation">
-		insert into sys_role_permission_relation(role_id, permission_id) value(#{roleId}, #{permissionId})
-	</insert>
+    <select id="getPermissionIdsByRoleId" resultType="Integer">
+        select permission_id as permissionId
+        from sys_role_permission_relation
+        where role_id = #{roleId}
+    </select>
+
+    <delete id="deletePermissionIdsByRoleId">
+        delete from sys_role_permission_relation
+        where role_id = #{roleId}
+    </delete>
+
+    <insert id="createRelation">
+        insert into sys_role_permission_relation (role_id, permission_id) value (#{roleId}, #{permissionId})
+    </insert>
 
 </mapper>

@@ -15,4 +15,4 @@ public class GlobalException extends RuntimeException {
     public Integer getCode() {
         return code;
     }
-    }
+}
