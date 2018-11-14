@@ -21,6 +21,7 @@ public class TestController {
     @GetMapping("/checkResult")
     public String notify(HttpServletRequest request) throws IOException {
 
+
 //        String head = request.getHeader("Content-Type");
 //        String fuck = request.getParameter("fuck");
 //        System.out.println("head: " + head);

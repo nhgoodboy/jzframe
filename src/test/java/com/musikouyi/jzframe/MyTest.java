@@ -19,5 +19,7 @@ public class MyTest {
         System.out.println(sha256_pwd);
         System.out.println(simple_pwd);
         System.out.println(password.equals(sha256_pwd));
+
+        new Thread(() -> System.out.println("haha")).start();
     }
 }
