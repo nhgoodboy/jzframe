@@ -2,6 +2,7 @@ package com.musikouyi.jzframe.common.config;
 
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
 import com.musikouyi.jzframe.common.intercept.RestApiInteceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -10,7 +11,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class SpringWebMvcConfig implements WebMvcConfigurer {
 
-    /**
+    @Value("${shiro.originUrl}")
+    private String originsUrl;
+
+   /**
      * 解决跨域访问
      *
      * @param registry
@@ -19,7 +23,7 @@ public class SpringWebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedHeaders("*")
-                .allowedOrigins("http://localhost:9528")
+                .allowedOrigins(originsUrl)
                 .allowedMethods("*")
                 .allowCredentials(true)   // 解决跨域请求sessionId不一致的问题
                 .maxAge(3600);
