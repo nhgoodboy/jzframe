@@ -85,18 +85,10 @@ INSERT INTO `sys_small_pict_setup` VALUES (1, 'user', 'userHeadPictId', '150x150
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES
-  (1, 'admon', '2018-10-07 11:44:54', '2018-10-01 11:45:00', 1, '806352388@qq.com', '我是谁，我在哪',
-      '0c82f8fac0ec50c3808f233472b2607f7be601b8f779f500433c4936b23d4c9d', '18813244587', 1, '8pgby', 1, 1, NULL, NULL);
-INSERT INTO `sys_user` VALUES (2, 'edit', '2018-10-07 11:45:54', '2018-10-01 11:46:00', 1, '706352388@qq.com', '编辑',
-                                  'e58ea49a5254bd6d4e8641dc33e16227f12082a98f57093f34c27f2ec118bd10', '18813244589', 2,
-                                  '1f7bf', 1, 1, NULL, NULL);
-INSERT INTO `sys_user` VALUES (3, 'test3', '2018-10-11 11:47:48', '2018-10-18 11:47:52', 3, '80232564@ww.cc', 'test3',
-                                  'd54d790ad38962527afc085de700b045898a3ce8a630b7a201053f9443b1a274', '17325869854', 3,
-                                  'j3cs9', 1, 1, NULL, NULL);
-INSERT INTO `sys_user` VALUES (4, 'test4', '2018-10-25 11:48:56', '2018-10-01 11:48:59', 4, '265236@aa.cn', 'test4',
-                                  'b3c966b4404bd26e93a52e2f7eb7d9a801f918981ca99c75be0164b4e2db7d20', '13698569852', 4,
-                                  's56tf', 2, 1, NULL, NULL);
+INSERT INTO `sys_user` VALUES (1, 'admon', '2018-10-07 11:44:54', '2018-10-01 11:45:00', 1, '806352388@qq.com', '我是谁，我在哪', '0c82f8fac0ec50c3808f233472b2607f7be601b8f779f500433c4936b23d4c9d', '18813244587', 1, '8pgby', 1, 1, NULL, NULL);
+INSERT INTO `sys_user` VALUES (2, 'edit', '2018-10-07 11:45:54', '2018-10-01 11:46:00', 1, '706352388@qq.com', '编辑', 'e58ea49a5254bd6d4e8641dc33e16227f12082a98f57093f34c27f2ec118bd10', '18813244589', 2, '1f7bf', 1, 1, NULL, NULL);
+INSERT INTO `sys_user` VALUES (3, 'test3', '2018-10-11 11:47:48', '2018-10-18 11:47:52', 3, '80232564@ww.cc', 'test3', 'd54d790ad38962527afc085de700b045898a3ce8a630b7a201053f9443b1a274', '17325869854', 3, 'j3cs9', 1, 1, NULL, NULL);
+INSERT INTO `sys_user` VALUES (4, 'test4', '2018-10-25 11:48:56', '2018-10-01 11:48:59', 4, '265236@aa.cn', 'test4', 'b3c966b4404bd26e93a52e2f7eb7d9a801f918981ca99c75be0164b4e2db7d20', '13698569852', 4, 's56tf', 2, 1, NULL, NULL);
 
 -- # CREATE TABLE `sys_permission`  (
 -- #   `id` int(11) NOT NULL AUTO_INCREMENT,
