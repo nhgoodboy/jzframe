@@ -10,4 +10,4 @@
 
 1、前端是基于vue的vue-admin-template模版。自行开发了系统管理功能。实现了动态角色权限配置。
 
-2、后端是基于springboot。实现了数据的增删查改（mybatis、springdatajpa、mysql）、图片上传及小图裁剪处理（lmax-disrupter）、权限管理（shiro）、前 后端数据通信（jwt）、项目持续集成部署（git、jenkins、docker）、缓存处理（redis）。
+2、后端是基于springboot。实现了数据的增删查改（mybatis、springdatajpa、mysql）、图片上传及小图裁剪处理（lmax-disruptor）、权限管理（shiro）、前后端数据通信（jwt）、项目持续集成部署（git、jenkins、docker）、缓存处理（redis）。
