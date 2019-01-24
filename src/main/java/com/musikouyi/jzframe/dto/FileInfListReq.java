@@ -6,7 +6,7 @@ import lombok.Setter;
 /**
  * 系统文件列表请求条件
  *
- * @author Jim
+ * @author Yjz
  */
 @Getter
 @Setter

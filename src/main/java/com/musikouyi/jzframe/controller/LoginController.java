@@ -9,6 +9,8 @@ import com.musikouyi.jzframe.service.IUserService;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import com.musikouyi.jzframe.utils.SpringContextHolder;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(ControllerMapping.BASE)
+@Slf4j
 public class LoginController {
 
     @Autowired
@@ -35,7 +38,8 @@ public class LoginController {
 
         try {
             subject.login(token);
-        } catch (Exception e) {
+        } catch (AuthenticationException e) {
+            log.error(e.getMessage());
             throw new GlobalException(ResultEnum.USERNAME_PASSWORD_ERROR);
         }
 
