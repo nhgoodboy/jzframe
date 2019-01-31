@@ -11,6 +11,11 @@ import org.springframework.util.SerializationUtils;
 import java.util.Collection;
 import java.util.Set;
 
+/**
+ * 权限数据的缓存
+ * @param <K>
+ * @param <V>
+ */
 @Slf4j
 @Component
 public class RedisCache<K, V> implements Cache<K, V> {
@@ -43,7 +48,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
         byte[] key = getKey(k);
         byte[] value = SerializationUtils.serialize(v);
         redisTemplate.opsForValue().set(key, value);
-//        redisTemplate.expire(key, 600, TimeUnit.MILLISECONDS);
+//        redisTemplate.expire(key, 600000, TimeUnit.MILLISECONDS);
         return v;
     }
 

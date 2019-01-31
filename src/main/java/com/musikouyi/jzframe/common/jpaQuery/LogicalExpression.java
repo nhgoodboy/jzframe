@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 逻辑条件表达式 用于复杂条件时使用，如但属性多对应值的OR查询等
  *
- * @author lee
+ * @author yjz
  */
 public class LogicalExpression implements Criterion {
     private Criterion[] criterion; // 逻辑表达式中包含的表达式
@@ -22,7 +22,7 @@ public class LogicalExpression implements Criterion {
     }
 
     public Predicate toPredicate(Root<?> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        List<Predicate> predicates = new ArrayList<Predicate>();
+        List<Predicate> predicates = new ArrayList<>();
         for (Criterion aCriterion : this.criterion) {
             predicates.add(aCriterion.toPredicate(root, query, builder));
         }

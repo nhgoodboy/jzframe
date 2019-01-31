@@ -135,7 +135,7 @@ public class ShiroConfig {
     @Bean
     public SimpleCookie cookie() {
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
-        simpleCookie.setMaxAge(200000);
+        simpleCookie.setMaxAge(2592000);  //单位秒 30天
         return simpleCookie;
     }
 }

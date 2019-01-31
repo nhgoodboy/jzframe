@@ -38,7 +38,7 @@ public interface Global {
     String ES_DEFAULT_INDEX = "role";
     String ES_DEFAULT_ANALYSER = "elasticsearch-analyser.json";
 
-    //请求
+    //请求类型
     String OPTIONS_REQUEST = "OPTIONS";
 
     //shiro

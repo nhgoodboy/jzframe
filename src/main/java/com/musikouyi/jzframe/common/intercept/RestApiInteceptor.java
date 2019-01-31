@@ -8,8 +8,7 @@ import com.musikouyi.jzframe.domain.enums.ResultEnum;
 import com.musikouyi.jzframe.utils.JwtTokenUtil;
 import com.musikouyi.jzframe.utils.ResultUtil;
 import io.jsonwebtoken.JwtException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,16 +23,15 @@ import java.io.PrintWriter;
  * @author yjz
  * @Date 2018/09/15 23:11
  */
+@Slf4j
 public class RestApiInteceptor extends HandlerInterceptorAdapter {
-
-    private final static Logger logger = LoggerFactory.getLogger(RestApiInteceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (handler instanceof org.springframework.web.servlet.resource.ResourceHttpRequestHandler) {  //跳过静态资源请求验证
             return true;
         }
-        logger.info("rest api鉴权拦截");
+        log.info("rest api鉴权拦截");
         return check(request, response);
     }
 
