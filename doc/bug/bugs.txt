@@ -5,3 +5,7 @@
 
 3、图片系统只生成了默认大小小图，没有生成其他规格的小图
 (已解决，原因是SmallPictEventHandler不是spring bean,不能使用Autowired,改用SpringContextHolder即可)
+
+4、开发环境和部署环境的文件上传位置问题
+  打jar包后不能获取jar包内文件的路径，
+  解决方案：将文件上传位置置于项目外面（注意windows和linux文件目录的不同）
