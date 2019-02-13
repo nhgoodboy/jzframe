@@ -23,6 +23,7 @@ import com.musikouyi.jzframe.utils.SmallPictUtil;
 import com.musikouyi.jzframe.utils.WebContextHolder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -41,6 +42,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+@Slf4j
 @Service
 public class FileInfServiceImpl implements IFileInfService {
 
@@ -78,6 +80,8 @@ public class FileInfServiceImpl implements IFileInfService {
             String fileTypeNm = FilenameUtils.getExtension(fileName);
             String fileUUID = UUID.randomUUID().toString();
             String filePath = Global.TEMP_DIR + File.separator + fileUUID + "." + fileTypeNm;
+            String outputFilePathTest = getClass().getClassLoader().getResource("").getPath();
+            log.info(outputFilePathTest);
             String outputFilePath = ResourceUtils.getURL(Global.CLASSPATH_STATIC_DIR).getPath() + File.separator + filePath;
             fileOutputStream = new FileOutputStream(outputFilePath);
             IOUtils.copy(fileStream, fileOutputStream);
