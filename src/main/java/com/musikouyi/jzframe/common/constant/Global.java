@@ -61,4 +61,8 @@ public interface Global {
     String PERMISSION_DEPT_ADD = "dept_add";
     String PERMISSION_DEPT_EDIT = "dept_edit";
     String PERMISSION_DEPT_DELETE = "dept_delete";
+
+    //文件上传路径(区分开发环境和部署环境)
+//    String uploadFolder = "d://imagesUp/";
+    String uploadFolder = "/home/evan_yjz_gmail_com/imagesUp/";
 }

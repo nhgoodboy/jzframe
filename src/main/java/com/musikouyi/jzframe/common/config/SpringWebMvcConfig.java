@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -13,6 +14,12 @@ public class SpringWebMvcConfig implements WebMvcConfigurer {
 
     @Value("${shiro.originUrl}")
     private String originsUrl;
+
+    @Value("${file.staticAccessPath}")
+    private String staticAccessPath;
+
+    @Value("${file.uploadFolder}")
+    private String uploadFolder;
 
    /**
      * 解决跨域访问
@@ -35,5 +42,10 @@ public class SpringWebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new RestApiInteceptor()).addPathPatterns(ControllerMapping.ADMIN_BASE + "/**");
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler(staticAccessPath).addResourceLocations("file:" + uploadFolder);
     }
 }
