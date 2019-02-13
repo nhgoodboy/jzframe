@@ -1,6 +1,7 @@
 package com.musikouyi.jzframe.common.config;
 
 import com.musikouyi.jzframe.common.constant.ControllerMapping;
+import com.musikouyi.jzframe.common.constant.Global;
 import com.musikouyi.jzframe.common.intercept.RestApiInteceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -17,9 +18,6 @@ public class SpringWebMvcConfig implements WebMvcConfigurer {
 
     @Value("${file.staticAccessPath}")
     private String staticAccessPath;
-
-    @Value("${file.uploadFolder}")
-    private String uploadFolder;
 
    /**
      * 解决跨域访问
@@ -46,6 +44,6 @@ public class SpringWebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(staticAccessPath).addResourceLocations("file:" + uploadFolder);
+        registry.addResourceHandler(staticAccessPath).addResourceLocations("file:" + Global.uploadFolder);
     }
 }
