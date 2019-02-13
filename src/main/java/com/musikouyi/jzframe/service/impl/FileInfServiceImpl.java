@@ -80,10 +80,10 @@ public class FileInfServiceImpl implements IFileInfService {
             String fileTypeNm = FilenameUtils.getExtension(fileName);
             String fileUUID = UUID.randomUUID().toString();
             String filePath = Global.TEMP_DIR + File.separator + fileUUID + "." + fileTypeNm;
-            String outputFilePathTest = getClass().getClassLoader().getResource("").getPath();
-            log.info(outputFilePathTest);
+            String outputFilePathTest = getClass().getClassLoader().getResource("").getPath() + File.separator + filePath;
+            log.info("test::: " + outputFilePathTest);
             String outputFilePath = ResourceUtils.getURL(Global.CLASSPATH_STATIC_DIR).getPath() + File.separator + filePath;
-            fileOutputStream = new FileOutputStream(outputFilePath);
+            fileOutputStream = new FileOutputStream(outputFilePathTest);
             IOUtils.copy(fileStream, fileOutputStream);
             FileInfDto fileInfDto = new FileInfDto();
             fileInfDto.setFileNm(fileName);
