@@ -50,9 +50,6 @@ public class FileInfServiceImpl implements IFileInfService {
     @Value("${file.staticAccessPath}")
     private String staticAccessPath;
 
-    @Value("${file.uploadFolder}")
-    private String uploadFolder;
-
     private final FileInfRepository fileInfRepository;
 
     private final SmallPictSetupRepository smallPictSetupRepository;
@@ -88,7 +85,7 @@ public class FileInfServiceImpl implements IFileInfService {
             String fileUUID = UUID.randomUUID().toString();
             String filePath = Global.TEMP_DIR + File.separator + fileUUID + "." + fileTypeNm;
 
-            String outputFilePath = ResourceUtils.getURL(uploadFolder).getPath() + File.separator + filePath;
+            String outputFilePath = ResourceUtils.getURL(Global.uploadFolder).getPath() + File.separator + filePath;
             log.info("outputFilePath: " + outputFilePath);
             fileOutputStream = new FileOutputStream(outputFilePath);
             IOUtils.copy(fileStream, fileOutputStream);
@@ -166,7 +163,7 @@ public class FileInfServiceImpl implements IFileInfService {
         Collection<Integer> deleteList = CollectionUtils.subtract(savedFileInfIdList, updateFileInfIdList);   //获得需要删除的id
         for (Integer deleteId : deleteList) {
             FileInf fileInf = fileInfRepository.getOne(deleteId);
-            FileUtils.deleteQuietly(new File(ResourceUtils.getURL(uploadFolder).getPath() + File.separator + fileInf.getFilePath()));
+            FileUtils.deleteQuietly(new File(ResourceUtils.getURL(Global.uploadFolder).getPath() + File.separator + fileInf.getFilePath()));
             fileInfRepository.delete(fileInf);
 
             //删除所有小图
@@ -179,7 +176,7 @@ public class FileInfServiceImpl implements IFileInfService {
                         .append(".")
                         .append(SmallPictUtil.DEFAULT_OUTPUT_FORMAT)
                         .toString();
-                FileUtils.deleteQuietly(new File(ResourceUtils.getURL(uploadFolder).getPath() + File.separator + smallPictPath));
+                FileUtils.deleteQuietly(new File(ResourceUtils.getURL(Global.uploadFolder).getPath() + File.separator + smallPictPath));
                 smallPictRepository.delete(smallPict);
             }
         }
@@ -188,7 +185,7 @@ public class FileInfServiceImpl implements IFileInfService {
         Map<Integer, Integer> replaceIdMap = new HashMap<>();
         Date now = new Date();
         for (FileInfDto fileInfBarDto : addFileInfBarDto) {
-            File tempFile = new File(ResourceUtils.getURL(uploadFolder).getPath() + File.separator + fileInfBarDto.getFilePath());
+            File tempFile = new File(ResourceUtils.getURL(Global.uploadFolder).getPath() + File.separator + fileInfBarDto.getFilePath());
             Integer tempFileSize = new Long(tempFile.length() / 1024).intValue();  //将文件大小转换为kb单位
             Calendar calender = Calendar.getInstance();
 
@@ -201,7 +198,7 @@ public class FileInfServiceImpl implements IFileInfService {
                     .append(calender.get(Calendar.DAY_OF_MONTH)).toString();
             try {
                 //本地文件的策略
-                FileUtils.moveFileToDirectory(tempFile, new File(ResourceUtils.getURL(uploadFolder).getPath() + File.separator + moveDirPath), true);
+                FileUtils.moveFileToDirectory(tempFile, new File(ResourceUtils.getURL(Global.uploadFolder).getPath() + File.separator + moveDirPath), true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -224,7 +221,7 @@ public class FileInfServiceImpl implements IFileInfService {
                 int fileSizeKb = SmallPictUtil.generateSmallPict(
                         Global.DEFAULT_SMALL_PICT_SIZE,
                         Global.DEFAULT_SMALL_PICT_SIZE,
-                        ResourceUtils.getURL(uploadFolder).getPath() + File.separator + fileInf.getFilePath(),
+                        ResourceUtils.getURL(Global.uploadFolder).getPath() + File.separator + fileInf.getFilePath(),
                         true
                 );
                 if (fileSizeKb != -1) { //原位置有图片则忽略
