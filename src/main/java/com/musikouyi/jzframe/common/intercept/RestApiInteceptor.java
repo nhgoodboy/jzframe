@@ -83,7 +83,7 @@ public class RestApiInteceptor extends HandlerInterceptorAdapter {
         try {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.addHeader("Access-Control-Allow-Origin", "http://127.0.0.1:9528");  //解决跨域问题
+            response.addHeader("Access-Control-Allow-Origin", "*");  //解决跨域问题
             response.addHeader("Access-Control-Allow-Credentials", "true");  //解决跨域问题
             PrintWriter writer = response.getWriter();
             log.info("renderJson: " + JSON.toJSONString(jsonObject));

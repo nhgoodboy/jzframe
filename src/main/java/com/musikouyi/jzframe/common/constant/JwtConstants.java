@@ -12,7 +12,7 @@ public interface JwtConstants {
 
     String SECRET = "defaultSecret";    //密钥
 
-    long EXPIRATION = 5 * 60L;   //过期时间: 1小时（单位秒）
+    long EXPIRATION = 1 * 60L;   //过期时间: 1小时（单位秒）
 
     String AUTH_PATH = ControllerMapping.DO_LOGIN;   //不需要验证的路径
 
