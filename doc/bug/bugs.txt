@@ -1,11 +1,41 @@
 1、sessionId和绝对路径
-
+---------------------------------
 2、跨域请求导致sessionId不一致
 (已解决，allowCredentials(true))
-
+---------------------------------
 3、图片系统只生成了默认大小小图，没有生成其他规格的小图
 (已解决，原因是SmallPictEventHandler不是spring bean,不能使用Autowired,改用SpringContextHolder即可)
-
+---------------------------------
 4、开发环境和部署环境的文件上传位置问题
   打jar包后不能获取jar包内文件的路径，
   解决方案：将文件上传位置置于项目外面（注意windows和linux文件目录的不同）
+---------------------------------
+5、jzframe.sh
+#!/bin/bash
+PORT=$(ps axu | grep jzframe-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{print $2}')
+if [ $PORT = "" ]
+then
+    echo "the port 8082 isn't be using"
+else
+    kill -9 $PORT
+    echo "kill pid:" $PORT
+fi
+nohup java -jar /var/lib/jenkins/workspace/jzframe/build/libs/jzframe-0.0.1-SNAPSHOT.jar > jzframe.log 2>&1 &
+echo "starting jzframe, see detail in jzframe.log"
+---------------------------------
+6、vue-template-admin.sh
+PORT=$(ps axu | grep http-server | grep -v grep | awk '{print $2}')
+if [ $PORT = "" ]
+then
+    echo "the port 9528 isn't be using"
+else
+    kill -9 $PORT
+    echo "kill pid:" $PORT
+fi
+cd /var/lib/jenkins/workspace/vue-template-admin/dist/
+nohup http-server -a 0.0.0.0 -p 9528 > vue-template-admin.log 2>&1 &
+---------------------------------
+7、session过期
+解决：每次登录检查一次session，sessionid不存在时，从新创建一个。（LoginController--line54）
+---------------------------------
+8、Caused by: io.lettuce.core.RedisCommandExecutionException: NOAUTH Authentication required.

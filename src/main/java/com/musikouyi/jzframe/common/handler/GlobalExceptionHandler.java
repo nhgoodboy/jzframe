@@ -22,6 +22,7 @@ public class GlobalExceptionHandler {
         } else {
             log.error(ResultEnum.UNKNOWN_ERROR.getMsg(), e);
             return ResultUtil.error(ResultEnum.UNKNOWN_ERROR);
+//            return ResultUtil.error(-1, e.getMessage());
         }
     }
 }

@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class RedisSessionDAO extends AbstractSessionDAO {
@@ -80,7 +81,7 @@ public class RedisSessionDAO extends AbstractSessionDAO {
             byte[] key = getKey(session.getId().toString());
             byte[] value = SerializationUtils.serialize(session);
             redisTemplate.opsForValue().set(key, value);
-//            redisTemplate.expire(key, 600, TimeUnit.MILLISECONDS);
+            redisTemplate.expire(key, 24, TimeUnit.HOURS);
         }
     }
 }

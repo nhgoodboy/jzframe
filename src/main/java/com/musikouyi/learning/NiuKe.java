@@ -1,5 +1,8 @@
 package com.musikouyi.learning;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class NiuKe {
 
     private static int a = 1;
@@ -45,9 +48,22 @@ public class NiuKe {
 //        System.out.println(headset.contains("3"));
 
         String asd = "asd";
-        String asdf = "a";
+        String asdf = "a" + "sd";
         String asdfg = "sd";
         String asdfgh = asdf + asdfg;
-        System.out.println(asd == asdfgh);
+        System.out.println(asd == asdf);
+
+        int[] test = new int[] {1,2,3,4};
+        List list = Arrays.asList(test);
+        System.out.println(list.size());
+        System.out.println(list.get(0));
+        Integer a = 3;
+
+//        list.
+//        Iterator<Integer> iterator = list.iterator();
+//        for (Iterator it = iterator; it.hasNext(); ) {
+//            int i = (int) it.next();
+//            System.out.println(i);
+//        }
     }
 }

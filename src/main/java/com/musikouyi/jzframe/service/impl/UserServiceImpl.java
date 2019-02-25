@@ -84,7 +84,7 @@ public class UserServiceImpl implements IUserService {
             return ResultUtil.error(ResultEnum.FORBIDDEN);
         }
         User user = userRepository.findById(id).orElseThrow(() -> new GlobalException(ResultEnum.DATABASE_QUERRY_ERROR));
-        user.setStatus(UserStatusEnum.DELETED.getCode());
+        user.setStatus(UserStatusEnum.DELETED.getCode());   //软删除，避免查找不到记录
         userRepository.saveAndFlush(user);
         return ResultUtil.success();
     }

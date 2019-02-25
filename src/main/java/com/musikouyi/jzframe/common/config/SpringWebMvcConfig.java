@@ -42,6 +42,10 @@ public class SpringWebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new RestApiInteceptor()).addPathPatterns(ControllerMapping.ADMIN_BASE + "/**");
     }
 
+    /**
+     * 定义外部资源映射目录
+     * @param registry
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(staticAccessPath).addResourceLocations("file:" + Global.uploadFolder);
