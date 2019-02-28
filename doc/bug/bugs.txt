@@ -36,6 +36,10 @@ cd /var/lib/jenkins/workspace/vue-template-admin/dist/
 nohup http-server -a 0.0.0.0 -p 9528 > vue-template-admin.log 2>&1 &
 ---------------------------------
 7、session过期
-解决：每次登录检查一次session，sessionid不存在时，从新创建一个。（LoginController--line54）
+解决：每次登录检查一次session，sessionid不存在时，从新创建一个。(LoginController--line54)
 ---------------------------------
 8、Caused by: io.lettuce.core.RedisCommandExecutionException: NOAUTH Authentication required.
+(待解决)
+---------------------------------
+9、token过期等错误后，前端不走拦截器interceptors,直接报Network error(开发环境可以，部署环境不行)
+(待解决)
