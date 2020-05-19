@@ -1,4 +1,4 @@
-package com.musikouyi.learning;
+package com.musikouyi.learning.thread;
 
 public class PoolThread implements Runnable {
 

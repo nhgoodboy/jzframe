@@ -1,6 +1,8 @@
 package com.musikouyi.learning;
 
 
+import com.musikouyi.learning.lock.Lock;
+
 public class Counter {
 
     private Lock lock = new Lock();

@@ -1,4 +1,4 @@
-package com.musikouyi.learning;
+package com.musikouyi.learning.lock;
 
 import java.util.HashMap;
 import java.util.Map;

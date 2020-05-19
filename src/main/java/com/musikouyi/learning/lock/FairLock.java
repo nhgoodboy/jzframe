@@ -1,4 +1,4 @@
-package com.musikouyi.learning;
+package com.musikouyi.learning.lock;
 
 public class FairLock {
 

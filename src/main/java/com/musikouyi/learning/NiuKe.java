@@ -2,12 +2,17 @@ package com.musikouyi.learning;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class NiuKe {
 
     private static int a = 1;
 
     public static void main(String[] args) {
+        ExecutorService e = Executors.newFixedThreadPool(2);
+//        e.execute();
 //        int a = 2;
 //        int b = 3;
 //        System.out.println(a + ~b);

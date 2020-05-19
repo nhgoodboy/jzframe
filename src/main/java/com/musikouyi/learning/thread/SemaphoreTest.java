@@ -1,4 +1,4 @@
-package com.musikouyi.learning;
+package com.musikouyi.learning.thread;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;

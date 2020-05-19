@@ -20,7 +20,7 @@ public class EarlyNotify {
         print("in removeItem() - entering");
 
         synchronized (list) {
-            if (list.isEmpty()) {  //这里用if语句会发生危险
+            while (list.isEmpty()) {  //这里用if语句会发生危险
                 print("in removeItem() - about to wait()");
                 list.wait();
                 print("in removeItem() - done with wait()");
